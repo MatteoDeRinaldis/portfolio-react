@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+﻿# Matteo De Rinaldis — Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Personal portfolio presenting my professional experience, technical skills, and work as a Frontend Engineer. Built with React and TypeScript, with a responsive interface, interactive animations, and English and Italian content.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+- **Interactive home page** with animated Frontend and Engineer sections.
+- **Professional background** presented through dedicated About, Projects, and Skills pages and an experience timeline.
+- **Light and dark themes**, with the selected theme saved locally.
+- **English and Italian translations**, with a persistent language preference.
+- **Integrated PDF viewer** for reading and downloading the CV.
+- **Contact form** with email submission, field validation, loading feedback, and success and error notifications.
 
-### `npm start`
+## Technology
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Area | Tools |
+| --- | --- |
+| Interface | React 19, TypeScript |
+| Routing | React Router 7 |
+| Styling | styled-components, shared theme tokens |
+| Animation | Motion |
+| Icons and documents | React Icons, React PDF |
+| Email delivery | Web3Forms |
+| Development and build | Create React App / react-scripts |
+| Testing | Jest, React Testing Library |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+Install Node.js and npm, then run the following commands from the project root:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm ci
+npm start
+```
 
-### `npm run build`
+`npm ci` installs dependencies from the committed lockfile. The development server opens at **http://localhost:3000** by default and reloads when source files change.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Available Commands
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The following scripts are defined in [package.json](package.json):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Start the development server |
+| `npm run build` | Generate the production bundle in `build/` |
+| `npm test` | Run tests in interactive watch mode |
+| `npm run eject` | Expose the underlying build configuration; this operation is irreversible |
 
-### `npm run eject`
+To run tests once, without watch mode:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm test -- --watchAll=false
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To run the contact form tests only:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm test -- --watchAll=false --runInBand --runTestsByPath src/pages/Contact.test.js
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```text
+public/                 Static public assets and HTML entry point
+src/
+├── assets/             Images and CV document
+├── components/         Shared interface components, header, and footer
+├── data/               Portfolio and professional experience content
+├── i18n/               Language provider and translation dictionaries
+├── pages/              Page components, page styles, and tests
+├── styles/             Global styles and theme definitions
+├── types/              Asset type declarations
+├── App.tsx             Application layout, routing, and theme selection
+└── index.tsx           React entry point
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Content and Configuration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Routes and layout:** [src/App.tsx](src/App.tsx).
+- **Colors, typography, and spacing:** [src/styles/theme.ts](src/styles/theme.ts).
+- **Translations:** [src/i18n/translations](src/i18n/translations).
+- **Professional experience:** [src/data](src/data).
+- **CV document:** [src/assets/docs](src/assets/docs), referenced by the footer.
 
-### Code Splitting
+The application includes `/`, `/about`, `/projects`, `/skills`, `/contact`, and `/privacy-policy` routes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contact Form
 
-### Analyzing the Bundle Size
+The contact page submits requests directly to Web3Forms over HTTPS, without opening the visitor's email application or requiring a dedicated application backend.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The public form identifier is configured as `contactAccessKey` in [src/pages/Contact.tsx](src/pages/Contact.tsx). When adapting this project, replace it with the access key for your own verified Web3Forms form.
 
-### Making a Progressive Web App
+Submission behavior:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Required fields and email format are validated before sending.
+- Leading whitespace is removed while typing; spaces within the text are preserved.
+- Fields and the submit button are disabled while a request is pending.
+- A successful service response displays a subtle green notification and clears the form.
+- Service errors, network failures, and requests exceeding 30 seconds display an error notification and retain the draft for retry.
 
-### Advanced Configuration
+The contact tests use simulated service responses to verify validation, successful submission, duplicate submission prevention, and failure handling. Actual inbox delivery can be checked by submitting the form from the running application.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Production Deployment
 
-### Deployment
+Generate the static production files:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+npm run build
+```
 
-### `npm run build` fails to minify
+Publish the contents of `build/` to your static hosting provider. Configure a fallback to `index.html` for application routes so that direct navigation and page refreshes work with React Router.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Before publishing, confirm the Web3Forms recipient and website settings, review the contact and privacy information, and check that the CV and portfolio content are up to date.
