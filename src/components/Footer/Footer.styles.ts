@@ -1,0 +1,287 @@
+import styled, { css } from 'styled-components';
+
+export const FooterWrapper = styled.footer`
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  color: ${({ theme }) => theme.colors.text};
+  text-align: center;
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background-color ${({ theme }) => theme.transitions.base},
+    color ${({ theme }) => theme.transitions.base};
+`;
+
+export const FooterToggle = styled.button<{ $visible: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.primary};
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  transform: translate(-50%, -50%);
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
+  pointer-events: ${({ $visible }) => ($visible ? 'auto' : 'none')};
+  transition:
+    opacity ${({ theme }) => theme.transitions.base},
+    visibility ${({ theme }) => theme.transitions.base},
+    transform ${({ theme }) => theme.transitions.base};
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &:hover {
+    transform: translate(-50%, -54%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 4px;
+  }
+`;
+
+export const FooterContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[8]};
+  padding-top: ${({ theme }) => theme.spacing[4]};
+  padding-bottom: ${({ theme }) => theme.spacing[4]};
+  padding-left: ${({ theme }) => theme.spacing[32]};
+  padding-right: ${({ theme }) => theme.spacing[32]};
+  margin: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding-left: ${({ theme }) => theme.spacing[6]};
+    padding-right: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing[4]};
+    padding-left: ${({ theme }) => theme.spacing[4]};
+    padding-right: ${({ theme }) => theme.spacing[4]};
+  }
+`;
+
+export const FooterText = styled.p`
+  font-family: ${({ theme }) => theme.fonts.primary};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  color: ${({ theme }) => theme.colors.textLight};
+  margin-bottom: 0;
+`;
+
+export const FooterLegal = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[3]};
+  min-width: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+`;
+
+export const SocialLinks = styled.div<{ $isHomeIdle: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[4]};
+
+  ${({ $isHomeIdle, theme }) => $isHomeIdle && css`
+    a, button {
+      color: ${theme.mode === 'light' ? '#b9b9b9' : theme.colors.textLight};
+      transition: color ${theme.transitions.base};
+
+      &:hover {
+        color: ${theme.colors.primary};
+      }
+    }
+  `}
+`;
+
+export const SocialLink = styled.a<{ $isHomeEngineerHovered?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  color: ${({ theme, $isHomeEngineerHovered }) => (theme.mode === 'dark' && $isHomeEngineerHovered ? '#000' : theme.colors.textLight)};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  transition: color ${({ theme }) => theme.transitions.base};
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme, $isHomeEngineerHovered }) => (theme.mode === 'dark' && $isHomeEngineerHovered ? '#000' : theme.colors.primary)};
+  }
+`;
+
+export const CvLink = styled.button<{ $isHomeEngineerHovered?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  margin-left: ${({ theme }) => theme.spacing[2]};
+  margin-bottom: 1px;
+  padding-left: ${({ theme }) => theme.spacing[6]};
+  border-left: 1px solid ${({ theme }) => theme.colors.border};
+  color: ${({ theme, $isHomeEngineerHovered }) => (theme.mode === 'dark' && $isHomeEngineerHovered ? '#000' : theme.colors.textLight)};
+  font-size: inherit;
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+
+  &:hover {
+    color: ${({ theme, $isHomeEngineerHovered }) => (theme.mode === 'dark' && $isHomeEngineerHovered ? '#000' : theme.colors.primary)};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 4px;
+  }
+`;
+
+export const PrivacyLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  margin-left: ${({ theme }) => theme.spacing[2]};
+  padding-left: ${({ theme }) => theme.spacing[6]};
+  border-left: 1px solid ${({ theme }) => theme.colors.border};
+  color: ${({ theme }) => theme.colors.textLight};
+  font-size: inherit;
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 4px;
+  }
+`;
+
+export const PdfModal = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ theme }) => theme.spacing[6]};
+  background-color: rgba(0, 0, 0, 0.7);
+`;
+
+export const PdfModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 820px);
+  max-height: calc(100vh - 3rem);
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  background-color: ${({ theme }) => theme.colors.background};
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+`;
+
+export const PdfModalHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[6]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+export const PdfModalTitle = styled.h2`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  margin: 0;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+
+  svg {
+    flex: 0 0 auto;
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 1.2em;
+  }
+`;
+
+export const PdfDownloadButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: ${({ theme }) => theme.spacing[3]};
+  padding: ${({ theme }) => theme.spacing[2]};
+  color: ${({ theme }) => theme.colors.text};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 4px;
+  }
+
+  svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+`;
+
+export const PdfCloseButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ theme }) => theme.spacing[2]};
+  color: ${({ theme }) => theme.colors.text};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 4px;
+  }
+
+  svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+`;
+
+export const PdfDocument = styled('div')`
+  overflow: auto;
+  padding: ${({ theme }) => theme.spacing[6]};
+
+  .react-pdf__Page {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto ${({ theme }) => theme.spacing[6]};
+    box-shadow: ${({ theme }) => theme.shadows.md};
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .react-pdf__Page__canvas {
+    display: block;
+    max-width: 100%;
+    height: auto !important;
+  }
+`;
