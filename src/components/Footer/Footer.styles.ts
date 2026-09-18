@@ -48,6 +48,16 @@ export const FooterToggle = styled.button<{ $visible: boolean }>`
     transform: translate(-50%, -54%);
   }
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 4px;
@@ -66,14 +76,12 @@ export const FooterContent = styled.div`
   padding-right: ${({ theme }) => theme.spacing[32]};
   margin: 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding-left: ${({ theme }) => theme.spacing[6]};
-    padding-right: ${({ theme }) => theme.spacing[6]};
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    flex-direction: column;
-    gap: ${({ theme }) => theme.spacing[4]};
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: ${({ theme }) => theme.spacing[4]};
+    row-gap: ${({ theme }) => theme.spacing[2]};
     padding-left: ${({ theme }) => theme.spacing[4]};
     padding-right: ${({ theme }) => theme.spacing[4]};
   }
@@ -85,6 +93,11 @@ export const FooterText = styled.p`
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   color: ${({ theme }) => theme.colors.textLight};
   margin-bottom: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    order: 1;
+    flex-basis: 100%;
+  }
 `;
 
 export const FooterLegal = styled.div`
@@ -94,8 +107,7 @@ export const FooterLegal = styled.div`
   min-width: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    justify-content: center;
-    flex-wrap: wrap;
+    display: contents;
   }
 `;
 
@@ -114,7 +126,23 @@ export const SocialLinks = styled.div<{ $isHomeIdle: boolean }>`
         color: ${theme.colors.primary};
       }
     }
+
+    @media (max-width: ${theme.breakpoints.mobile}) {
+      ${theme.mode === 'light' && css`
+        a, button {
+          color: ${theme.colors.textLight};
+
+          &:hover {
+            color: ${theme.colors.primary};
+          }
+        }
+      `}
+    }
   `}
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: contents;
+  }
 `;
 
 export const SocialLink = styled.a<{ $isHomeEngineerHovered?: boolean }>`
@@ -149,6 +177,12 @@ export const CvLink = styled.button<{ $isHomeEngineerHovered?: boolean }>`
     outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 4px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-left: 0;
+    padding-left: ${({ theme }) => theme.spacing[4]};
+    white-space: nowrap;
+  }
 `;
 
 export const PrivacyLink = styled.a`
@@ -168,6 +202,15 @@ export const PrivacyLink = styled.a`
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 4px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-left: 0;
+    padding-right: ${({ theme }) => theme.spacing[4]};
+    padding-left: 0;
+    border-left: 0;
+    border-right: 1px solid ${({ theme }) => theme.colors.border};
+    white-space: nowrap;
   }
 `;
 

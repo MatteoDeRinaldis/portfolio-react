@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { useTheme } from 'styled-components';
 import { AnimatePresence, motion } from 'motion/react';
 import type { IconType } from 'react-icons';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { SiAxios, SiCss, SiCypress, SiGit, SiGithub, SiGithubcopilot, SiHtml5, SiJavascript, SiJest, SiJira, SiMui, SiNpm, SiPostman, SiReact, SiRedux, SiStorybook, SiTailwindcss, SiTypescript, SiWebpack } from 'react-icons/si';
 import profileImage from '../assets/img/MDR_Profile.png';
 import frontendProfileImage from '../assets/img/MDR_Profile_FE.png';
@@ -95,6 +97,42 @@ const engineerSkillOrder = [
 
 export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChange, onRoleHoverChange }) => {
   const { language, t } = useTranslation();
+  const theme = useTheme();
+  const mobileQuery = `(max-width: ${theme.breakpoints.mobile})`;
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia(mobileQuery).matches);
+  const [mobileRole, setMobileRole] = useState<'frontend' | 'engineer' | null>(null);
+  const isMobileFrontendOpen = mobileRole === 'frontend';
+  const isMobileEngineerOpen = mobileRole === 'engineer';
+
+  useEffect(() => {
+    const media = window.matchMedia(mobileQuery);
+    const updateMobile = () => setIsMobile(media.matches);
+    updateMobile();
+    media.addEventListener('change', updateMobile);
+    return () => media.removeEventListener('change', updateMobile);
+  }, [mobileQuery]);
+
+  useEffect(() => {
+    if (!isMobile || mobileRole === null) return;
+
+    const handleOutsideClick = (event: PointerEvent) => {
+      const mobileContent = mobileContentRef.current;
+
+      if (
+        mobileContent &&
+        !mobileContent.contains(event.target as Node)
+      ) {
+        setMobileRole(null);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('pointerdown', handleOutsideClick);
+    };
+  }, [isMobile, mobileRole]);
+
   const [activeBatchIndex, setActiveBatchIndex] = useState<number | null>(null);
   const [areProfileLabelsVisible] = useState(true);
   const [hasCornerLabelsEntered, setHasCornerLabelsEntered] = useState(false);
@@ -103,6 +141,7 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   const [isOrbitEntering, setIsOrbitEntering] = useState(true);
   const roleExitTimerRef = useRef<number | null>(null);
   const orbitEntryTimerRef = useRef<number | null>(null);
+  const mobileContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => {
     onProfileHoverChange(false);
@@ -236,9 +275,10 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   const activeRightSkills = activeBatchIndex === null ? [] : rightSkills.slice(activeBatchIndex * 2, activeBatchIndex * 2 + 2);
   const leftSlots = activeBatchIndex === null ? [] : leftSlotPatterns[activeBatchIndex % leftSlotPatterns.length];
   const rightSlots = activeBatchIndex === null ? [] : rightSlotPatterns[activeBatchIndex % rightSlotPatterns.length];
-  const activeProfileImage = activeRole === 'frontend'
+  const profileRole = isMobile ? mobileRole : activeRole;
+  const activeProfileImage = profileRole === 'frontend'
     ? frontendProfileImage
-    : activeRole === 'engineer'
+    : profileRole === 'engineer'
       ? engineerProfileImage
       : profileImage;
   const orbitNodes = [
@@ -316,6 +356,46 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   return (
     <HomePageWrapper>
       <HomeContainer>
+        <S.HomeMobileContent ref={mobileContentRef}>
+          <section aria-labelledby="mobile-frontend-title">
+            <S.HomeMobileTitle $isOpen={isMobileFrontendOpen}>
+              <S.HomeMobileToggle
+                id="mobile-frontend-title"
+                type="button"
+                aria-expanded={isMobileFrontendOpen}
+                aria-controls="mobile-frontend-description"
+                onClick={() => setMobileRole((role) => role === 'frontend' ? null : 'frontend')}
+              >
+                FRONTEND
+                {isMobileFrontendOpen ? <FiChevronUp aria-hidden="true" /> : <FiChevronDown aria-hidden="true" />}
+              </S.HomeMobileToggle>
+            </S.HomeMobileTitle>
+            <S.HomeMobilePanel id="mobile-frontend-description" $isOpen={isMobileFrontendOpen} aria-hidden={!isMobileFrontendOpen}>
+              <div>
+                <S.HomeMobileDescription>{t('pages.frontendExperience')}</S.HomeMobileDescription>
+              </div>
+            </S.HomeMobilePanel>
+          </section>
+          <section aria-labelledby="mobile-engineer-title">
+            <S.HomeMobileTitle $isOpen={isMobileEngineerOpen}>
+              <S.HomeMobileToggle
+                id="mobile-engineer-title"
+                type="button"
+                aria-expanded={isMobileEngineerOpen}
+                aria-controls="mobile-engineer-description"
+                onClick={() => setMobileRole((role) => role === 'engineer' ? null : 'engineer')}
+              >
+                ENGINEER
+                {isMobileEngineerOpen ? <FiChevronUp aria-hidden="true" /> : <FiChevronDown aria-hidden="true" />}
+              </S.HomeMobileToggle>
+            </S.HomeMobileTitle>
+            <S.HomeMobilePanel id="mobile-engineer-description" $isOpen={isMobileEngineerOpen} aria-hidden={!isMobileEngineerOpen}>
+              <div>
+                <S.HomeMobileDescription>{t('pages.engineerExperience')}</S.HomeMobileDescription>
+              </div>
+            </S.HomeMobilePanel>
+          </section>
+        </S.HomeMobileContent>
         <HomeCornerLabel
           $position="top-left"
           $isDisabled={!areProfileLabelsVisible || !hasCornerLabelsEntered}
