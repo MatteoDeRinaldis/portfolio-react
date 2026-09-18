@@ -3,9 +3,9 @@
   "name": "Portfolio Web - Matteo De Rinaldis",
   "icons": [
     {
-      "src": "MDR_Profile.png",
+      "src": "MDR_Profile.webp",
       "sizes": "256x256 128x128 64x64 32x32 16x16",
-      "type": "image/png"
+      "type": "image/webp"
     }
   ],
   "start_url": ".",
