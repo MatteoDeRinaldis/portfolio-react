@@ -171,10 +171,6 @@ const CarouselSlide = styled.div<{ $itemsPerPage: number }>`
   min-width: 100%;
   align-items: stretch;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
   }

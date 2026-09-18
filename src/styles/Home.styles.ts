@@ -10,6 +10,12 @@ export const HomeContainer = styled.div`
   width: 100%;
   min-height: 0;
   overflow: visible;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: clamp(12px, 2.5dvh, 24px) 1.5rem calc(6.5rem + env(safe-area-inset-bottom, 0px));
+  }
 `;
 
 export const HomePageWrapper = styled.div.attrs({
@@ -22,6 +28,98 @@ export const HomePageWrapper = styled.div.attrs({
   padding: 0;
   overflow-x: clip;
   overflow-y: clip;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    min-height: 0;
+    overflow-y: visible;
+  }
+`;
+
+export const HomeMobileContent = styled.div`
+  display: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    color: ${({ theme }) => theme.colors.text};
+    text-align: left;
+  }
+`;
+
+export const HomeMobileTitle = styled.h2<{ $isOpen: boolean }>`
+  margin: 0 0 0.4em;
+  font-family: 'Sora', 'Segoe UI', sans-serif;
+  font-size: clamp(24px, 4dvh, 32px);
+  font-weight: ${({ theme }) => theme.fontWeights.normal};
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+    margin-bottom: ${({ $isOpen }) => $isOpen ? '0.4em' : '0'};
+    padding-bottom: ${({ $isOpen }) => $isOpen ? '0.2em' : '0'};
+    border-bottom: 1px solid ${({ $isOpen }) => $isOpen ? 'currentColor' : 'transparent'};
+    transition: border-color 240ms ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+`;
+
+export const HomeMobileToggle = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  width: 100%;
+  min-height: 44px;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+
+  svg {
+    width: 0.7em;
+    height: 0.7em;
+    flex-shrink: 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+`;
+
+export const HomeMobilePanel = styled.div<{ $isOpen: boolean }>`
+  display: grid;
+  grid-template-rows: ${({ $isOpen }) => $isOpen ? '1fr' : '0fr'};
+  opacity: ${({ $isOpen }) => $isOpen ? 1 : 0};
+  visibility: ${({ $isOpen }) => $isOpen ? 'visible' : 'hidden'};
+  transition:
+    grid-template-rows 320ms ease,
+    opacity 240ms ease,
+    visibility 0s ${({ $isOpen }) => $isOpen ? '0s' : '320ms'};
+
+  > div {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+`;
+
+export const HomeMobileDescription = styled.p`
+  margin: 0;
+  font-size: clamp(14px, 2dvh, 16px);
+  line-height: 1.4;
+  white-space: normal;
+  text-align: justify;
+  hyphens: auto;
 `;
 
 export const HomeHero = styled.div`
@@ -41,10 +139,6 @@ export const HomeHero = styled.div`
   pointer-events: none;
   transform: translateY(-50%) scale(0.78);
   transform-origin: right center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    width: min(54vw, calc(100vh * 490 / 915));
-  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: min(47vw, calc(100vh * 490 / 915));
@@ -116,10 +210,6 @@ export const HomeSkill = styled(motion.span)<{ $side: 'left' | 'right' }>`
   white-space: nowrap;
   will-change: transform, opacity, clip-path;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: clamp(1rem, 3.2vw, 1.8rem);
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 0.95rem;
   }
@@ -145,6 +235,11 @@ export const HomeBackgroundImage = styled.img`
   filter: grayscale(100%) contrast(1.1);
   pointer-events: none;
   z-index: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    object-fit: cover;
+    object-position: center top;
+  }
 `;
 
 export const HomeProfileTarget = styled.div`
@@ -168,12 +263,18 @@ export const HomeProfileTarget = styled.div`
   pointer-events: none;
   z-index: 1;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    width: min(54vw, calc(100vh * 490 / 915));
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: min(47vw, calc(100vh * 490 / 915));
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    opacity: ${({ theme }) => theme.mode === 'light' ? 0.3 : 0.4};
+    transform: none;
+
+    > div {
+      transform: none !important;
+    }
   }
 `;
 
@@ -206,12 +307,8 @@ export const HomeProfileOrbit = styled.div`
   pointer-events: none;
   z-index: 3;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    left: ${({ theme }) => theme.spacing[6]};
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    left: ${({ theme }) => theme.spacing[4]};
+    display: none;
   }
 `;
 
@@ -329,15 +426,8 @@ export const HomeCornerLabel = styled.div<{ $position: 'top-left' | 'bottom-righ
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: clamp(1.5rem, 6vw, 4rem);
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    ${({ $position }) => ($position === 'top-left'
-      ? 'top: 35%; left: 5%;'
-      : 'top: 35%; left: 50%;')}
-    font-size: clamp(1.2rem, 7.5vw, 2.8rem);
+    display: none;
   }
 `;
 
@@ -384,11 +474,7 @@ export const HomeRoleSkills = styled(motion.ul)<{ $position: 'top-left' | 'botto
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    ${({ $position }) => ($position === 'top-left'
-      ? 'top: 6rem; left: 2rem;'
-      : 'bottom: 8rem; left: 2rem;')}
-    gap: 0.32em;
-    font-size: 0.8rem;
+    display: none;
   }
 `;
 
@@ -492,12 +578,6 @@ export const HomeNameBadge = styled.div`
   box-shadow: none;
   will-change: transform, opacity;
   backface-visibility: hidden;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    top: 58%;
-    width: 100%;
-    letter-spacing: 0.08em;
-  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     top: 62%;
