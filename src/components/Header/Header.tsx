@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTheme } from 'styled-components';
 import { useTranslation } from '../../i18n';
-import profileImage from '../../assets/img/MDR_Profile_Header.png';
+import profileImage from '../../assets/img/MDR_Profile_Header.webp';
 import {
   BrandGroup,
   BrandLink,
