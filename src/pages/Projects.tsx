@@ -1,18 +1,21 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import styled from 'styled-components';
+import styled, { keyframes, useTheme } from 'styled-components';
 import { FiBriefcase, FiCalendar, FiCode, FiGitBranch, FiLayers, FiMapPin, FiUsers } from 'react-icons/fi';
 import { PageDescription, PageSection, PageTitle, PageWrapper } from '../components/PageLayout';
 import { useTranslation } from '../i18n';
 import { getLocalizedProfessionalExperiences } from '../data/cv';
+import { MobileProjectCard } from '../components/common/MobileProjectCard';
 
 const ProjectsPageWrapper = styled(PageWrapper)`
   position: relative;
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    overflow-y: visible;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    --company-bar-height: 120px;
+    padding-top: calc(5rem + var(--company-bar-height));
+    padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
 `;
 
@@ -33,10 +36,9 @@ const ProjectsBackgroundIcon = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    top: 12%;
-    left: -30vw;
-    font-size: clamp(14rem, 48vw, 28rem);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    top: 2rem;
+    font-size: clamp(16rem, 56vw, 32rem);
   }
 `;
 
@@ -45,18 +47,61 @@ const revealVariants = {
   visible: { opacity: 1, x: 0 },
 };
 
+const overviewCarouselEnter = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const OverviewCarousel = styled.div<{ $isAtEnd: boolean }>`
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    margin: ${({ theme }) => `${theme.spacing[8]} 0 ${theme.spacing[12]}`};
+    animation: ${overviewCarouselEnter} 400ms ease-out 550ms both;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      width: 3rem;
+      background: linear-gradient(to right, transparent, ${({ theme }) => theme.colors.background});
+      content: '';
+      pointer-events: none;
+      opacity: ${({ $isAtEnd }) => $isAtEnd ? 0 : 1};
+      transition: opacity 200ms ease;
+    }
+  }
+`;
+
 const OverviewGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: ${({ theme }) => theme.spacing[4]};
   margin-bottom: ${({ theme }) => theme.spacing[12]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: ${({ theme }) => theme.spacing[2]};
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+
+    > div {
+      scroll-snap-align: start;
+    }
   }
 `;
 
@@ -118,7 +163,11 @@ const ExperienceTimeline = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     gap: ${({ theme }) => theme.spacing[8]};
-    padding-left: ${({ theme }) => theme.spacing[6]};
+    padding-left: 0;
+
+    &::before {
+      display: none;
+    }
   }
 `;
 
@@ -138,9 +187,22 @@ const ProjectsExperienceLayout = styled.div`
   gap: ${({ theme }) => theme.spacing[16]};
   align-items: start;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: minmax(0, 1fr);
     gap: ${({ theme }) => theme.spacing[8]};
+    width: 100%;
+    min-width: 0;
+  }
+`;
+
+const companyBarEnter = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 
@@ -174,32 +236,39 @@ const CompanySidebar = styled.aside<{ $isPageScrolled: boolean }>`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    position: static;
-    justify-self: stretch;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    position: fixed;
+    top: var(--header-height, 5rem);
+    right: 0;
+    left: 0;
+    z-index: 90;
     width: 100%;
-    padding-top: ${({ theme }) => theme.spacing[6]};
-    padding-left: 0;
-    border-top: 1px solid ${({ theme }) => theme.colors.border};
+    height: var(--company-bar-height);
+    padding: 0px ${({ theme }) => theme.spacing[4]} 10px;
+    border-top: 0;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    background: ${({ theme }) => theme.mode === 'dark' ? 'rgba(11, 11, 11, 0.45)' : 'rgba(244, 244, 241, 0.45)'};
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     transform: none;
-    transition: none;
+    animation: ${companyBarEnter} 800ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both;
 
-    &::before {
-      top: 0;
-      right: 0;
-      bottom: auto;
-      left: 0;
-      width: auto;
-      height: 1px;
-      transform: none;
-      opacity: 1;
+    @media (prefers-reduced-motion: reduce) {
       animation: none;
     }
+
+    &::before { display: none; }
   }
 `;
 
 const CompanySidebarContent = styled(motion.div)`
   width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    height: 100%;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 `;
 
 const CompanySidebarTitle = styled.h3<{ $isPageScrolled?: boolean }>`
@@ -213,6 +282,10 @@ const CompanySidebarTitle = styled.h3<{ $isPageScrolled?: boolean }>`
   transform: translateY(${({ $isPageScrolled }) => ($isPageScrolled ? '0' : '-0.5rem')});
   pointer-events: ${({ $isPageScrolled }) => ($isPageScrolled ? 'auto' : 'none')};
   transition: opacity 240ms ease, transform 240ms ease;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 const CompanyList = styled.ul`
@@ -233,6 +306,24 @@ const CompanyList = styled.ul`
     width: 1px;
     background-color: ${({ theme }) => theme.colors.border};
     content: '';
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    height: 100%;
+    gap: 0;
+    padding: 0;
+    direction: ltr;
+
+    &::before {
+      top: auto;
+      bottom: 6px;
+      left: calc(50% / var(--company-count));
+      right: calc(50% / var(--company-count));
+      width: auto;
+      height: 1px;
+    }
   }
 `;
 
@@ -261,6 +352,27 @@ const CompanyListItem = styled.li<{ $isActive: boolean }>`
   &:has(> button:focus-visible)::before {
     background-color: ${({ theme }) => theme.colors.primary};
     box-shadow: 0 0 0.45rem ${({ theme }) => theme.colors.primary};
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    text-align: center;
+
+    &::before,
+    &:has(> button:hover)::before,
+    &:has(> button:focus-visible)::before {
+      top: auto;
+      right: auto;
+      left: 47%;
+      bottom: 2px;
+      width: 9px;
+      height: 9px;
+      transform: translateX(-50%);
+      pointer-events: none;
+      background-color: ${({ theme, $isActive }) => $isActive ? theme.colors.primary : theme.colors.background};
+      box-shadow: ${({ theme, $isActive }) => $isActive ? `0 0 0.45rem ${theme.colors.primary}` : 'none'};
+    }
   }
 `;
 
@@ -296,6 +408,38 @@ const CompanyLink = styled.button<{ $isActive: boolean }>`
     background-color: ${({ theme }) => theme.colors.primary};
     box-shadow: 0 0 0.45rem ${({ theme }) => theme.colors.primary};
   }
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 44px;
+    padding: 0 0 22px;
+    border: 0;
+    background: transparent;
+    font-size: 13px;
+    white-space: nowrap;
+    text-align: center;
+    text-shadow: none;
+
+    > span {
+      display: block;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      line-height: 1;
+    }
+
+    &:hover, &:focus-visible {
+      color: ${({ theme, $isActive }) => $isActive ? theme.colors.text : theme.colors.textLight};
+      text-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: 1px solid ${({ theme }) => theme.colors.primary};
+      outline-offset: -2px;
+    }
+  }
 `;
 
 const ExperienceTimelineItem = styled(motion.article)<{ $isActive: boolean }>`
@@ -306,7 +450,8 @@ const ExperienceTimelineItem = styled(motion.article)<{ $isActive: boolean }>`
   transition: opacity 220ms ease;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => `${theme.spacing[4]} 0 ${theme.spacing[5]}`};
+    padding: ${({ theme }) => `${theme.spacing[4]} 0 ${theme.spacing[6]}`};
+    scroll-margin-top: calc(var(--header-height, 5rem) + var(--company-bar-height) + 1rem);
   }
 `;
 
@@ -326,7 +471,7 @@ const ExperienceMarker = styled.span<{ $isActive: boolean }>`
   transition: background-color 180ms ease, box-shadow 180ms ease;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    left: calc(-${({ theme }) => theme.spacing[4]} + 0.1rem);
+    display: none;
   }
 `;
 
@@ -357,9 +502,11 @@ const ExperienceHeader = styled.header<{ $isActive: boolean }>`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: flex-start;
-    flex-direction: column;
-    gap: ${({ theme }) => theme.spacing[1]};
+    gap: ${({ theme }) => `${theme.spacing[2]} ${theme.spacing[3]}`};
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
 
     &::before {
       display: none;
@@ -384,7 +531,8 @@ const ExperienceIdentity = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin-left: calc(${({ theme }) => theme.spacing[2]} + ${({ theme }) => theme.spacing[4]});
+    display: contents;
+    margin-left: 0;
 
     ${ExperienceMarker} {
       left: calc(-${({ theme }) => `${theme.spacing[6]} + ${theme.spacing[2]} + ${theme.spacing[4]}`} + 0.1rem);
@@ -411,6 +559,20 @@ const ExperienceCompany = styled.h3<{ $isActive: boolean }>`
   border-color: ${({ theme, $isActive }) => ($isActive ? theme.colors.primary : theme.colors.border)};
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: ${({ theme }) => theme.colors.text};
+    font-size: 22px;
+    line-height: 1.3;
+  }
 `;
 
 const ExperienceLocation = styled.span<{ $isActive: boolean }>`
@@ -437,6 +599,23 @@ const ExperienceLocation = styled.span<{ $isActive: boolean }>`
     flex: 0 0 auto;
     color: ${({ theme }) => theme.colors.primary};
     font-size: 0.95em;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    align-items: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: ${({ theme }) => theme.colors.textLight};
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: normal;
+
+    svg { margin-top: 0.25em; }
   }
 `;
 
@@ -473,6 +652,23 @@ const ExperienceDate = styled.span<{ $isActive: boolean }>`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     align-self: flex-start;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: ${({ theme }) => theme.colors.textLight};
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    white-space: normal;
+    text-align: right;
+
+    svg { margin-top: 0.25em; }
   }
 `;
 
@@ -491,15 +687,67 @@ const ExperienceProjects = styled.div`
     transition: opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    margin-left: ${({ theme }) => theme.spacing[2]};
-    padding-left: ${({ theme }) => theme.spacing[4]};
+    margin-left: 0;
+    padding-left: 0;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    gap: ${({ theme }) => theme.spacing[4]};
+    padding-bottom: ${({ theme }) => theme.spacing[2]};
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+
+    &:has(> section:only-child) {
+      grid-auto-columns: 100%;
+    }
+
+    > section {
+      scroll-snap-align: start;
+    }
+
+    &:has(> section:hover) > section:not(:hover) {
+      opacity: 1;
+    }
   }
 `;
+
+const CompanyProjectsViewport = styled(OverviewCarousel)`
+  min-width: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin: 0;
+  }
+`;
+
+const CompanyProjectCarousel: FC<{ children: React.ReactNode; company: string }> = ({ children, company }) => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isAtEnd, setIsAtEnd] = useState(React.Children.count(children) <= 1);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    const updateEdge = () => setIsAtEnd(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2);
+    updateEdge();
+    carousel.addEventListener('scroll', updateEdge, { passive: true });
+    const observer = new ResizeObserver(updateEdge);
+    observer.observe(carousel);
+    return () => {
+      carousel.removeEventListener('scroll', updateEdge);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <CompanyProjectsViewport $isAtEnd={isAtEnd}>
+      <ExperienceProjects ref={carouselRef} role="group" aria-label={company}>
+        {children}
+      </ExperienceProjects>
+    </CompanyProjectsViewport>
+  );
+};
 
 const ExperienceProject = styled.section`
   position: relative;
@@ -511,6 +759,18 @@ const ExperienceProject = styled.section`
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   transition: opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0;
+    border: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: none !important;
+
+    &&:hover {
+      box-shadow: none;
+    }
+  }
   &:hover {
     border-color: ${({ theme }) => (theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.86)' : 'rgba(17, 17, 17, 0.62)')};
     box-shadow: ${({ theme }) => (theme.mode === 'dark'
@@ -521,6 +781,14 @@ const ExperienceProject = styled.section`
       background-color: ${({ theme }) => theme.colors.primary};
       box-shadow: 0 0 0.45rem ${({ theme }) => theme.colors.primary};
     }
+  }
+`;
+
+const DesktopProjectContent = styled.div`
+  display: contents;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
   }
 `;
 
@@ -572,6 +840,25 @@ const Technology = styled.li`
 `;
 
 export const Projects: FC = () => {
+  const theme = useTheme();
+  const overviewRef = useRef<HTMLDivElement>(null);
+  const [isOverviewAtEnd, setIsOverviewAtEnd] = useState(false);
+
+  useEffect(() => {
+    const carousel = overviewRef.current;
+    if (!carousel) return;
+    const updateOverviewEdge = () => {
+      setIsOverviewAtEnd(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2);
+    };
+    updateOverviewEdge();
+    carousel.addEventListener('scroll', updateOverviewEdge, { passive: true });
+    const observer = new ResizeObserver(updateOverviewEdge);
+    observer.observe(carousel);
+    return () => {
+      carousel.removeEventListener('scroll', updateOverviewEdge);
+      observer.disconnect();
+    };
+  }, []);
   const { t, language } = useTranslation();
   const [isPageScrolled, setIsPageScrolled] = useState(false);
   const [activeCompanyIndex, setActiveCompanyIndex] = useState<number | null>(null);
@@ -596,7 +883,12 @@ export const Projects: FC = () => {
         return;
       }
 
-      const anchorY = window.scrollY + 7 * 16;
+      const mobile = window.matchMedia(`(max-width: ${theme.breakpoints.mobile})`).matches;
+      const firstCompany = document.getElementById('company-0');
+      const offset = mobile && firstCompany
+        ? parseFloat(window.getComputedStyle(firstCompany).scrollMarginTop)
+        : 7 * 16;
+      const anchorY = window.scrollY + offset;
       let nearestIndex: number | null = null;
       let nearestDistance = Number.POSITIVE_INFINITY;
 
@@ -624,7 +916,7 @@ export const Projects: FC = () => {
       window.removeEventListener('scroll', updateActiveCompany);
       window.removeEventListener('resize', updateActiveCompany);
     };
-  }, [experiences]);
+  }, [experiences, theme.breakpoints.mobile]);
 
   useEffect(() => {
     const updateActiveMarkerPosition = () => {
@@ -676,7 +968,8 @@ export const Projects: FC = () => {
         {t('projects.description')}
       </PageDescription>
 
-      <OverviewGrid as={motion.div}>
+      <OverviewCarousel $isAtEnd={isOverviewAtEnd}>
+      <OverviewGrid as={motion.div} ref={overviewRef}>
         <OverviewItem as={motion.div} initial="hidden" animate="visible" variants={revealVariants} transition={{ duration: 0.4, delay: 0.55, ease: 'easeOut' }}>
           <FiCode aria-hidden={true} />
           <span>{t('projects.experience')}</span>
@@ -698,6 +991,7 @@ export const Projects: FC = () => {
           <span>{t('projects.approach')}</span>
         </OverviewItem>
       </OverviewGrid>
+      </OverviewCarousel>
 
       <ProjectsExperienceLayout>
         <ExperienceSection
@@ -742,7 +1036,7 @@ export const Projects: FC = () => {
                     {experience.period}
                   </ExperienceDate>
                 </ExperienceHeader>
-                <ExperienceProjects>
+                <CompanyProjectCarousel company={experience.company}>
                   {experience.projects.map((project) => (
                     <ExperienceProject
                       as={motion.section}
@@ -751,16 +1045,19 @@ export const Projects: FC = () => {
                       whileFocus={{ scale: 1.012 }}
                       transition={{ duration: 0.16, ease: 'easeOut' }}
                     >
-                      <ProjectClient className="project-client">{project.client}</ProjectClient>
-                      <ProjectDescription>{project.description}</ProjectDescription>
-                      <TechnologyList aria-label={`${project.client} technologies`}>
-                        {project.technologies.map((technology) => (
-                          <Technology key={`${project.client}-${technology}`}>{technology}</Technology>
-                        ))}
-                      </TechnologyList>
+                      <DesktopProjectContent>
+                        <ProjectClient className="project-client">{project.client}</ProjectClient>
+                        <ProjectDescription>{project.description}</ProjectDescription>
+                        <TechnologyList aria-label={`${project.client} technologies`}>
+                          {project.technologies.map((technology) => (
+                            <Technology key={`${project.client}-${technology}`}>{technology}</Technology>
+                          ))}
+                        </TechnologyList>
+                      </DesktopProjectContent>
+                      <MobileProjectCard client={project.client} description={project.description} technologies={project.technologies} />
                     </ExperienceProject>
                   ))}
-                </ExperienceProjects>
+                </CompanyProjectCarousel>
               </ExperienceTimelineItem>
             ))}
           </ExperienceTimeline>
@@ -772,19 +1069,20 @@ export const Projects: FC = () => {
             transition={{ duration: 0.8, delay: 1, ease: 'easeOut' }}
           >
             <CompanySidebarTitle $isPageScrolled={isPageScrolled}>{t('projects.carouselTitle')}</CompanySidebarTitle>
-            <CompanyList>
+            <CompanyList style={{ '--company-count': experiences.length } as React.CSSProperties}>
               {experiences.map((experience, index) => (
                 <CompanyListItem $isActive={activeCompanyIndex === index} key={`${experience.company}-sidebar`}>
                   <CompanyLink
                     as={motion.button}
                     type="button"
                     $isActive={activeCompanyIndex === index}
+                    aria-current={activeCompanyIndex === index ? 'location' : undefined}
                     onClick={() => scrollToCompany(index)}
                     whileHover={{ scale: 1.035 }}
                     whileFocus={{ scale: 1.035 }}
                     transition={{ duration: 0.16, ease: 'easeOut' }}
                   >
-                    {experience.company}
+                    <span>{experience.company}</span>
                   </CompanyLink>
                 </CompanyListItem>
               ))}

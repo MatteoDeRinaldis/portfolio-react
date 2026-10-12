@@ -7,8 +7,9 @@ export const ContactPageWrapper = styled(PageWrapper)`
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    overflow-y: visible;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding-top: 5rem;
+    padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
 `;
 
@@ -29,10 +30,9 @@ export const ContactMail = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    top: 12%;
-    right: -30vw;
-    font-size: clamp(14rem, 48vw, 28rem);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    top: 2rem;
+    font-size: clamp(16rem, 56vw, 32rem);
   }
 `;
 
@@ -58,6 +58,10 @@ export const ContactForm = styled.form`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[4]};
   width: 50%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) { 
+    width: 100%;
+  }
 `;
 
 export const ContactCard = styled.div`
@@ -78,6 +82,7 @@ export const ContactCard = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => theme.spacing[6]};
+    width: 100%;
   }
 `;
 
@@ -234,7 +239,7 @@ export const SubmitButton = styled.button`
   }
 `;
 
-export const Snackbar = styled(motion.div)<{ $variant?: 'error' | 'success' }>`
+export const Snackbar = styled(motion.div) <{ $variant?: 'error' | 'success' }>`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[2]};

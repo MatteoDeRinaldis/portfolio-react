@@ -10,11 +10,6 @@ const BookmarkContainer = styled.div`
   bottom: 2rem;
   right: 2rem;
   z-index: 50;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    bottom: 1rem;
-    right: 1rem;
-  }
 `;
 
 const BookmarkContent = styled.div`

@@ -20,6 +20,12 @@ const AppLayout = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    &:has(.home-page-wrapper) {
+      min-height: 100dvh;
+    }
+  }
 `;
 
 const MainContent = styled.main`
@@ -49,21 +55,36 @@ const AppContent: FC = () => {
   const [isHomeRoleHovered, setIsHomeRoleHovered] = useState(false);
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     if (typeof window === 'undefined') {
-      return 'light';
+      return 'dark';
     }
 
-    const savedThemeMode = window.localStorage.getItem(THEME_STORAGE_KEY);
-    if (savedThemeMode === 'light' || savedThemeMode === 'dark') {
-      return savedThemeMode;
+    try {
+      const savedThemeMode = window.localStorage.getItem(THEME_STORAGE_KEY);
+      if (savedThemeMode === 'light' || savedThemeMode === 'dark') {
+        return savedThemeMode;
+      }
+    } catch {
+      // Storage may be unavailable; try the browser preference instead.
     }
 
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    try {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+      if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+    } catch {
+      // Unavailable browser preferences fall back to the dark theme.
+    }
+
+    return 'dark';
   });
 
   useEffect(() => {
     document.documentElement.dataset.theme = themeMode;
     document.documentElement.style.colorScheme = themeMode;
-    window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+    } catch {
+      // Keep the selected theme usable even when storage is blocked.
+    }
   }, [themeMode]);
 
   useEffect(() => {

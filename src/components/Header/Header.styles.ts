@@ -5,11 +5,21 @@ export const BrandGroup = styled.div`
   align-items: center;
 `;
 
-export const BrandLink = styled.a`
+export const BrandLink = styled.a<{ $isHome?: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
   text-decoration: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: ${({ theme, $isHome }) => $isHome ? theme.spacing[3] : '0'};
+    transition: gap 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: ${({ $isHome }) => $isHome ? '0ms' : '1140ms'};
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
 
   &:hover .logo-expanded-name,
   &:focus-visible .logo-expanded-name {
@@ -63,6 +73,17 @@ export const HeaderWrapper = styled.header<{ $isHome?: boolean }>`
   overflow: visible;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    ${({ $isHome }) => $isHome && 'position: sticky;'}
+    height: calc(var(--header-content-height) + 1px);
+    flex-shrink: 0;
+    overflow: clip;
+    transition: height 800ms cubic-bezier(0.45, 0, 0.55, 1);
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
 `;
 
 export const HeaderContent = styled.div`
@@ -76,10 +97,6 @@ export const HeaderContent = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.spacing[4]};
   flex-wrap: wrap;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding: ${({ theme }) => theme.spacing[6]};
-  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => theme.spacing[4]};
@@ -139,6 +156,39 @@ export const Logo = styled.span<{ $isHome?: boolean }>`
   > span:nth-child(3) .logo-expanded-name {
     transition-delay: 0ms;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: ${({ $isHome }) => $isHome ? '24rem' : '0'};
+    opacity: ${({ $isHome }) => $isHome ? 1 : 0};
+    overflow: hidden;
+    transition:
+      max-width 380ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 240ms ease-out;
+    transition-delay: ${({ $isHome }) => $isHome ? '0ms' : '1140ms'};
+
+    && .logo-expanded-name {
+      max-width: ${({ $isHome }) => $isHome ? '8rem' : '0'};
+      opacity: ${({ $isHome }) => $isHome ? 1 : 0};
+    }
+
+    && > span:nth-child(1) .logo-expanded-name {
+      transition-delay: 760ms !important;
+    }
+
+    && > span:nth-child(2) .logo-expanded-name {
+      transition-delay: 380ms !important;
+    }
+
+    && > span:nth-child(3) .logo-expanded-name {
+      transition-delay: 0ms !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &, && .logo-expanded-name {
+        transition: none !important;
+      }
+    }
+  }
 `;
 
 export const Nav = styled.nav`
@@ -192,6 +242,22 @@ export const NavLink = styled.a<{ $active: boolean; $isHome?: boolean }>`
     outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 4px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    color: ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.textLight)};
+
+    &::after {
+      background-color: ${({ theme }) => theme.colors.primary};
+    }
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary};
+    }
+
+    &:focus-visible {
+      color: inherit;
+    }
+  }
 `;
 
 export const LightModeButton = styled.button<{ $isLightMode: boolean }>`
@@ -209,10 +275,6 @@ export const LightModeButton = styled.button<{ $isLightMode: boolean }>`
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 4px;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding-right: ${({ theme }) => theme.spacing[6]};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

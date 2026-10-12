@@ -1,4 +1,5 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FiGlobe } from 'react-icons/fi';
 import styled, { keyframes } from 'styled-components';
 import { useTranslation } from '../i18n';
@@ -26,16 +27,20 @@ const slideOutToLeft = keyframes`
   }
 `;
 
-const BookmarkContainer = styled.div<{ $isExpanded: boolean }>`
+const BookmarkContainer = styled.div<{ $isExpanded: boolean; $isHome: boolean }>`
   position: fixed;
   bottom: 4.5rem;
   left: -1rem;
   z-index: 50;
   animation: ${({ $isExpanded }) => ($isExpanded ? slideInFromLeft : slideOutToLeft)} 400ms ease-out both;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    bottom: 1rem;
-    left: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: ${({ $isHome }) => $isHome ? 'block' : 'none'};
+    top: calc(var(--header-height, 8rem) + 5rem);
+    right: 0;
+    bottom: auto;
+    left: auto;
+    width: ${({ $isExpanded }) => $isExpanded ? '13rem' : '4rem'};
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -58,6 +63,12 @@ const BookmarkContent = styled.div<{ $isExpanded: boolean }>`
   overflow: hidden;
   height: 3.5rem;
   transition: all ${({ theme }) => theme.transitions.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+    border-right: 0;
+    border-radius: ${({ theme }) => `${theme.borderRadius.lg} 0 0 ${theme.borderRadius.lg}`};
+  }
 
   &:hover {
     background-color: ${({ theme }) => (theme as any).mode === 'light' ? 'rgba(244, 244, 241, 0.5)' : 'rgba(11, 11, 11, 0.5)'};
@@ -164,6 +175,7 @@ const SwitchTrack = styled.span`
 export const LanguageBookmark: FC<LanguageBookmarkProps> = ({ language }) => {
   const { t, setLanguage } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
+  const { pathname } = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -195,7 +207,7 @@ export const LanguageBookmark: FC<LanguageBookmarkProps> = ({ language }) => {
   };
 
   return (
-    <BookmarkContainer ref={containerRef} $isExpanded={isExpanded}>
+    <BookmarkContainer ref={containerRef} $isExpanded={isExpanded} $isHome={pathname === '/'}>
       <BookmarkContent $isExpanded={isExpanded}>
         <IconButton
           type="button"

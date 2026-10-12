@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { FiCode, FiLayers, FiAward, FiDatabase, FiCheckCircle } from 'react-icons/fi';
 import { SkillCard } from '../components/common/CvCards';
 import { PageDescription, PageSection, PageTitle, PageWrapper } from '../components/PageLayout';
@@ -17,8 +17,9 @@ const SkillsPageWrapper = styled(PageWrapper)`
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    overflow-y: visible;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding-top: 5rem;
+    padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
 `;
 
@@ -39,10 +40,9 @@ const SkillsBackgroundIcon = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    top: 12%;
-    right: -30vw;
-    font-size: clamp(14rem, 48vw, 28rem);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    top: 2rem;
+    font-size: clamp(16rem, 56vw, 32rem);
   }
 `;
 
@@ -52,9 +52,36 @@ const revealVariants = {
 };
 
 export const Skills: FC = () => {
+  const overviewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const carousel = overviewRef.current;
+    if (!carousel) return;
+
+    const handleScroll = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = carousel;
+
+      setIsOverviewAtEnd(
+        scrollLeft + clientWidth >= scrollWidth - 2
+      );
+    };
+
+    handleScroll();
+
+    carousel.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      carousel.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
   const { t, language } = useTranslation();
   const [isPageScrolled, setIsPageScrolled] = useState(false);
   const [hoveredCategoryIndex, setHoveredCategoryIndex] = useState<number | null>(null);
+  const [isOverviewAtEnd, setIsOverviewAtEnd] = useState(false);
+
   const skillCategories = getLocalizedSkillCategories(language);
 
   useEffect(() => {
@@ -91,58 +118,60 @@ export const Skills: FC = () => {
         {t('skills.description')}
       </PageDescription>
 
-      <OverviewGrid as={motion.div}>
-        <OverviewItem
-          as={motion.div}
-          initial="hidden"
-          animate="visible"
-          variants={revealVariants}
-          transition={{ duration: 0.4, delay: 0.55, ease: 'easeOut' }}
-        >
-          <LayersIcon aria-hidden={true} />
-          <span>{t('skills.architecture')}</span>
-        </OverviewItem>
-        <OverviewItem
-          as={motion.div}
-          initial="hidden"
-          animate="visible"
-          variants={revealVariants}
-          transition={{ duration: 0.4, delay: 0.7, ease: 'easeOut' }}
-        >
-          <CodeIconSkill aria-hidden={true} />
-          <span>{t('skills.react')}</span>
-        </OverviewItem>
-        <OverviewItem
-          as={motion.div}
-          initial="hidden"
-          animate="visible"
-          variants={revealVariants}
-          transition={{ duration: 0.4, delay: 0.85, ease: 'easeOut' }}
-        >
-          <DatabaseIconSkill aria-hidden={true} />
-          <span>{t('skills.integrations')}</span>
-        </OverviewItem>
-        <OverviewItem
-          as={motion.div}
-          initial="hidden"
-          animate="visible"
-          variants={revealVariants}
-          transition={{ duration: 0.4, delay: 1, ease: 'easeOut' }}
-        >
-          <QualityIconSkill aria-hidden={true} />
-          <span>{t('skills.quality')}</span>
-        </OverviewItem>
-        <OverviewItem
-          as={motion.div}
-          initial="hidden"
-          animate="visible"
-          variants={revealVariants}
-          transition={{ duration: 0.4, delay: 1.15, ease: 'easeOut' }}
-        >
-          <FiAward aria-hidden={true} />
-          <span>{t('skills.ai')}</span>
-        </OverviewItem>
-      </OverviewGrid>
+      <OverviewCarousel $isAtEnd={isOverviewAtEnd}>
+        <OverviewGrid as={motion.div} ref={overviewRef} id="skills-overview">
+          <OverviewItem
+            as={motion.div}
+            initial="hidden"
+            animate="visible"
+            variants={revealVariants}
+            transition={{ duration: 0.4, delay: 0.55, ease: 'easeOut' }}
+          >
+            <LayersIcon aria-hidden={true} />
+            <span>{t('skills.architecture')}</span>
+          </OverviewItem>
+          <OverviewItem
+            as={motion.div}
+            initial="hidden"
+            animate="visible"
+            variants={revealVariants}
+            transition={{ duration: 0.4, delay: 0.7, ease: 'easeOut' }}
+          >
+            <CodeIconSkill aria-hidden={true} />
+            <span>{t('skills.react')}</span>
+          </OverviewItem>
+          <OverviewItem
+            as={motion.div}
+            initial="hidden"
+            animate="visible"
+            variants={revealVariants}
+            transition={{ duration: 0.4, delay: 0.85, ease: 'easeOut' }}
+          >
+            <DatabaseIconSkill aria-hidden={true} />
+            <span>{t('skills.integrations')}</span>
+          </OverviewItem>
+          <OverviewItem
+            as={motion.div}
+            initial="hidden"
+            animate="visible"
+            variants={revealVariants}
+            transition={{ duration: 0.4, delay: 1, ease: 'easeOut' }}
+          >
+            <QualityIconSkill aria-hidden={true} />
+            <span>{t('skills.quality')}</span>
+          </OverviewItem>
+          <OverviewItem
+            as={motion.div}
+            initial="hidden"
+            animate="visible"
+            variants={revealVariants}
+            transition={{ duration: 0.4, delay: 1.15, ease: 'easeOut' }}
+          >
+            <FiAward aria-hidden={true} />
+            <span>{t('skills.ai')}</span>
+          </OverviewItem>
+        </OverviewGrid>
+      </OverviewCarousel>
 
       <SkillsPageLayout>
         <PageSection
@@ -214,18 +243,68 @@ export const Skills: FC = () => {
   );
 };
 
+const overviewCarouselEnter = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const OverviewCarousel = styled.div<{ $isAtEnd: boolean }>`
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    margin: ${({ theme }) => `${theme.spacing[8]} 0 ${theme.spacing[12]}`};
+    animation: ${overviewCarouselEnter} 400ms ease-out 550ms both;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      width: 3rem;
+
+      background: linear-gradient(
+        to right,
+        transparent,
+        ${({ theme }) => theme.colors.background}
+      );
+
+      content: '';
+      pointer-events: none;
+
+      opacity: ${({ $isAtEnd }) => ($isAtEnd ? 0 : 1)};
+      transition: opacity 200ms ease;
+    }
+  }
+`;
+
 const OverviewGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: ${({ theme }) => theme.spacing[4]};
   margin-bottom: ${({ theme }) => theme.spacing[12]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: ${({ theme }) => theme.spacing[2]};
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+
+    > div {
+      scroll-snap-align: start;
+    }
   }
 `;
 
@@ -300,6 +379,12 @@ const SkillsGrid = styled.div<{ $hasHoveredItem?: boolean }>`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
+
+    > *,
+    &:hover > *,
+    &:hover > *:hover {
+      opacity: 1 !important;
+    }
   }
 `;
 
@@ -320,6 +405,16 @@ const SkillCardItem = styled.div<{ $isHovered?: boolean }>`
       box-shadow: 0 0 24px ${theme.colors.primary}66, ${theme.shadows.md};
     }
   `}
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    transform: none !important;
+    opacity: 1 !important;
+
+    > article {
+      border-color: ${({ theme }) => theme.colors.border} !important;
+      box-shadow: ${({ theme }) => theme.shadows.sm} !important;
+    }
+  }
 `;
 
 const SkillsSidebar = styled.aside<{ $isPageScrolled: boolean }>`
