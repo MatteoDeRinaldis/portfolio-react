@@ -7,8 +7,9 @@ export const AboutPageWrapper = styled(PageWrapper)`
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    overflow-y: visible;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding-top: 5rem;
+    padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
 `;
 
@@ -29,10 +30,9 @@ export const AboutBackgroundIcon = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    top: 12%;
-    left: -30vw;
-    font-size: clamp(14rem, 48vw, 28rem);
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    top: 2rem;
+    font-size: clamp(16rem, 56vw, 32rem);
   }
 `;
 
@@ -43,7 +43,7 @@ export const AboutLayout = styled.div`
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing[12]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
     gap: ${({ theme }) => theme.spacing[8]};
   }
@@ -91,14 +91,8 @@ export const AboutAside = styled.aside`
   border-left: 1px solid ${({ theme }) => theme.colors.border};
   text-align: right;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    position: static;
-    justify-self: stretch;
-    width: 100%;
-    padding-top: ${({ theme }) => theme.spacing[6]};
-    padding-left: 0;
-    border-top: 1px solid ${({ theme }) => theme.colors.border};
-    border-left: 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
   }
 `;
 
@@ -128,6 +122,16 @@ export const FocusList = styled.ul`
 
 export const AboutReveal = styled(motion.div)`
   display: block;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    h4 {
+      font-size: ${({ theme }) => theme.fontSizes.lg};
+    }
+
+    p {
+      font-size: ${({ theme }) => theme.fontSizes.base};
+    }
+  }
 `;
 
 export const AboutLead = styled.p`
