@@ -9,27 +9,25 @@ import frontendProfileImage from '../assets/img/MDR_Profile_FE.webp';
 import engineerProfileImage from '../assets/img/MDR_Profile_EN.webp';
 import { getLocalizedSkillCategories } from '../data/cv';
 import { useTranslation } from '../i18n';
-import * as S from '../styles/Home.styles';
-const {
+import {
   HomeContainer,
   HomeBackgroundImage,
   HomeProfileTarget,
   HomeProfileOrbit,
   HomeOrbitNode,
-  // HomeHero,
   HomeSkillsLayer,
   HomeSkill,
-  // HomeWordmark,
-  // HomeNameBadge,
   HomeRoleSkills,
   HomeCornerLabel,
   HomeRoleTitle,
   HomeRoleDescription,
-  // TagStart,
-  // NameText,
-  // TagEnd,
   HomePageWrapper,
-} = S;
+  HomeMobileContent,
+  HomeMobileTitle,
+  HomeMobileToggle,
+  HomeMobilePanel,
+  HomeMobileDescription,
+} from '../styles/Home.styles';
 
 type HomeProps = {
   onProfileHoverChange: (isHovered: boolean) => void;
@@ -356,10 +354,10 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   return (
     <HomePageWrapper>
       <HomeContainer>
-        <S.HomeMobileContent ref={mobileContentRef}>
+        <HomeMobileContent ref={mobileContentRef}>
           <section aria-labelledby="mobile-frontend-title">
-            <S.HomeMobileTitle $isOpen={isMobileFrontendOpen}>
-              <S.HomeMobileToggle
+            <HomeMobileTitle $isOpen={isMobileFrontendOpen}>
+              <HomeMobileToggle
                 id="mobile-frontend-title"
                 type="button"
                 aria-expanded={isMobileFrontendOpen}
@@ -368,17 +366,17 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
               >
                 FRONTEND
                 {isMobileFrontendOpen ? <FiChevronUp aria-hidden="true" /> : <FiChevronDown aria-hidden="true" />}
-              </S.HomeMobileToggle>
-            </S.HomeMobileTitle>
-            <S.HomeMobilePanel id="mobile-frontend-description" $isOpen={isMobileFrontendOpen} aria-hidden={!isMobileFrontendOpen}>
+              </HomeMobileToggle>
+            </HomeMobileTitle>
+            <HomeMobilePanel id="mobile-frontend-description" $isOpen={isMobileFrontendOpen} aria-hidden={!isMobileFrontendOpen}>
               <div>
-                <S.HomeMobileDescription>{t('pages.frontendExperience')}</S.HomeMobileDescription>
+                <HomeMobileDescription>{t('pages.frontendExperience')}</HomeMobileDescription>
               </div>
-            </S.HomeMobilePanel>
+            </HomeMobilePanel>
           </section>
           <section aria-labelledby="mobile-engineer-title">
-            <S.HomeMobileTitle $isOpen={isMobileEngineerOpen}>
-              <S.HomeMobileToggle
+            <HomeMobileTitle $isOpen={isMobileEngineerOpen}>
+              <HomeMobileToggle
                 id="mobile-engineer-title"
                 type="button"
                 aria-expanded={isMobileEngineerOpen}
@@ -387,15 +385,15 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
               >
                 ENGINEER
                 {isMobileEngineerOpen ? <FiChevronUp aria-hidden="true" /> : <FiChevronDown aria-hidden="true" />}
-              </S.HomeMobileToggle>
-            </S.HomeMobileTitle>
-            <S.HomeMobilePanel id="mobile-engineer-description" $isOpen={isMobileEngineerOpen} aria-hidden={!isMobileEngineerOpen}>
+              </HomeMobileToggle>
+            </HomeMobileTitle>
+            <HomeMobilePanel id="mobile-engineer-description" $isOpen={isMobileEngineerOpen} aria-hidden={!isMobileEngineerOpen}>
               <div>
-                <S.HomeMobileDescription>{t('pages.engineerExperience')}</S.HomeMobileDescription>
+                <HomeMobileDescription>{t('pages.engineerExperience')}</HomeMobileDescription>
               </div>
-            </S.HomeMobilePanel>
+            </HomeMobilePanel>
           </section>
-        </S.HomeMobileContent>
+        </HomeMobileContent>
         <HomeCornerLabel
           $position="top-left"
           $isDisabled={!areProfileLabelsVisible || !hasCornerLabelsEntered}
