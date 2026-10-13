@@ -39,7 +39,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
             paragraphs: [
               'Il modulo di contatto consente agli utenti di fornire volontariamente il proprio nome, indirizzo email e un messaggio.',
               'I dati inseriti nel modulo vengono trasmessi tramite connessione HTTPS a Web3Forms, servizio esterno utilizzato per elaborare la richiesta e inoltrare il messaggio alla casella email del titolare.',
-              'Web3Forms tratta i dati trasmessi tramite il modulo in qualità di fornitore del servizio e può conservarli secondo le proprie impostazioni di conservazione e la propria Privacy Policy.',
+              'Web3Forms può trattare e conservare i dati trasmessi tramite il modulo secondo le proprie impostazioni di conservazione e la propria Privacy Policy.',
               'Ulteriori informazioni sono disponibili nella Privacy Policy di Web3Forms: https://web3forms.com/privacy',
             ],
           },
@@ -48,33 +48,31 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
             title: 'Dati tecnici',
             paragraphs: [
               'Il sito è ospitato e distribuito tramite Netlify.',
-              'Durante la navigazione, Netlify può trattare i dati tecnici necessari per fornire, proteggere e mantenere il servizio. Tali dati possono includere, ad esempio, l’indirizzo IP, informazioni sul browser e sul dispositivo, gli URL richiesti e la data e l’ora delle richieste.',
+              'Durante la navigazione, i fornitori tecnici utilizzati dal sito possono trattare le informazioni necessarie per fornire, proteggere e mantenere i rispettivi servizi. Tali informazioni possono includere, ad esempio, l’indirizzo IP, informazioni sul browser e sul dispositivo, gli URL richiesti e la data e l’ora delle richieste.',
               'Il titolare del sito non utilizza tali informazioni per finalità pubblicitarie o di profilazione.',
-              'Ulteriori informazioni sono disponibili nella Privacy Policy di Netlify: https://www.netlify.com/privacy/',
+              'Ulteriori informazioni sul trattamento effettuato da Netlify sono disponibili nella relativa Privacy Policy: https://www.netlify.com/privacy/',
             ],
           },
 
           {
-            title: 'Preferenze locali',
+            title: 'File scaricabili',
             paragraphs: [
-              'Il sito utilizza il localStorage del browser esclusivamente per memorizzare alcune preferenze dell’utente:',
-              'Queste informazioni rimangono memorizzate sul dispositivo dell’utente e non vengono utilizzate per identificarlo, profilarlo o tracciarne l’attività.',
-            ],
-            list: [
-              'la lingua preferita;',
-              'la modalità di visualizzazione chiara o scura.',
+              'Il curriculum vitae disponibile sul sito è archiviato e distribuito tramite Supabase Storage in uno spazio di archiviazione pubblico.',
+              'Quando un utente visualizza o scarica il curriculum, la richiesta viene gestita dall’infrastruttura di Supabase, che può trattare i dati tecnici necessari per fornire e proteggere il servizio secondo la propria Privacy Policy.',
+              'Il file contiene esclusivamente informazioni professionali relative al titolare ed è reso pubblicamente disponibile intenzionalmente.',
+              'Ulteriori informazioni sono disponibili nella Privacy Policy di Supabase: https://supabase.com/privacy',
             ],
           },
         ],
       },
 
       {
-        title: '3. Analytics e tecnologie di archiviazione locale',
+        title: '3. Analytics e tecnologie di tracciamento',
         paragraphs: [
           'Il sito utilizza Cloudflare Web Analytics per ottenere statistiche aggregate sull’utilizzo del portfolio e informazioni sulle prestazioni delle pagine.',
-          'Cloudflare Web Analytics è progettato per fornire statistiche senza utilizzare cookie, localStorage o altre tecnologie destinate a identificare o seguire individualmente i visitatori.',
-          'Il sito non utilizza sistemi pubblicitari, cookie di profilazione, fingerprinting o tecnologie analoghe per creare profili degli utenti.',
-          'Il localStorage utilizzato dal sito serve esclusivamente a memorizzare le preferenze relative alla lingua e alla modalità di visualizzazione.',
+          'Cloudflare Web Analytics non utilizza cookie o localStorage per finalità di analytics e non utilizza tecniche di fingerprinting per tracciare individualmente i visitatori.',
+          'Il sito non utilizza sistemi pubblicitari, cookie di profilazione o altre tecnologie destinate a creare profili degli utenti.',
+          'Il sito non utilizza localStorage per conservare in modo persistente le preferenze relative alla lingua o alla modalità di visualizzazione.',
           'Ulteriori informazioni su Cloudflare Web Analytics e sul trattamento dei dati da parte di Cloudflare sono disponibili all’indirizzo: https://www.cloudflare.com/privacypolicy/',
         ],
       },
@@ -83,8 +81,8 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         title: '4. Finalità e base giuridica',
         paragraphs: [
           'I dati personali forniti volontariamente tramite il modulo di contatto sono trattati per le seguenti finalità:',
-          'I dati tecnici e le informazioni aggregate relative all’utilizzo del sito possono inoltre essere trattati per garantirne il corretto funzionamento, la sicurezza e il monitoraggio delle prestazioni.',
-          'A seconda delle circostanze e della normativa applicabile, il trattamento può basarsi sulla richiesta volontaria dell’utente, sul consenso ove richiesto e/o sul legittimo interesse del titolare a gestire e proteggere il sito e a rispondere alle comunicazioni ricevute.',
+          'I dati tecnici e le informazioni aggregate relative all’utilizzo del sito possono inoltre essere trattati per fornire i contenuti e i file richiesti, garantire il corretto funzionamento e la sicurezza del sito e monitorarne le prestazioni.',
+          'A seconda delle circostanze e della normativa applicabile, il trattamento può basarsi sulla richiesta volontaria dell’utente, sull’adozione delle misure necessarie per rispondere a tale richiesta, sul consenso ove richiesto e/o sul legittimo interesse del titolare a gestire, proteggere e migliorare il sito e a rispondere alle comunicazioni ricevute.',
         ],
         list: [
           'consentire agli utenti di contattare il titolare;',
@@ -98,8 +96,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         paragraphs: [
           'I dati inviati tramite il modulo di contatto possono essere conservati da Web3Forms secondo il periodo di conservazione previsto o configurato per il servizio e in conformità alla relativa Privacy Policy.',
           'I messaggi ricevuti dal titolare possono essere conservati nella relativa casella email per il tempo ragionevolmente necessario a gestire la richiesta e le eventuali comunicazioni successive, fatti salvi eventuali obblighi di legge.',
-          'Le preferenze salvate nel localStorage rimangono sul dispositivo dell’utente finché non vengono eliminate, sovrascritte dal sito oppure rimossi i dati del sito dal browser.',
-          'I dati tecnici eventualmente trattati dai fornitori di hosting, infrastruttura e analytics sono conservati secondo le rispettive policy e configurazioni del servizio.',
+          'I dati tecnici eventualmente trattati dai fornitori di hosting, storage, infrastruttura e analytics sono conservati secondo le rispettive policy e configurazioni del servizio.',
         ],
       },
 
@@ -110,6 +107,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
           'Netlify: hosting, distribuzione dei contenuti, DNS e infrastruttura HTTPS. Privacy Policy: https://www.netlify.com/privacy/',
           'Web3Forms: elaborazione e inoltro dei messaggi inviati tramite il modulo di contatto. Privacy Policy: https://web3forms.com/privacy',
           'Cloudflare Web Analytics: statistiche aggregate sull’utilizzo del sito e monitoraggio delle prestazioni. Privacy Policy: https://www.cloudflare.com/privacypolicy/',
+          'Supabase Storage: archiviazione e distribuzione pubblica del curriculum vitae e di eventuali altri documenti scaricabili. Privacy Policy: https://supabase.com/privacy',
           'Il sito contiene inoltre collegamenti a servizi esterni, tra cui GitHub e LinkedIn. Quando l’utente segue uno di questi collegamenti lascia il presente sito; l’eventuale trattamento dei dati è pertanto disciplinato dalle condizioni e dalle Privacy Policy del rispettivo servizio.',
         ],
       },
@@ -118,7 +116,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         title: '7. Trasferimenti internazionali di dati',
         paragraphs: [
           'Alcuni dei fornitori utilizzati dal sito possono trattare dati in Paesi diversi dalla Svizzera o dal Paese di residenza dell’utente.',
-          'Quando previsto dalla normativa applicabile, tali trasferimenti vengono effettuati dai rispettivi fornitori adottando le garanzie previste dalla legislazione in materia di protezione dei dati.',
+          'Quando previsto dalla normativa applicabile, tali trasferimenti vengono effettuati dai rispettivi fornitori adottando le garanzie previste dalla legislazione applicabile in materia di protezione dei dati.',
         ],
       },
 
@@ -175,7 +173,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
             paragraphs: [
               'The contact form allows users to voluntarily provide their name, email address and a message.',
               'Information submitted through the form is transmitted over HTTPS to Web3Forms, an external service used to process the request and forward the message to the controller’s email inbox.',
-              'Web3Forms processes information submitted through the form as a service provider and may retain it according to its retention settings and Privacy Policy.',
+              'Web3Forms may process and retain information submitted through the form according to its retention settings and Privacy Policy.',
               'Further information is available in the Web3Forms Privacy Policy: https://web3forms.com/privacy',
             ],
           },
@@ -184,33 +182,31 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
             title: 'Technical data',
             paragraphs: [
               'The website is hosted and delivered through Netlify.',
-              'When users access the website, Netlify may process technical information necessary to provide, secure and maintain the service. This may include, for example, IP addresses, browser and device information, requested URLs, and the date and time of requests.',
+              'When users interact with the website, the technical service providers used by the website may process information necessary to provide, secure and maintain their respective services. This may include, for example, IP addresses, browser and device information, requested URLs, and the date and time of requests.',
               'The website owner does not use this information for advertising or profiling purposes.',
-              'Further information is available in the Netlify Privacy Policy: https://www.netlify.com/privacy/',
+              'Further information about Netlify’s processing practices is available in its Privacy Policy: https://www.netlify.com/privacy/',
             ],
           },
 
           {
-            title: 'Local preferences',
+            title: 'Downloadable files',
             paragraphs: [
-              'The website uses browser localStorage exclusively to store certain user preferences:',
-              'This information remains stored on the user’s device and is not used to identify, profile or track individual users.',
-            ],
-            list: [
-              'preferred language;',
-              'light or dark display mode.',
+              'The curriculum vitae available on the website is stored and delivered through Supabase Storage using publicly accessible storage.',
+              'When a user views or downloads the CV, the request is handled by Supabase infrastructure, which may process technical information necessary to provide and secure the service in accordance with its Privacy Policy.',
+              'The file contains only professional information relating to the website owner and is intentionally made publicly available.',
+              'Further information is available in the Supabase Privacy Policy: https://supabase.com/privacy',
             ],
           },
         ],
       },
 
       {
-        title: '3. Analytics and local storage technologies',
+        title: '3. Analytics and tracking technologies',
         paragraphs: [
           'The website uses Cloudflare Web Analytics to obtain aggregated information about the use of the portfolio and the performance of its pages.',
-          'Cloudflare Web Analytics is designed to provide website statistics without using cookies, localStorage or other technologies intended to identify or individually track visitors.',
-          'The website does not use advertising systems, profiling cookies, fingerprinting or similar technologies to create user profiles.',
-          'Browser localStorage is used exclusively to store language and display preferences.',
+          'Cloudflare Web Analytics does not use cookies or localStorage for analytics purposes and does not use fingerprinting techniques to individually track visitors.',
+          'The website does not use advertising systems, profiling cookies or other technologies intended to create user profiles.',
+          'The website does not use localStorage to persist language or display mode preferences.',
           'Further information about Cloudflare Web Analytics and Cloudflare’s data processing practices is available at: https://www.cloudflare.com/privacypolicy/',
         ],
       },
@@ -219,8 +215,8 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         title: '4. Purposes and legal basis',
         paragraphs: [
           'Personal data voluntarily provided through the contact form is processed for the following purposes:',
-          'Technical data and aggregated information relating to website usage may also be processed to ensure the proper operation and security of the website and to monitor its performance.',
-          'Depending on the circumstances and applicable law, processing may be based on the user’s voluntary request, consent where required and/or the controller’s legitimate interest in operating and securing the website and responding to communications.',
+          'Technical data and aggregated information relating to website usage may also be processed to deliver requested content and files, ensure the proper operation and security of the website, and monitor its performance.',
+          'Depending on the circumstances and applicable law, processing may be based on the user’s voluntary request, steps necessary to respond to that request, consent where required and/or the controller’s legitimate interest in operating, securing and improving the website and responding to communications.',
         ],
         list: [
           'allowing users to contact the controller;',
@@ -234,8 +230,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         paragraphs: [
           'Information submitted through the contact form may be retained by Web3Forms according to the retention period provided or configured for the service and in accordance with its Privacy Policy.',
           'Messages received by the controller may be retained in the controller’s email inbox for as long as reasonably necessary to handle the request and any related communications, subject to applicable legal requirements.',
-          'Preferences stored in localStorage remain on the user’s device until they are deleted, overwritten by the website or the website’s local data is removed from the browser.',
-          'Technical information processed by hosting, infrastructure and analytics providers is retained according to their respective policies and service configurations.',
+          'Technical information processed by hosting, storage, infrastructure and analytics providers is retained according to their respective policies and service configurations.',
         ],
       },
 
@@ -246,6 +241,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
           'Netlify: hosting, content delivery, DNS and HTTPS infrastructure. Privacy Policy: https://www.netlify.com/privacy/',
           'Web3Forms: processing and forwarding of messages submitted through the contact form. Privacy Policy: https://web3forms.com/privacy',
           'Cloudflare Web Analytics: aggregated website usage statistics and performance monitoring. Privacy Policy: https://www.cloudflare.com/privacypolicy/',
+          'Supabase Storage: public storage and delivery of the curriculum vitae and any other downloadable documents. Privacy Policy: https://supabase.com/privacy',
           'The website also contains links to external services, including GitHub and LinkedIn. When users follow one of these links, they leave this website and any subsequent processing of personal data is governed by the terms and Privacy Policy of the respective service.',
         ],
       },
