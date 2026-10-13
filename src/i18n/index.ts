@@ -6,7 +6,19 @@ export type Language = 'it' | 'en';
 
 export const languages = ['it', 'en'] as const;
 
-const LANGUAGE_STORAGE_KEY = 'portfolio-language';
+const LEGACY_LANGUAGE_STORAGE_KEYS = ['language', 'portfolio-language-pref', 'portfolio-language-mode', 'portfolio-language'];
+
+const cleanupLegacyLanguageStorage = () => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    LEGACY_LANGUAGE_STORAGE_KEYS.forEach((key) => window.localStorage.removeItem(key));
+  } catch {
+    // Ignore storage access failures while cleaning legacy values.
+  }
+};
 
 const translations = {
   it,
@@ -42,25 +54,15 @@ const getNestedValue = (source: Record<string, unknown>, path: string): unknown 
 export const useTranslation = () => useContext(TranslationContext);
 
 export const LanguageProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window === 'undefined') {
-      return 'en';
-    }
-
-    const savedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    if (savedLanguage === 'it' || savedLanguage === 'en') {
-      return savedLanguage;
-    }
-
-    return window.navigator.language.toLowerCase().startsWith('it') ? 'it' : 'en';
-  });
+  const [language, setLanguageState] = useState<Language>(() => 'en');
 
   const setLanguage = useCallback((nextLanguage: Language) => {
     setLanguageState(nextLanguage);
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+    document.documentElement.lang = language;
+    cleanupLegacyLanguageStorage();
   }, [language]);
 
   const translate = useCallback((key: string, params?: TranslationParams) => {

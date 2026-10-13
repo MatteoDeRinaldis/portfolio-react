@@ -7,7 +7,9 @@ import { GlobalStyle } from './styles/GlobalStyle';
 import { darkTheme, lightTheme, type Theme } from './styles/theme';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ThemeBookmark } from './components/ThemeBookmark';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LanguageBookmark } from './components/LanguageBookmark';
 import { Home } from './pages/Home';
 import { Projects } from './pages/Projects';
@@ -36,7 +38,19 @@ const MainContent = styled.main`
 
 type ThemeMode = Theme['mode'];
 
-const THEME_STORAGE_KEY = 'portfolio-theme-mode';
+const LEGACY_THEME_STORAGE_KEYS = ['theme', 'portfolio-theme', 'portfolio-theme-mode'];
+
+const cleanupLegacyThemeStorage = () => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    LEGACY_THEME_STORAGE_KEYS.forEach((key) => window.localStorage.removeItem(key));
+  } catch {
+    // Ignore storage access failures while cleaning legacy values.
+  }
+};
 
 const ScrollToTop: FC = () => {
   const { pathname } = useLocation();
@@ -53,38 +67,12 @@ const AppContent: FC = () => {
   const [isHomeProfileHovered, setIsHomeProfileHovered] = useState(false);
   const [isHomeEngineerHovered, setIsHomeEngineerHovered] = useState(false);
   const [isHomeRoleHovered, setIsHomeRoleHovered] = useState(false);
-  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
-    if (typeof window === 'undefined') {
-      return 'dark';
-    }
-
-    try {
-      const savedThemeMode = window.localStorage.getItem(THEME_STORAGE_KEY);
-      if (savedThemeMode === 'light' || savedThemeMode === 'dark') {
-        return savedThemeMode;
-      }
-    } catch {
-      // Storage may be unavailable; try the browser preference instead.
-    }
-
-    try {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-      if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
-    } catch {
-      // Unavailable browser preferences fall back to the dark theme.
-    }
-
-    return 'dark';
-  });
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => 'dark');
 
   useEffect(() => {
     document.documentElement.dataset.theme = themeMode;
     document.documentElement.style.colorScheme = themeMode;
-    try {
-      window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
-    } catch {
-      // Keep the selected theme usable even when storage is blocked.
-    }
+    cleanupLegacyThemeStorage();
   }, [themeMode]);
 
   useEffect(() => {
@@ -96,6 +84,30 @@ const AppContent: FC = () => {
   };
 
   const activeTheme = themeMode === 'light' ? lightTheme : darkTheme;
+
+  useEffect(() => {
+    const isProduction =
+      process.env.NODE_ENV === 'production' &&
+      window.location.hostname === 'matteoderinaldis.com';
+
+    if (!isProduction) {
+      return undefined;
+    }
+
+    const script = document.createElement('script');
+
+    script.type = 'module';
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.dataset.cfBeacon = JSON.stringify({
+      token: '8b5a899ac5d3414c8ca018fec6d46c70',
+    });
+
+    document.body.appendChild(script);
+
+    return () => {
+      script.remove();
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={activeTheme}>
@@ -119,8 +131,8 @@ const AppContent: FC = () => {
             </Routes>
           </MainContent>
           <Footer isHomeEngineerHovered={isHomeEngineerHovered} isHomeRoleHovered={isHomeRoleHovered} />
-          <ThemeBookmark themeMode={themeMode} onToggleTheme={toggleThemeMode} />
-          <LanguageBookmark language={language} />
+          {/* <ThemeBookmark themeMode={themeMode} onToggleTheme={toggleThemeMode} /> */}
+          {/* <LanguageBookmark language={language} /> */}
         </AppLayout>
       </BrowserRouter>
     </ThemeProvider>
