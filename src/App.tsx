@@ -7,7 +7,9 @@ import { GlobalStyle } from './styles/GlobalStyle';
 import { darkTheme, lightTheme, type Theme } from './styles/theme';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ThemeBookmark } from './components/ThemeBookmark';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LanguageBookmark } from './components/LanguageBookmark';
 import { Home } from './pages/Home';
 import { Projects } from './pages/Projects';
@@ -64,14 +66,7 @@ const AppContent: FC = () => {
         return savedThemeMode;
       }
     } catch {
-      // Storage may be unavailable; try the browser preference instead.
-    }
-
-    try {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-      if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
-    } catch {
-      // Unavailable browser preferences fall back to the dark theme.
+      // Storage may be unavailable; keep the default dark theme.
     }
 
     return 'dark';
@@ -119,8 +114,8 @@ const AppContent: FC = () => {
             </Routes>
           </MainContent>
           <Footer isHomeEngineerHovered={isHomeEngineerHovered} isHomeRoleHovered={isHomeRoleHovered} />
-          <ThemeBookmark themeMode={themeMode} onToggleTheme={toggleThemeMode} />
-          <LanguageBookmark language={language} />
+          {/* <ThemeBookmark themeMode={themeMode} onToggleTheme={toggleThemeMode} /> */}
+          {/* <LanguageBookmark language={language} /> */}
         </AppLayout>
       </BrowserRouter>
     </ThemeProvider>

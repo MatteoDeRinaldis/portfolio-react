@@ -136,7 +136,8 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   const [hasCornerLabelsEntered, setHasCornerLabelsEntered] = useState(false);
   const [activeRole, setActiveRole] = useState<'frontend' | 'engineer' | null>(null);
   const [leavingRole, setLeavingRole] = useState<'frontend' | 'engineer' | null>(null);
-  const [isOrbitEntering, setIsOrbitEntering] = useState(true);
+  const [isOrbitEntering, setIsOrbitEntering] = useState(false);
+  const [hasProfileImageMounted, setHasProfileImageMounted] = useState(false);
   const roleExitTimerRef = useRef<number | null>(null);
   const orbitEntryTimerRef = useRef<number | null>(null);
   const mobileContentRef = useRef<HTMLDivElement>(null);
@@ -165,13 +166,17 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
     orbitEntryTimerRef.current = window.setTimeout(() => {
       setIsOrbitEntering(false);
       orbitEntryTimerRef.current = null;
-    }, 1350);
+    }, 0);
 
     return () => {
       if (orbitEntryTimerRef.current !== null) {
         window.clearTimeout(orbitEntryTimerRef.current);
       }
     };
+  }, []);
+
+  useEffect(() => {
+    setHasProfileImageMounted(true);
   }, []);
 
   const handleRoleEnter = (role: 'frontend' | 'engineer') => {
@@ -191,18 +196,14 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   const handleRoleLeave = (role: 'frontend' | 'engineer') => {
     setActiveRole(null);
     setLeavingRole(role);
-    setIsOrbitEntering(true);
+    setIsOrbitEntering(false);
     if (orbitEntryTimerRef.current !== null) {
       window.clearTimeout(orbitEntryTimerRef.current);
     }
-    orbitEntryTimerRef.current = window.setTimeout(() => {
-      setIsOrbitEntering(false);
-      orbitEntryTimerRef.current = null;
-    }, 1350);
     roleExitTimerRef.current = window.setTimeout(() => {
       setLeavingRole(null);
       roleExitTimerRef.current = null;
-    }, 790);
+    }, 260);
   };
 
   const skills = getLocalizedSkillCategories(language)
@@ -279,6 +280,17 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
     : profileRole === 'engineer'
       ? engineerProfileImage
       : profileImage;
+
+  useEffect(() => {
+    const preloadImages = [profileImage, frontendProfileImage, engineerProfileImage];
+
+    preloadImages.forEach((src) => {
+      const image = new window.Image();
+      image.decoding = 'async';
+      image.src = src;
+    });
+  }, []);
+
   const orbitNodes = [
     ...frontendTechnologies.map((technology, index) => ({ technology, role: 'frontend' as const, index })),
     ...engineerTechnologies.map((technology, index) => ({ technology, role: 'engineer' as const, index })),
@@ -493,9 +505,9 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
         </AnimatePresence>
         <HomeProfileTarget aria-hidden="true">
           <motion.div
-            initial={{ opacity: 0, x: '42vw' }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.85, ease: 'easeInOut' }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
             style={{ position: 'absolute', inset: 0 }}
           >
             <AnimatePresence mode="sync" initial={false}>
@@ -504,10 +516,10 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
                 key={activeProfileImage}
                 src={activeProfileImage}
                 alt=""
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.7 }}
+                    initial={hasProfileImageMounted ? { opacity: 0 } : false}
+                    animate={{ opacity: theme.mode === 'light' ? 0.8 : 0.72 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.85, ease: 'easeInOut' }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
               />
             </AnimatePresence>
           </motion.div>
