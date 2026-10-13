@@ -4,7 +4,7 @@ import { Document as PdfViewerDocument, Page, pdfjs } from 'react-pdf';
 import { FiChevronUp, FiDownload, FiFileText, FiX } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTranslation } from '../../i18n';
-import cvPdf from '../../assets/docs/Matteo_De_Rinaldis_Senior_Frontend_Engineer_CV.pdf';
+import { EXTERNAL_LINKS } from '../../constants/externalLinks';
 import {
   CvLink,
   FooterContent,
@@ -88,83 +88,114 @@ export const Footer: FC<FooterProps> = ({ isHomeEngineerHovered, isHomeRoleHover
     });
   };
 
+  const downloadCv = async () => {
+    try {
+      const response = await fetch(EXTERNAL_LINKS.cv);
+
+      if (!response.ok) {
+        throw new Error('Failed to download CV');
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+
+      link.href = url;
+      link.download = 'Matteo_De_Rinaldis_Senior_Frontend_Engineer_CV.pdf';
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('CV download failed:', error);
+    }
+  };
+
   return (
     <>
       <FooterWrapper>
-      <FooterToggle
-        type="button"
-        onClick={scrollToTop}
-        aria-label={t('common.backToTop')}
-        $visible={showToggle}
-      >
-        <ChevronUpIcon aria-hidden={true} />
-      </FooterToggle>
-      <FooterContent>
-        <FooterLegal>
-          <FooterText>&copy; 2026 Matteo De Rinaldis · {t('common.allRightsReserved')}</FooterText>
-          <PrivacyLink as={Link} to="/privacy-policy">{t('common.privacyPolicy')}</PrivacyLink>
-        </FooterLegal>
-        <SocialLinks $isHomeIdle={pathname === '/' && !isHomeRoleHovered}>
-          <SocialLink $isHomeEngineerHovered={isHomeEngineerHovered} href="https://github.com/MatteoDeRinaldis" target="_blank" rel="noopener noreferrer">GitHub</SocialLink>
-          <SocialLink $isHomeEngineerHovered={isHomeEngineerHovered} href="https://linkedin.com/in/matteo-de-rinaldis" target="_blank" rel="noopener noreferrer">LinkedIn</SocialLink>
-          <CvLink $isHomeEngineerHovered={isHomeEngineerHovered} type="button" onClick={() => setIsCvOpen(true)}>{t('common.cv')}</CvLink>
-        </SocialLinks>
-      </FooterContent>
+        <FooterToggle
+          type="button"
+          onClick={scrollToTop}
+          aria-label={t('common.backToTop')}
+          $visible={showToggle}
+        >
+          <ChevronUpIcon aria-hidden={true} />
+        </FooterToggle>
+        <FooterContent>
+          <FooterLegal>
+            <FooterText>&copy; 2026 Matteo De Rinaldis · {t('common.allRightsReserved')}</FooterText>
+            <PrivacyLink as={Link} to="/privacy-policy">{t('common.privacyPolicy')}</PrivacyLink>
+          </FooterLegal>
+          <SocialLinks $isHomeIdle={pathname === '/' && !isHomeRoleHovered}>
+            <SocialLink $isHomeEngineerHovered={isHomeEngineerHovered} href="https://github.com/MatteoDeRinaldis" target="_blank" rel="noopener noreferrer">GitHub</SocialLink>
+            <SocialLink $isHomeEngineerHovered={isHomeEngineerHovered} href="https://linkedin.com/in/matteo-de-rinaldis" target="_blank" rel="noopener noreferrer">LinkedIn</SocialLink>
+            <CvLink $isHomeEngineerHovered={isHomeEngineerHovered} type="button" onClick={() => setIsCvOpen(true)}>{t('common.cv')}</CvLink>
+          </SocialLinks>
+        </FooterContent>
       </FooterWrapper>
       <AnimatePresence>
-      {isCvOpen && (
-        <PdfModal
-          as={motion.div}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.24, ease: 'easeOut' }}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cv-modal-title"
-          onClick={(event) => {
-            if (event.target === event.currentTarget) {
-              setIsCvOpen(false);
-            }
-          }}
-        >
-          <PdfModalContent
+        {isCvOpen && (
+          <PdfModal
             as={motion.div}
-            initial={{ opacity: 0, scale: 0.96, y: 12 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: 8 }}
-            transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cv-modal-title"
+            onClick={(event) => {
+              if (event.target === event.currentTarget) {
+                setIsCvOpen(false);
+              }
+            }}
           >
-            <PdfModalHeader>
-              <PdfModalTitle id="cv-modal-title">
-                <FiFileText aria-hidden="true" />
-                {t('common.cvTitle')}
-              </PdfModalTitle>
-              <div>
-                <PdfDownloadButton href={cvPdf} download="Matteo_De_Rinaldis_CV.pdf" aria-label={t('common.downloadCv')}>
-                  <FiDownload aria-hidden="true" />
-                </PdfDownloadButton>
-                <PdfCloseButton type="button" onClick={() => setIsCvOpen(false)} aria-label={t('common.closeCv')}>
-                  <FiX aria-hidden="true" />
-                </PdfCloseButton>
-              </div>
-            </PdfModalHeader>
-            <PdfDocument
+            <PdfModalContent
+              as={motion.div}
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: 8 }}
+              transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
             >
-              <PdfViewerDocument
-                file={cvPdf}
-                onLoadSuccess={({ numPages: loadedPages }: { numPages: number }) => setNumPages(loadedPages)}
-                loading={t('common.loadingCv')}
-                error={t('common.errorCv')}
+              <PdfModalHeader>
+                <PdfModalTitle id="cv-modal-title">
+                  <FiFileText aria-hidden="true" />
+                  {t('common.cvTitle')}
+                </PdfModalTitle>
+                <div>
+                  <PdfDownloadButton
+                    as="button"
+                    type="button"
+                    onClick={downloadCv}
+                    aria-label={t('common.downloadCv')}
+                  >
+                    <FiDownload aria-hidden="true" />
+                  </PdfDownloadButton>
+                  <PdfCloseButton type="button" onClick={() => setIsCvOpen(false)} aria-label={t('common.closeCv')}>
+                    <FiX aria-hidden="true" />
+                  </PdfCloseButton>
+                </div>
+              </PdfModalHeader>
+              <PdfDocument
               >
-                {Array.from(new Array(numPages || 0), (_, index) => (
-                  <Page key={`cv-page-${index + 1}`} pageNumber={index + 1} width={720} renderTextLayer={false} renderAnnotationLayer={false} />
-                ))}
-              </PdfViewerDocument>
-            </PdfDocument>
-          </PdfModalContent>
-        </PdfModal>
-      )}
+                <PdfViewerDocument
+                  file={EXTERNAL_LINKS.cv}
+                  onLoadSuccess={({ numPages: loadedPages }: { numPages: number }) => setNumPages(loadedPages)}
+                  loading={t('common.loadingCv')}
+                  error={t('common.errorCv')}
+                >
+                  {Array.from(new Array(numPages || 0), (_, index) => (
+                    <Page key={`cv-page-${index + 1}`} pageNumber={index + 1} width={720} renderTextLayer={false} renderAnnotationLayer={false} />
+                  ))}
+                </PdfViewerDocument>
+              </PdfDocument>
+            </PdfModalContent>
+          </PdfModal>
+        )}
       </AnimatePresence>
     </>
   );

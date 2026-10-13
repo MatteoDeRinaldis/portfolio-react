@@ -14,6 +14,10 @@ export const FooterWrapper = styled.footer`
   transition:
     background-color ${({ theme }) => theme.transitions.base},
     color ${({ theme }) => theme.transitions.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    bottom: -1px;
+  }
 `;
 
 export const FooterToggle = styled.button<{ $visible: boolean }>`

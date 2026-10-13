@@ -21,7 +21,7 @@ const ProjectsPageWrapper = styled(PageWrapper)`
 
 const ProjectsBackgroundIcon = styled.div`
   position: absolute;
-  top: -12%;
+  top: -5%;
   left: -10vw;
   z-index: 0;
   color: ${({ theme }) => theme.colors.primary};
@@ -37,7 +37,7 @@ const ProjectsBackgroundIcon = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    top: 2rem;
+    top: 8rem;
     font-size: clamp(16rem, 56vw, 32rem);
   }
 `;

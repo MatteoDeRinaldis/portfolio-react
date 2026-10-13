@@ -21,7 +21,7 @@ export const PrivacyPageWrapper = styled.div`
 
 export const PrivacyBackgroundIcon = styled.div`
   position: absolute;
-  top: -12%;
+  top: -5%;
   right: -10vw;
   z-index: 0;
   color: ${({ theme }) => theme.colors.primary};
@@ -36,15 +36,23 @@ export const PrivacyBackgroundIcon = styled.div`
     width: 1em;
     height: 1em;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    right: -18vw;
+    top: 1rem;
+    font-size: clamp(11rem, 48vw, 22rem);
+    opacity: 0.08;
+  }
 `;
 
 export const PrivacyPageContent = styled(motion.article)`
   width: min(100%, 880px);
-  margin-top: ${({ theme }) => theme.spacing[10]};
+  margin-top: ${({ theme }) => theme.spacing[8]};
   color: ${({ theme }) => theme.colors.textLight};
   font-family: ${({ theme }) => theme.fonts.primary};
   font-size: ${({ theme }) => theme.fontSizes.base};
   line-height: 1.8;
+  text-align: justify;
 
   p {
     margin: 0 0 ${({ theme }) => theme.spacing[4]};
@@ -68,7 +76,7 @@ export const PrivacyMeta = styled.p`
 `;
 
 export const PrivacySection = styled.section`
-  margin-top: ${({ theme }) => theme.spacing[10]};
+  margin-top: ${({ theme }) => theme.spacing[8]};
 
   h3 {
     margin: 0 0 ${({ theme }) => theme.spacing[4]};
