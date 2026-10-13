@@ -52,7 +52,7 @@ export const LanguageProvider: FC<{ children: ReactNode }> = ({ children }) => {
       return savedLanguage;
     }
 
-    return window.navigator.language.toLowerCase().startsWith('it') ? 'it' : 'en';
+    return 'en';
   });
 
   const setLanguage = useCallback((nextLanguage: Language) => {

@@ -269,7 +269,7 @@ export const HomeProfileTarget = styled.div`
     width: 100%;
     height: 100%;
     aspect-ratio: auto;
-    opacity: ${({ theme }) => theme.mode === 'light' ? 0.3 : 0.4};
+    opacity: ${({ theme }) => theme.mode === 'light' ? 0.7 : 0.72};
     transform: none;
 
     > div {
