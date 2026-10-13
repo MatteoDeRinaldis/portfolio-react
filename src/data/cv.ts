@@ -133,7 +133,7 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
     {
       company: 'Codeway SA',
       location: 'Chiasso, CH',
-      period: '09/2022 - in corso',
+      period: '09/2022 - 09/2026',
       projects: [
         {
           client: 'Sisal',
@@ -291,7 +291,7 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
     {
       company: 'Codeway SA',
       location: 'Chiasso, CH',
-      period: '09/2022 - present',
+      period: '09/2022 - 09/2026',
       projects: [
         {
           client: 'Sisal',
