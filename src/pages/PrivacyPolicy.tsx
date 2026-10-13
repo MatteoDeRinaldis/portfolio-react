@@ -15,87 +15,274 @@ type PrivacyCopy = {
 
 const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
   it: {
-    description: 'Informativa sulla privacy del sito portfolio di Matteo De Rinaldis.',
+    description:
+      'Informativa sul trattamento dei dati personali del portfolio di Matteo De Rinaldis.',
     updated: 'Ultimo aggiornamento:',
     updatedDate: '13 ottobre 2026',
-    intro: 'Questa Privacy Policy spiega come vengono trattati i dati personali quando gli utenti visitano il sito portfolio di Matteo De Rinaldis, disponibile all\'indirizzo https://matteoderinaldis.com.',
+    intro:
+      'La presente Privacy Policy descrive come vengono trattati i dati personali degli utenti che visitano il sito portfolio di Matteo De Rinaldis, disponibile all’indirizzo https://matteoderinaldis.com.',
+
     sections: [
-      { title: '1. Titolare del trattamento', paragraphs: ['Il titolare del trattamento è:', 'Matteo De Rinaldis|Email: matteo_derinaldis@libero.it'] },
-      { title: '2. Dati trattati', subsections: [
-        {
-          title: 'Dati forniti volontariamente',
-          paragraphs: [
-            'Il modulo di contatto consente agli utenti di inserire nome, indirizzo email e messaggio.',
-            'Le richieste inviate tramite il modulo vengono trasmesse in HTTPS a Web3Forms, un servizio di elaborazione dati terzo utilizzato per inoltrare i messaggi alla casella di posta del titolare.',
-            'Web3Forms agisce come data processor per le richieste del modulo e può elaborare e conservare i dati trasmessi in base alle proprie impostazioni di archiviazione e alla relativa privacy policy.',
-            'La privacy policy di Web3Forms è disponibile all\'indirizzo: https://web3forms.com/privacy'
-          ]
-        },
-        {
-          title: 'Dati tecnici',
-          paragraphs: [
-            'Il sito è ospitato da Netlify.',
-            'Quando gli utenti accedono al sito, Netlify può trattare informazioni tecniche necessarie per erogare, gestire, proteggere e monitorare il servizio. Tra queste possono rientrare l\'indirizzo IP, le informazioni sul browser e sul dispositivo, gli URL richiesti e la data e l\'ora delle richieste.',
-            'Il titolare del sito non utilizza questi dati tecnici per finalità pubblicitarie o di profilazione.',
-            'Ulteriori informazioni sulle pratiche di trattamento di Netlify sono disponibili nella privacy policy di Netlify: https://www.netlify.com/privacy/'
-          ]
-        },
-        {
-          title: 'Preferenze locali',
-          paragraphs: ['Il sito utilizza il localStorage del browser solo per salvare:', 'Queste informazioni rimangono sul dispositivo dell\'utente e non vengono usate dal titolare del sito per identificare o tracciare gli utenti.'],
-          list: ['la lingua preferita;', 'la modalità di visualizzazione chiara o scura.']
-        }
-      ] },
-      { title: '3. Cookie, analytics e tracking', paragraphs: ['Il sito non utilizza sistemi pubblicitari, tecnologie di profilazione, pixel di tracciamento o fingerprinting.', 'Il sito non utilizza attualmente strumenti di analytics di terze parti per il tracciamento dei visitatori.', 'Il localStorage viene impiegato soltanto per memorizzare preferenze di lingua e display e non viene utilizzato per finalità pubblicitarie o di profilazione.', 'I provider di infrastrutture di terze parti possono comunque trattare informazioni tecniche necessarie al funzionamento e alla sicurezza dei propri servizi, secondo le proprie policy privacy.'] },
-      { title: '4. Finalità e base giuridica', paragraphs: ['I dati personali trasmessi volontariamente tramite il modulo di contatto sono trattati per:', 'Il trattamento si basa, a seconda delle circostanze e della normativa applicabile, sulla richiesta volontaria dell\'utente, sul consenso ove applicabile e/o sul legittimo interesse nel gestione e protezione del sito e nella risposta alle comunicazioni.'], list: ['permettere agli utenti di contattare il titolare;', 'rispondere alle richieste e ai messaggi ricevuti;', 'gestire le comunicazioni avviate dagli utenti.'] },
-      { title: '5. Conservazione dei dati', paragraphs: ['Le richieste inviate tramite il modulo possono essere conservate da Web3Forms in base al periodo di conservazione configurato dal servizio e alla relativa policy.', 'I messaggi ricevuti dal titolare possono essere conservati nella sua casella email per il tempo ragionevolmente necessario a rispondere alla richiesta e gestire le comunicazioni correlate, salvo obblighi di legge applicabili.', 'Le preferenze memorizzate in localStorage rimangono sul dispositivo dell\'utente finché non vengono eliminate dall\'utente, sovrascritte dal sito o rimossi i dati locali del browser.', 'I dati tecnici e i log elaborati da provider di hosting e infrastrutture sono conservati in base alle policy e alle configurazioni dei rispettivi fornitori.'] },
-      { title: '6. Servizi esterni e destinatari', paragraphs: ['Il sito utilizza i seguenti servizi esterni:', 'Netlify: hosting, distribuzione contenuti, DNS e infrastruttura HTTPS. Privacy: https://www.netlify.com/privacy/', 'Web3Forms: elaborazione e inoltro delle richieste del modulo di contatto. Privacy: https://web3forms.com/privacy', 'Il sito contiene inoltre link a siti e servizi esterni, inclusi GitHub e LinkedIn. Quando un utente apre un link esterno, lascia questo sito e il trattamento dei dati personali è disciplinato dal servizio esterno rispettivo.'] },
-      { title: '7. Trasferimenti internazionali', paragraphs: ['Alcuni fornitori di servizi utilizzati dal sito possono trattare dati personali fuori dalla Svizzera o dal Paese di residenza dell\'utente.', 'Quando applicabile, tali trasferimenti sono gestiti dal rispettivo fornitore con le misure di sicurezza richieste dalla normativa applicabile in materia di protezione dei dati.'] },
-      { title: '8. Diritti dell\'utente', paragraphs: ['Nei casi previsti dalla normativa applicabile, gli utenti possono esercitare diritti quali accesso, rettifica, cancellazione, limitazione del trattamento, opposizione e portabilità dei dati.', 'Per esercitare questi diritti riguardo ai dati personali trattati dal titolare, gli utenti possono contattare:', 'matteo_derinaldis@libero.it', 'Gli utenti possono inoltre avere diritto a presentare reclamo all\'autorità competente per la protezione dei dati personali.'] },
-      { title: '9. Modifiche alla Privacy Policy', paragraphs: ['La Privacy Policy può essere aggiornata quando il sito, i suoi servizi, i fornitori di terze parti o i requisiti legali applicabili cambiano.', 'La versione aggiornata sarà pubblicata su questa pagina insieme alla nuova data di "Ultimo aggiornamento".'] },
-      { title: '10. Contatti', paragraphs: ['Per domande riguardanti questa Privacy Policy o il trattamento dei dati personali tramite questo sito, contattare:', 'Matteo De Rinaldis|matteo_derinaldis@libero.it'] },
+      {
+        title: '1. Titolare del trattamento',
+        paragraphs: [
+          'Il titolare del trattamento dei dati personali è:',
+          'Matteo De Rinaldis|Email: matteo_derinaldis@libero.it',
+        ],
+      },
+
+      {
+        title: '2. Dati trattati',
+        subsections: [
+          {
+            title: 'Dati forniti volontariamente',
+            paragraphs: [
+              'Il modulo di contatto consente agli utenti di fornire volontariamente il proprio nome, indirizzo email e un messaggio.',
+              'I dati inseriti nel modulo vengono trasmessi tramite connessione HTTPS a Web3Forms, servizio esterno utilizzato per elaborare la richiesta e inoltrare il messaggio alla casella email del titolare.',
+              'Web3Forms tratta i dati trasmessi tramite il modulo in qualità di fornitore del servizio e può conservarli secondo le proprie impostazioni di conservazione e la propria Privacy Policy.',
+              'Ulteriori informazioni sono disponibili nella Privacy Policy di Web3Forms: https://web3forms.com/privacy',
+            ],
+          },
+
+          {
+            title: 'Dati tecnici',
+            paragraphs: [
+              'Il sito è ospitato e distribuito tramite Netlify.',
+              'Durante la navigazione, Netlify può trattare i dati tecnici necessari per fornire, proteggere e mantenere il servizio. Tali dati possono includere, ad esempio, l’indirizzo IP, informazioni sul browser e sul dispositivo, gli URL richiesti e la data e l’ora delle richieste.',
+              'Il titolare del sito non utilizza tali informazioni per finalità pubblicitarie o di profilazione.',
+              'Ulteriori informazioni sono disponibili nella Privacy Policy di Netlify: https://www.netlify.com/privacy/',
+            ],
+          },
+
+          {
+            title: 'Preferenze locali',
+            paragraphs: [
+              'Il sito utilizza il localStorage del browser esclusivamente per memorizzare alcune preferenze dell’utente:',
+              'Queste informazioni rimangono memorizzate sul dispositivo dell’utente e non vengono utilizzate per identificarlo, profilarlo o tracciarne l’attività.',
+            ],
+            list: [
+              'la lingua preferita;',
+              'la modalità di visualizzazione chiara o scura.',
+            ],
+          },
+        ],
+      },
+
+      {
+        title: '3. Analytics e tecnologie di archiviazione locale',
+        paragraphs: [
+          'Il sito utilizza Cloudflare Web Analytics per ottenere statistiche aggregate sull’utilizzo del portfolio e informazioni sulle prestazioni delle pagine.',
+          'Cloudflare Web Analytics è progettato per fornire statistiche senza utilizzare cookie, localStorage o altre tecnologie destinate a identificare o seguire individualmente i visitatori.',
+          'Il sito non utilizza sistemi pubblicitari, cookie di profilazione, fingerprinting o tecnologie analoghe per creare profili degli utenti.',
+          'Il localStorage utilizzato dal sito serve esclusivamente a memorizzare le preferenze relative alla lingua e alla modalità di visualizzazione.',
+          'Ulteriori informazioni su Cloudflare Web Analytics e sul trattamento dei dati da parte di Cloudflare sono disponibili all’indirizzo: https://www.cloudflare.com/privacypolicy/',
+        ],
+      },
+
+      {
+        title: '4. Finalità e base giuridica',
+        paragraphs: [
+          'I dati personali forniti volontariamente tramite il modulo di contatto sono trattati per le seguenti finalità:',
+          'I dati tecnici e le informazioni aggregate relative all’utilizzo del sito possono inoltre essere trattati per garantirne il corretto funzionamento, la sicurezza e il monitoraggio delle prestazioni.',
+          'A seconda delle circostanze e della normativa applicabile, il trattamento può basarsi sulla richiesta volontaria dell’utente, sul consenso ove richiesto e/o sul legittimo interesse del titolare a gestire e proteggere il sito e a rispondere alle comunicazioni ricevute.',
+        ],
+        list: [
+          'consentire agli utenti di contattare il titolare;',
+          'rispondere alle richieste e ai messaggi ricevuti;',
+          'gestire le comunicazioni avviate dagli utenti.',
+        ],
+      },
+
+      {
+        title: '5. Conservazione dei dati',
+        paragraphs: [
+          'I dati inviati tramite il modulo di contatto possono essere conservati da Web3Forms secondo il periodo di conservazione previsto o configurato per il servizio e in conformità alla relativa Privacy Policy.',
+          'I messaggi ricevuti dal titolare possono essere conservati nella relativa casella email per il tempo ragionevolmente necessario a gestire la richiesta e le eventuali comunicazioni successive, fatti salvi eventuali obblighi di legge.',
+          'Le preferenze salvate nel localStorage rimangono sul dispositivo dell’utente finché non vengono eliminate, sovrascritte dal sito oppure rimossi i dati del sito dal browser.',
+          'I dati tecnici eventualmente trattati dai fornitori di hosting, infrastruttura e analytics sono conservati secondo le rispettive policy e configurazioni del servizio.',
+        ],
+      },
+
+      {
+        title: '6. Servizi esterni e destinatari',
+        paragraphs: [
+          'Per il funzionamento del sito vengono utilizzati i seguenti servizi esterni:',
+          'Netlify: hosting, distribuzione dei contenuti, DNS e infrastruttura HTTPS. Privacy Policy: https://www.netlify.com/privacy/',
+          'Web3Forms: elaborazione e inoltro dei messaggi inviati tramite il modulo di contatto. Privacy Policy: https://web3forms.com/privacy',
+          'Cloudflare Web Analytics: statistiche aggregate sull’utilizzo del sito e monitoraggio delle prestazioni. Privacy Policy: https://www.cloudflare.com/privacypolicy/',
+          'Il sito contiene inoltre collegamenti a servizi esterni, tra cui GitHub e LinkedIn. Quando l’utente segue uno di questi collegamenti lascia il presente sito; l’eventuale trattamento dei dati è pertanto disciplinato dalle condizioni e dalle Privacy Policy del rispettivo servizio.',
+        ],
+      },
+
+      {
+        title: '7. Trasferimenti internazionali di dati',
+        paragraphs: [
+          'Alcuni dei fornitori utilizzati dal sito possono trattare dati in Paesi diversi dalla Svizzera o dal Paese di residenza dell’utente.',
+          'Quando previsto dalla normativa applicabile, tali trasferimenti vengono effettuati dai rispettivi fornitori adottando le garanzie previste dalla legislazione in materia di protezione dei dati.',
+        ],
+      },
+
+      {
+        title: '8. Diritti degli utenti',
+        paragraphs: [
+          'Nei casi previsti dalla normativa applicabile, gli utenti possono esercitare i diritti riconosciuti in materia di protezione dei dati personali, tra cui accesso, rettifica, cancellazione, limitazione del trattamento, opposizione e, ove applicabile, portabilità dei dati.',
+          'Per richieste relative ai dati personali trattati direttamente dal titolare è possibile contattare:',
+          'matteo_derinaldis@libero.it',
+          'Gli utenti possono inoltre rivolgersi all’autorità competente in materia di protezione dei dati personali, nei casi previsti dalla normativa applicabile.',
+        ],
+      },
+
+      {
+        title: '9. Modifiche alla Privacy Policy',
+        paragraphs: [
+          'La presente Privacy Policy può essere aggiornata in seguito a modifiche del sito, dei servizi utilizzati o della normativa applicabile.',
+          'La versione aggiornata sarà pubblicata su questa pagina indicando la relativa data di ultimo aggiornamento.',
+        ],
+      },
+
+      {
+        title: '10. Contatti',
+        paragraphs: [
+          'Per domande relative alla presente Privacy Policy o al trattamento dei dati personali attraverso questo sito è possibile contattare:',
+          'Matteo De Rinaldis|matteo_derinaldis@libero.it',
+        ],
+      },
     ],
   },
+
   en: {
-    description: 'Privacy information for the Matteo De Rinaldis portfolio website.',
+    description:
+      'Privacy information for the portfolio website of Matteo De Rinaldis.',
     updated: 'Last updated:',
     updatedDate: '13 October 2026',
-    intro: 'This Privacy Policy explains how personal data is handled when users visit the portfolio website of Matteo De Rinaldis, available at https://matteoderinaldis.com.',
+    intro:
+      'This Privacy Policy describes how personal data is handled when users visit the portfolio website of Matteo De Rinaldis, available at https://matteoderinaldis.com.',
+
     sections: [
-      { title: '1. Data controller', paragraphs: ['The data controller is:', 'Matteo De Rinaldis|Email: matteo_derinaldis@libero.it'] },
-      { title: '2. Data processed', subsections: [
-        {
-          title: 'Data provided voluntarily',
-          paragraphs: [
-            'The contact form allows users to provide their name, email address and message.',
-            'Form submissions are transmitted over HTTPS to Web3Forms, a third-party form processing service used to forward messages to the controller\'s email inbox.',
-            'Web3Forms acts as a data processor for form submissions and may process and store submitted data according to its applicable retention settings and privacy policy.',
-            'Web3Forms\' privacy policy is available at: https://web3forms.com/privacy'
-          ]
-        },
-        {
-          title: 'Technical data',
-          paragraphs: [
-            'The website is hosted by Netlify.',
-            'When users access the website, Netlify may process technical information required to deliver, operate, secure and monitor the service. This may include information such as IP address, browser and device information, requested URLs, and date and time of requests.',
-            'The website owner does not use this technical data for advertising or profiling purposes.',
-            'Further information about Netlify\'s data processing practices is available in Netlify\'s privacy policy: https://www.netlify.com/privacy/'
-          ]
-        },
-        {
-          title: 'Local preferences',
-          paragraphs: ['The website uses browser localStorage only to save:', 'This information remains on the user\'s device and is not used by the website owner to identify or track users.'],
-          list: ['the preferred language;', 'the light or dark display mode.']
-        }
-      ] },
-      { title: '3. Cookies, analytics and tracking', paragraphs: ['The website does not use advertising systems, profiling technologies, tracking pixels or fingerprinting technologies.', 'The website owner does not currently use third-party analytics tools for visitor tracking.', 'Browser localStorage is used only to store language and display preferences and is not used for advertising or profiling.', 'Third-party infrastructure providers may process technical information necessary to operate and secure their services in accordance with their own privacy policies.'] },
-      { title: '4. Purposes and legal basis', paragraphs: ['Personal data voluntarily submitted through the contact form is processed for the purpose of:', 'Depending on the circumstances and applicable law, processing may be based on the user\'s voluntary request, consent where applicable, and/or the legitimate interest in operating and securing the website and responding to communications.'], list: ['allowing users to contact the controller;', 'responding to requests and messages;', 'managing communications initiated by users.'] },
-      { title: '5. Data retention', paragraphs: ['Form submissions may be retained by Web3Forms according to the retention period configured for the service and its applicable data retention policy.', 'Messages received by the controller may be retained in the controller\'s email inbox for as long as reasonably necessary to respond to the request and manage related communications, subject to applicable legal requirements.', 'Preferences stored in localStorage remain on the user\'s device until they are deleted by the user, overwritten by the website, or the website\'s local data is removed from the browser.', 'Technical data and logs processed by hosting and infrastructure providers are retained according to the respective providers\' policies and service configurations.'] },
-      { title: '6. External services and recipients', paragraphs: ['The website uses the following external services:', 'Netlify: hosting, content delivery, DNS and HTTPS infrastructure. Privacy information: https://www.netlify.com/privacy/', 'Web3Forms: processing and forwarding of contact form submissions. Privacy information: https://web3forms.com/privacy', 'The website also contains links to external websites and services, including GitHub and LinkedIn. When users follow an external link, they leave this website and the processing of personal data is governed by the respective external service.'] },
-      { title: '7. International data transfers', paragraphs: ['Some service providers used by the website may process personal data outside Switzerland or the user\'s country of residence.', 'Where applicable, such transfers are handled by the relevant service provider using appropriate safeguards required by applicable data protection law.'] },
-      { title: '8. User rights', paragraphs: ['Where provided by applicable data protection law, users may have rights including access, rectification, erasure, restriction of processing, objection and data portability.', 'To exercise these rights regarding personal data processed by the controller, users may contact:', 'matteo_derinaldis@libero.it', 'Users may also have the right to lodge a complaint with the competent data protection supervisory authority.'] },
-      { title: '9. Changes to this Privacy Policy', paragraphs: ['This Privacy Policy may be updated when the website, its services, third-party providers or applicable legal requirements change.', 'The updated version will be published on this page together with the revised "Last updated" date.'] },
-      { title: '10. Contact', paragraphs: ['For questions regarding this Privacy Policy or the processing of personal data through this website, please contact:', 'Matteo De Rinaldis|matteo_derinaldis@libero.it'] },
+      {
+        title: '1. Data controller',
+        paragraphs: [
+          'The controller responsible for the processing of personal data is:',
+          'Matteo De Rinaldis|Email: matteo_derinaldis@libero.it',
+        ],
+      },
+
+      {
+        title: '2. Data processed',
+        subsections: [
+          {
+            title: 'Data provided voluntarily',
+            paragraphs: [
+              'The contact form allows users to voluntarily provide their name, email address and a message.',
+              'Information submitted through the form is transmitted over HTTPS to Web3Forms, an external service used to process the request and forward the message to the controller’s email inbox.',
+              'Web3Forms processes information submitted through the form as a service provider and may retain it according to its retention settings and Privacy Policy.',
+              'Further information is available in the Web3Forms Privacy Policy: https://web3forms.com/privacy',
+            ],
+          },
+
+          {
+            title: 'Technical data',
+            paragraphs: [
+              'The website is hosted and delivered through Netlify.',
+              'When users access the website, Netlify may process technical information necessary to provide, secure and maintain the service. This may include, for example, IP addresses, browser and device information, requested URLs, and the date and time of requests.',
+              'The website owner does not use this information for advertising or profiling purposes.',
+              'Further information is available in the Netlify Privacy Policy: https://www.netlify.com/privacy/',
+            ],
+          },
+
+          {
+            title: 'Local preferences',
+            paragraphs: [
+              'The website uses browser localStorage exclusively to store certain user preferences:',
+              'This information remains stored on the user’s device and is not used to identify, profile or track individual users.',
+            ],
+            list: [
+              'preferred language;',
+              'light or dark display mode.',
+            ],
+          },
+        ],
+      },
+
+      {
+        title: '3. Analytics and local storage technologies',
+        paragraphs: [
+          'The website uses Cloudflare Web Analytics to obtain aggregated information about the use of the portfolio and the performance of its pages.',
+          'Cloudflare Web Analytics is designed to provide website statistics without using cookies, localStorage or other technologies intended to identify or individually track visitors.',
+          'The website does not use advertising systems, profiling cookies, fingerprinting or similar technologies to create user profiles.',
+          'Browser localStorage is used exclusively to store language and display preferences.',
+          'Further information about Cloudflare Web Analytics and Cloudflare’s data processing practices is available at: https://www.cloudflare.com/privacypolicy/',
+        ],
+      },
+
+      {
+        title: '4. Purposes and legal basis',
+        paragraphs: [
+          'Personal data voluntarily provided through the contact form is processed for the following purposes:',
+          'Technical data and aggregated information relating to website usage may also be processed to ensure the proper operation and security of the website and to monitor its performance.',
+          'Depending on the circumstances and applicable law, processing may be based on the user’s voluntary request, consent where required and/or the controller’s legitimate interest in operating and securing the website and responding to communications.',
+        ],
+        list: [
+          'allowing users to contact the controller;',
+          'responding to requests and messages;',
+          'managing communications initiated by users.',
+        ],
+      },
+
+      {
+        title: '5. Data retention',
+        paragraphs: [
+          'Information submitted through the contact form may be retained by Web3Forms according to the retention period provided or configured for the service and in accordance with its Privacy Policy.',
+          'Messages received by the controller may be retained in the controller’s email inbox for as long as reasonably necessary to handle the request and any related communications, subject to applicable legal requirements.',
+          'Preferences stored in localStorage remain on the user’s device until they are deleted, overwritten by the website or the website’s local data is removed from the browser.',
+          'Technical information processed by hosting, infrastructure and analytics providers is retained according to their respective policies and service configurations.',
+        ],
+      },
+
+      {
+        title: '6. External services and recipients',
+        paragraphs: [
+          'The website uses the following external services:',
+          'Netlify: hosting, content delivery, DNS and HTTPS infrastructure. Privacy Policy: https://www.netlify.com/privacy/',
+          'Web3Forms: processing and forwarding of messages submitted through the contact form. Privacy Policy: https://web3forms.com/privacy',
+          'Cloudflare Web Analytics: aggregated website usage statistics and performance monitoring. Privacy Policy: https://www.cloudflare.com/privacypolicy/',
+          'The website also contains links to external services, including GitHub and LinkedIn. When users follow one of these links, they leave this website and any subsequent processing of personal data is governed by the terms and Privacy Policy of the respective service.',
+        ],
+      },
+
+      {
+        title: '7. International data transfers',
+        paragraphs: [
+          'Some service providers used by the website may process data in countries other than Switzerland or the user’s country of residence.',
+          'Where required by applicable law, such transfers are carried out by the relevant providers using the safeguards required under applicable data protection legislation.',
+        ],
+      },
+
+      {
+        title: '8. User rights',
+        paragraphs: [
+          'Where provided by applicable law, users may exercise data protection rights including access, rectification, erasure, restriction of processing, objection and, where applicable, data portability.',
+          'For requests concerning personal data processed directly by the controller, users may contact:',
+          'matteo_derinaldis@libero.it',
+          'Users may also contact the competent data protection supervisory authority where provided by applicable law.',
+        ],
+      },
+
+      {
+        title: '9. Changes to this Privacy Policy',
+        paragraphs: [
+          'This Privacy Policy may be updated following changes to the website, the services used or applicable legal requirements.',
+          'The updated version will be published on this page together with its revised last updated date.',
+        ],
+      },
+
+      {
+        title: '10. Contact',
+        paragraphs: [
+          'For questions concerning this Privacy Policy or the processing of personal data through this website, please contact:',
+          'Matteo De Rinaldis|matteo_derinaldis@libero.it',
+        ],
+      },
     ],
   },
 };
