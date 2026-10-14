@@ -2,7 +2,6 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { AnimatePresence, motion } from 'motion/react';
 import type { IconType } from 'react-icons';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { SiAxios, SiCss, SiCypress, SiGit, SiGithub, SiGithubcopilot, SiHtml5, SiJavascript, SiJest, SiJira, SiMui, SiNpm, SiPostman, SiReact, SiRedux, SiStorybook, SiTailwindcss, SiTypescript, SiWebpack } from 'react-icons/si';
 import profileImage from '../assets/img/MDR_Profile.webp';
 import frontendProfileImage from '../assets/img/MDR_Profile_FE.webp';
@@ -25,8 +24,11 @@ import {
   HomeMobileContent,
   HomeMobileTitle,
   HomeMobileToggle,
+  HomeMobileToggleHint,
   HomeMobilePanel,
   HomeMobileDescription,
+  HomeCornerLabelContent,
+  HomeCornerLabelHint,
 } from '../styles/Home.styles';
 
 type HomeProps = {
@@ -374,10 +376,12 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
                 type="button"
                 aria-expanded={isMobileFrontendOpen}
                 aria-controls="mobile-frontend-description"
-                onClick={() => setMobileRole((role) => role === 'frontend' ? null : 'frontend')}
+                onClick={() => {
+                  setMobileRole((role) => role === 'frontend' ? null : 'frontend');
+                }}
               >
-                FRONTEND
-                {isMobileFrontendOpen ? <FiChevronUp aria-hidden="true" /> : <FiChevronDown aria-hidden="true" />}
+                <span>FRONTEND</span>
+                {!isMobileFrontendOpen && <HomeMobileToggleHint>open</HomeMobileToggleHint>}
               </HomeMobileToggle>
             </HomeMobileTitle>
             <HomeMobilePanel id="mobile-frontend-description" $isOpen={isMobileFrontendOpen} aria-hidden={!isMobileFrontendOpen}>
@@ -393,10 +397,12 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
                 type="button"
                 aria-expanded={isMobileEngineerOpen}
                 aria-controls="mobile-engineer-description"
-                onClick={() => setMobileRole((role) => role === 'engineer' ? null : 'engineer')}
+                onClick={() => {
+                  setMobileRole((role) => role === 'engineer' ? null : 'engineer');
+                }}
               >
-                ENGINEER
-                {isMobileEngineerOpen ? <FiChevronUp aria-hidden="true" /> : <FiChevronDown aria-hidden="true" />}
+                <span>ENGINEER</span>
+                {!isMobileEngineerOpen && <HomeMobileToggleHint>open</HomeMobileToggleHint>}
               </HomeMobileToggle>
             </HomeMobileTitle>
             <HomeMobilePanel id="mobile-engineer-description" $isOpen={isMobileEngineerOpen} aria-hidden={!isMobileEngineerOpen}>
@@ -424,19 +430,24 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {activeRole !== 'engineer' && leavingRole !== 'engineer' && (
-              <HomeRoleTitle
-                key="frontend-title"
-                initial={{ opacity: 0, y: -16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-              >
-                FRONTEND
-              </HomeRoleTitle>
+          <HomeCornerLabelContent>
+            {activeRole === null && leavingRole === null && (
+              <HomeCornerLabelHint aria-hidden="true">hover</HomeCornerLabelHint>
             )}
-          </AnimatePresence>
+            <AnimatePresence mode="wait" initial={false}>
+              {activeRole !== 'engineer' && leavingRole !== 'engineer' && (
+                <HomeRoleTitle
+                  key="frontend-title"
+                  initial={{ opacity: 0, y: -16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  FRONTEND
+                </HomeRoleTitle>
+              )}
+            </AnimatePresence>
+          </HomeCornerLabelContent>
           <AnimatePresence>
             {activeRole === 'frontend' && (
               <HomeRoleDescription
@@ -470,20 +481,25 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {activeRole !== 'frontend' && leavingRole !== 'frontend' && (
-              <HomeRoleTitle
-                key="engineer-title"
-                $letterSpacing="0.4rem"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 16 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-              >
-                ENGINEER
-              </HomeRoleTitle>
+          <HomeCornerLabelContent>
+            {activeRole === null && leavingRole === null && (
+              <HomeCornerLabelHint aria-hidden="true">hover</HomeCornerLabelHint>
             )}
-          </AnimatePresence>
+            <AnimatePresence mode="wait" initial={false}>
+              {activeRole !== 'frontend' && leavingRole !== 'frontend' && (
+                <HomeRoleTitle
+                  key="engineer-title"
+                  $letterSpacing="0.4rem"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 16 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  ENGINEER
+                </HomeRoleTitle>
+              )}
+            </AnimatePresence>
+          </HomeCornerLabelContent>
           <AnimatePresence>
             {activeRole === 'engineer' && (
               <HomeRoleDescription
@@ -519,7 +535,7 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
                     initial={hasProfileImageMounted ? { opacity: 0 } : false}
                     animate={{ opacity: theme.mode === 'light' ? 0.8 : 0.72 }}
                 exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    transition={{ duration: 1, ease: 'easeOut' }}
               />
             </AnimatePresence>
           </motion.div>
