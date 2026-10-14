@@ -61,8 +61,8 @@ export const HomeMobileTitle = styled.h2<{ $isOpen: boolean }>`
     width: 100%;
     margin-bottom: ${({ $isOpen }) => $isOpen ? '0.4em' : '0'};
     padding-bottom: ${({ $isOpen }) => $isOpen ? '0.2em' : '0'};
-    border-bottom: 1px solid ${({ $isOpen }) => $isOpen ? 'currentColor' : 'transparent'};
-    transition: border-color 240ms ease;
+    border-bottom: 1px solid ${({ $isOpen }) => $isOpen ? 'currentColor' : 'rgba(255, 255, 255, 0.18)'};
+    transition: border-color 240ms ease, opacity 220ms ease;
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
@@ -73,24 +73,35 @@ export const HomeMobileTitle = styled.h2<{ $isOpen: boolean }>`
 export const HomeMobileToggle = styled.button`
   display: flex;
   align-items: center;
-  gap: 0.4em;
+  justify-content: space-between;
   width: 100%;
   min-height: 44px;
   color: inherit;
   font: inherit;
   letter-spacing: inherit;
   text-align: left;
+  cursor: pointer;
+  transition: opacity 220ms ease;
 
-  svg {
-    width: 0.7em;
-    height: 0.7em;
-    flex-shrink: 0;
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
   }
 
   &:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }
+`;
+
+export const HomeMobileToggleHint = styled.span`
+  margin-left: auto;
+  color: ${({ theme }) => theme.colors.textLight};
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.7;
 `;
 
 export const HomeMobilePanel = styled.div<{ $isOpen: boolean }>`
@@ -486,6 +497,32 @@ export const HomeRoleTitle = styled(motion.span)<{ $fontFamily?: string; $letter
   color: ${({ theme }) => theme.colors.text};
   letter-spacing: ${({ $letterSpacing }) => $letterSpacing ?? '0.02em'};
   will-change: transform, opacity;
+`;
+
+export const HomeCornerLabelContent = styled.span`
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+`;
+
+export const HomeCornerLabelHint = styled.span`
+  position: absolute;
+  top: 8em;
+  left: -2.8rem;
+  display: inline-block;
+  color: ${({ theme }) => theme.colors.textLight};
+  font-family: 'Sora', 'Segoe UI', sans-serif;
+  font-size: 0.46rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  text-align: left;
+  pointer-events: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 export const HomeRoleDescription = styled(motion.span)<{ $position: 'top-left' | 'bottom-right' }>`
