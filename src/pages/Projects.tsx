@@ -120,6 +120,7 @@ const OverviewItem = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.sm};
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
 
   svg {
     flex: 0 0 auto;
@@ -131,7 +132,24 @@ const OverviewItem = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.sm};
     font-weight: ${({ theme }) => theme.fontWeights.semibold};
   }
+
+  @media (hover: hover) and (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    &:hover {
+      z-index: 2;
+      border-color: ${({ theme }) => theme.colors.primary};
+      box-shadow: 0 0 24px ${({ theme }) => theme.colors.primary}66, ${({ theme }) => theme.shadows.md};
+    }
+  }
 `;
+
+const overviewItemHover = { scale: 1.03, y: -4, transition: { duration: 0.22, ease: 'easeOut' as const } };
+
+const overviewItemVariants = {
+  hidden: { opacity: 0, x: -40 },
+  visible: (delay: number) => ({ opacity: 1, x: 0, transition: { duration: 0.4, delay, ease: 'easeOut' as const } }),
+};
+
+const overviewItemTransition = { duration: 0.22, ease: 'easeOut' as const };
 
 const ExperienceTimeline = styled.div`
   position: relative;
@@ -970,23 +988,23 @@ export const Projects: FC = () => {
 
       <OverviewCarousel $isAtEnd={isOverviewAtEnd}>
       <OverviewGrid as={motion.div} ref={overviewRef}>
-        <OverviewItem as={motion.div} initial="hidden" animate="visible" variants={revealVariants} transition={{ duration: 0.4, delay: 0.55, ease: 'easeOut' }}>
+        <OverviewItem as={motion.div} whileHover={overviewItemHover} initial="hidden" animate="visible" variants={overviewItemVariants} custom={0.55} transition={overviewItemTransition}>
           <FiCode aria-hidden={true} />
           <span>{t('projects.experience')}</span>
         </OverviewItem>
-        <OverviewItem as={motion.div} initial="hidden" animate="visible" variants={revealVariants} transition={{ duration: 0.4, delay: 0.7, ease: 'easeOut' }}>
+        <OverviewItem as={motion.div} whileHover={overviewItemHover} initial="hidden" animate="visible" variants={overviewItemVariants} custom={0.7} transition={overviewItemTransition}>
           <FiBriefcase aria-hidden={true} />
           <span>{t('projects.industries')}</span>
         </OverviewItem>
-        <OverviewItem as={motion.div} initial="hidden" animate="visible" variants={revealVariants} transition={{ duration: 0.4, delay: 0.85, ease: 'easeOut' }}>
+        <OverviewItem as={motion.div} whileHover={overviewItemHover} initial="hidden" animate="visible" variants={overviewItemVariants} custom={0.85} transition={overviewItemTransition}>
           <FiLayers aria-hidden={true} />
           <span>{t('projects.applications')}</span>
         </OverviewItem>
-        <OverviewItem as={motion.div} initial="hidden" animate="visible" variants={revealVariants} transition={{ duration: 0.4, delay: 1, ease: 'easeOut' }}>
+        <OverviewItem as={motion.div} whileHover={overviewItemHover} initial="hidden" animate="visible" variants={overviewItemVariants} custom={1} transition={overviewItemTransition}>
           <FiUsers aria-hidden={true} />
           <span>{t('projects.teams')}</span>
         </OverviewItem>
-        <OverviewItem as={motion.div} initial="hidden" animate="visible" variants={revealVariants} transition={{ duration: 0.4, delay: 1.15, ease: 'easeOut' }}>
+        <OverviewItem as={motion.div} whileHover={overviewItemHover} initial="hidden" animate="visible" variants={overviewItemVariants} custom={1.15} transition={overviewItemTransition}>
           <FiGitBranch aria-hidden={true} />
           <span>{t('projects.approach')}</span>
         </OverviewItem>

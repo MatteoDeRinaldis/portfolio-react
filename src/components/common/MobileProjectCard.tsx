@@ -58,6 +58,7 @@ const Card = styled.button`
     text-align: left;
     perspective: 1200px;
     border-radius: ${({ theme }) => theme.borderRadius.md};
+    -webkit-tap-highlight-color: transparent;
 
     &:focus-visible {
       outline: 2px solid ${({ theme }) => theme.colors.primary};
