@@ -122,50 +122,60 @@ export const Skills: FC = () => {
         <OverviewGrid as={motion.div} ref={overviewRef} id="skills-overview">
           <OverviewItem
             as={motion.div}
+            whileHover={overviewItemHover}
             initial="hidden"
             animate="visible"
-            variants={revealVariants}
-            transition={{ duration: 0.4, delay: 0.55, ease: 'easeOut' }}
+            variants={overviewItemVariants}
+            custom={0.55}
+            transition={overviewItemTransition}
           >
             <LayersIcon aria-hidden={true} />
             <span>{t('skills.architecture')}</span>
           </OverviewItem>
           <OverviewItem
             as={motion.div}
+            whileHover={overviewItemHover}
             initial="hidden"
             animate="visible"
-            variants={revealVariants}
-            transition={{ duration: 0.4, delay: 0.7, ease: 'easeOut' }}
+            variants={overviewItemVariants}
+            custom={0.7}
+            transition={overviewItemTransition}
           >
             <CodeIconSkill aria-hidden={true} />
             <span>{t('skills.react')}</span>
           </OverviewItem>
           <OverviewItem
             as={motion.div}
+            whileHover={overviewItemHover}
             initial="hidden"
             animate="visible"
-            variants={revealVariants}
-            transition={{ duration: 0.4, delay: 0.85, ease: 'easeOut' }}
+            variants={overviewItemVariants}
+            custom={0.85}
+            transition={overviewItemTransition}
           >
             <DatabaseIconSkill aria-hidden={true} />
             <span>{t('skills.integrations')}</span>
           </OverviewItem>
           <OverviewItem
             as={motion.div}
+            whileHover={overviewItemHover}
             initial="hidden"
             animate="visible"
-            variants={revealVariants}
-            transition={{ duration: 0.4, delay: 1, ease: 'easeOut' }}
+            variants={overviewItemVariants}
+            custom={1}
+            transition={overviewItemTransition}
           >
             <QualityIconSkill aria-hidden={true} />
             <span>{t('skills.quality')}</span>
           </OverviewItem>
           <OverviewItem
             as={motion.div}
+            whileHover={overviewItemHover}
             initial="hidden"
             animate="visible"
-            variants={revealVariants}
-            transition={{ duration: 0.4, delay: 1.15, ease: 'easeOut' }}
+            variants={overviewItemVariants}
+            custom={1.15}
+            transition={overviewItemTransition}
           >
             <FiAward aria-hidden={true} />
             <span>{t('skills.ai')}</span>
@@ -185,7 +195,7 @@ export const Skills: FC = () => {
             <h3>{t('skills.carouselTitle')}</h3>
           </SkillsSectionHeader>
 
-          <SkillsGrid $hasHoveredItem={hoveredCategoryIndex !== null}>
+          <SkillsGrid>
             {skillCategories.map((skill, index) => (
               <SkillCardItem
                 id={`skill-category-${index}`}
@@ -323,6 +333,7 @@ const OverviewItem = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.sm};
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
 
   svg {
     flex: 0 0 auto;
@@ -334,7 +345,24 @@ const OverviewItem = styled.div`
     font-weight: ${({ theme }) => theme.fontWeights.semibold};
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
+
+  @media (hover: hover) and (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    &:hover {
+      z-index: 2;
+      border-color: ${({ theme }) => theme.colors.primary};
+      box-shadow: 0 0 24px ${({ theme }) => theme.colors.primary}66, ${({ theme }) => theme.shadows.md};
+    }
+  }
 `;
+
+const overviewItemHover = { scale: 1.03, y: -4, transition: { duration: 0.22, ease: 'easeOut' as const } };
+
+const overviewItemVariants = {
+  hidden: { opacity: 0, x: -40 },
+  visible: (delay: number) => ({ opacity: 1, x: 0, transition: { duration: 0.4, delay, ease: 'easeOut' as const } }),
+};
+
+const overviewItemTransition = { duration: 0.22, ease: 'easeOut' as const };
 
 const SkillsPageLayout = styled.div`
   display: grid;
@@ -352,26 +380,10 @@ const SkillsSectionHeader = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing[6]};
 `;
 
-const SkillsGrid = styled.div<{ $hasHoveredItem?: boolean }>`
+const SkillsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: ${({ theme }) => theme.spacing[6]};
-
-  ${({ $hasHoveredItem }) =>
-    $hasHoveredItem &&
-    `
-    > * {
-      opacity: 0.45;
-    }
-  `}
-
-  &:hover > * {
-    opacity: 0.45;
-  }
-
-  &:hover > *:hover {
-    opacity: 1;
-  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.wide}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -379,12 +391,6 @@ const SkillsGrid = styled.div<{ $hasHoveredItem?: boolean }>`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
-
-    > *,
-    &:hover > *,
-    &:hover > *:hover {
-      opacity: 1 !important;
-    }
   }
 `;
 
