@@ -56,8 +56,8 @@ export const AboutCopy = styled.article`
   p {
     margin: 0 0 ${({ theme }) => theme.spacing[4]};
     color: ${({ theme }) => theme.colors.textLight};
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    line-height: 1.85;
+    font-size: 1.0625rem;
+    line-height: 1.65;
   }
 
   strong {
@@ -129,13 +129,13 @@ export const AboutReveal = styled(motion.div)`
     }
 
     p {
-      font-size: ${({ theme }) => theme.fontSizes.base};
+      font-size: 0.975rem;
     }
   }
 `;
 
 export const AboutLead = styled.p`
   color: ${({ theme }) => theme.colors.text};
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: 1.4375rem;
   font-weight: ${({ theme }) => theme.fontWeights.medium};
 `;

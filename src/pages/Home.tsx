@@ -3,6 +3,7 @@ import { useTheme } from 'styled-components';
 import { AnimatePresence, motion } from 'motion/react';
 import type { IconType } from 'react-icons';
 import { SiAxios, SiCss, SiCypress, SiGit, SiGithub, SiGithubcopilot, SiHtml5, SiJavascript, SiJest, SiJira, SiMui, SiNpm, SiPostman, SiReact, SiRedux, SiStorybook, SiTailwindcss, SiTypescript, SiWebpack } from 'react-icons/si';
+import { VscAzureDevops } from 'react-icons/vsc';
 import profileImage from '../assets/img/MDR_Profile.webp';
 import frontendProfileImage from '../assets/img/MDR_Profile_FE.webp';
 import engineerProfileImage from '../assets/img/MDR_Profile_EN.webp';
@@ -64,7 +65,7 @@ const engineerTechnologies: OrbitTechnology[] = [
   { name: 'REST APIs', Icon: SiPostman, documentationUrl: 'https://www.postman.com/api-platform/api-client/' },
   { name: 'Jest', Icon: SiJest, documentationUrl: 'https://jestjs.io/docs/getting-started' },
   { name: 'Cypress', Icon: SiCypress, documentationUrl: 'https://docs.cypress.io/' },
-  { name: 'Azure DevOps', Icon: SiGit, documentationUrl: 'https://learn.microsoft.com/en-us/azure/devops/' },
+  { name: 'Azure DevOps', Icon: VscAzureDevops, documentationUrl: 'https://learn.microsoft.com/en-us/azure/devops/' },
   { name: 'Jira', Icon: SiJira, documentationUrl: 'https://www.atlassian.com/software/jira' },
   { name: 'GitHub Copilot CLI', Icon: SiGithubcopilot, documentationUrl: 'https://github.com/features/copilot/cli' },
 ];
@@ -74,7 +75,7 @@ const frontendSkillOrder = [
   'TypeScript',
   'JavaScript',
   'HTML5',
-  'CSS/SCSS/LESS',
+  'CSS / SCSS / LESS',
   'Redux',
   'Axios',
   'Tailwind CSS',
@@ -85,9 +86,10 @@ const frontendSkillOrder = [
 const engineerSkillOrder = [
   'Git',
   'GitHub',
-  'npm/yarn',
+  'npm / yarn',
   'Webpack',
   'REST APIs',
+  'API REST',
   'Jest',
   'Cypress',
   'Azure DevOps',
