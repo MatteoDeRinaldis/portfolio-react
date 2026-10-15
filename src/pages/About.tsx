@@ -45,7 +45,6 @@ export const About: FC = () => {
           <AboutReveal variants={revealVariants}><AboutLead>{t('about.lead')}</AboutLead></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.intro1')}</p></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.intro2')}</p></AboutReveal>
-          <AboutReveal variants={revealVariants}><p>{t('about.intro3')}</p></AboutReveal>
 
           <AboutReveal variants={revealVariants}><AboutSectionTitle>{t('about.approachTitle')}</AboutSectionTitle></AboutReveal>
           <AboutReveal variants={revealVariants}><AboutLead>{t('about.approachLead')}</AboutLead></AboutReveal>
@@ -56,13 +55,14 @@ export const About: FC = () => {
           <AboutReveal variants={revealVariants}><p>{t('about.seniority1')}</p></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.seniority2')}</p></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.seniority3')}</p></AboutReveal>
+          <AboutReveal variants={revealVariants}><p>{t('about.seniority4')}</p></AboutReveal>
 
           <AboutReveal variants={revealVariants}><AboutSectionTitle>{t('about.outsideTitle')}</AboutSectionTitle></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.outside1')}</p></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.outside2')}</p></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.outside3')}</p></AboutReveal>
+          <AboutReveal variants={revealVariants}><p>{t('about.outside4')}</p></AboutReveal>
           <br></br>
-          <AboutReveal variants={revealVariants}><p><strong>{t('about.closing')}</strong></p></AboutReveal>
           <AboutReveal variants={revealVariants}><p><strong>{t('about.signature')}</strong></p></AboutReveal>
         </AboutCopy>
 
@@ -74,13 +74,11 @@ export const About: FC = () => {
         >
           <AsideTitle>{t('about.focusTitle')}</AsideTitle>
           <FocusList>
-            <li>{t('about.focusReact')}</li>
-            <li>{t('about.focusTypeScript')}</li>
-            <li>{t('about.focusArchitecture')}</li>
-            <li>{t('about.focusCleanInterfaces')}</li>
+            <li>{t('about.focusFrontend')}</li>
             <li>{t('about.focusCinema')}</li>
             <li>{t('about.focusFilmmaking')}</li>
             <li>{t('about.focusArchery')}</li>
+            <li>{t('about.focusDad')}</li>
           </FocusList>
         </AboutAside>
       </AboutLayout>
