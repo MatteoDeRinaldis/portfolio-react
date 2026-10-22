@@ -27,8 +27,3 @@ declare module '*.json' {
   const value: Record<string, unknown>;
   export default value;
 }
-
-declare module './reportWebVitals' {
-  const value: () => void;
-  export default value;
-}

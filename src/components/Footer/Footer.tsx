@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Document as PdfViewerDocument, Page, pdfjs } from 'react-pdf';
 import { FiChevronUp, FiDownload, FiFileText, FiX } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'motion/react';
+import packageJson from '../../../package.json';
 import { useTranslation } from '../../i18n';
 import { EXTERNAL_LINKS } from '../../constants/externalLinks';
 import {
@@ -127,7 +128,7 @@ export const Footer: FC<FooterProps> = ({ isHomeEngineerHovered, isHomeRoleHover
         </FooterToggle>
         <FooterContent>
           <FooterLegal>
-            <FooterText>&copy; 2026 Matteo De Rinaldis · {t('common.allRightsReserved')}</FooterText>
+            <FooterText>&copy; 2026 Matteo De Rinaldis · {t('common.allRightsReserved')} · v{packageJson.version}</FooterText>
             <PrivacyLink as={Link} to="/privacy-policy">{t('common.privacyPolicy')}</PrivacyLink>
           </FooterLegal>
           <SocialLinks $isHomeIdle={pathname === '/' && !isHomeRoleHovered}>

@@ -87,7 +87,7 @@ const AppContent: FC = () => {
 
   useEffect(() => {
     const isProduction =
-      process.env.NODE_ENV === 'production' &&
+      import.meta.env.PROD &&
       window.location.hostname === 'matteoderinaldis.com';
 
     if (!isProduction) {

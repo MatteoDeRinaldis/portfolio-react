@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-
-const soraFont = require('../assets/fonts/Sora.ttf') as string;
+import soraFont from '../assets/fonts/Sora.ttf';
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {
