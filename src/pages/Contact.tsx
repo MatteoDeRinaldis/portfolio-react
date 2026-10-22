@@ -1,6 +1,8 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiMail } from 'react-icons/fi';
+import { useForm } from 'react-hook-form';
+import type { FieldErrors } from 'react-hook-form';
 import { useTranslation } from '../i18n';
 import { PageTitle, PageDescription } from '../components/PageLayout';
 import {
@@ -29,8 +31,8 @@ import {
 // Public form identifier supplied by Web3Forms, intended for browser use.
 const contactAccessKey = 'cd071282-745b-4c47-af3d-41fd395aeb56';
 type ContactField = 'name' | 'email' | 'message';
-type ContactErrors = Partial<Record<ContactField, string>>;
 type ContactValues = Record<ContactField, string>;
+type ContactFormValues = ContactValues & { botcheck: boolean };
 
 const contactDraft: ContactValues = {
   name: '',
@@ -40,10 +42,19 @@ const contactDraft: ContactValues = {
 
 export const Contact: FC = () => {
   const { t } = useTranslation();
-  const [values, setValues] = useState<ContactValues>(() => contactDraft);
-  const [errors, setErrors] = useState<ContactErrors>({});
+  const {
+    register,
+    handleSubmit: handleFormSubmit,
+    getValues,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<ContactFormValues>({
+    defaultValues: { ...contactDraft, botcheck: false },
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+  });
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
   const [snackbarVariant, setSnackbarVariant] = useState<'error' | 'success'>('error');
   const [isSending, setIsSending] = useState(false);
   const sendingRef = useRef(false);
@@ -54,43 +65,18 @@ export const Contact: FC = () => {
     return () => window.clearTimeout(timer);
   }, [snackbarMessage, snackbarVariant]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (formValues: ContactFormValues) => {
     if (sendingRef.current) return;
-    setSnackbarVariant('error');
-    setHasAttemptedSubmit(true);
-    const formData = new FormData(event.currentTarget);
-    const name = String(formData.get('name') ?? '').trim();
-    const email = String(formData.get('email') ?? '').trim();
-    const message = String(formData.get('message') ?? '').trim();
+    const name = formValues.name.trim();
+    const email = formValues.email.trim();
+    const message = formValues.message.trim();
     const nextValues = { name, email, message };
-    setValues(nextValues);
+    setValue('name', name);
+    setValue('email', email);
+    setValue('message', message);
     Object.assign(contactDraft, nextValues);
-    const nextErrors: ContactErrors = {};
 
-    if (!name) {
-      nextErrors.name = t('contact.nameRequired');
-    }
-
-    if (!email) {
-      nextErrors.email = t('contact.emailRequired');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      nextErrors.email = t('contact.emailInvalid');
-    }
-
-    if (!message) {
-      nextErrors.message = t('contact.messageRequired');
-    }
-
-    setErrors(nextErrors);
-
-    if (Object.keys(nextErrors).length > 0) {
-      setSnackbarMessage(t('contact.validationError'));
-      const firstInvalidField = Object.keys(nextErrors)[0] as ContactField;
-      document.getElementById(`contact-${firstInvalidField}`)?.focus();
-      return;
-    }
-
+    setSnackbarVariant('error');
     setSnackbarMessage('');
     sendingRef.current = true;
     setIsSending(true);
@@ -105,7 +91,7 @@ export const Contact: FC = () => {
           ...nextValues,
           subject: t('contact.emailSubject', { name }),
           from_name: 'Portfolio Contact',
-          botcheck: Boolean(formData.get('botcheck')),
+          botcheck: Boolean(formValues.botcheck),
         }),
         signal: controller.signal,
       });
@@ -113,10 +99,8 @@ export const Contact: FC = () => {
       if (!response.ok || result.success !== true) throw new Error('Contact submission failed');
 
       const emptyValues = { name: '', email: '', message: '' };
-      setValues(emptyValues);
+      reset({ ...emptyValues, botcheck: false });
       Object.assign(contactDraft, emptyValues);
-      setErrors({});
-      setHasAttemptedSubmit(false);
       setSnackbarVariant('success');
       setSnackbarMessage(t('contact.sendSuccess'));
     } catch {
@@ -129,55 +113,52 @@ export const Contact: FC = () => {
     }
   };
 
-  const handleFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const changedElement = event.currentTarget;
-    const changedField = changedElement.name as ContactField;
+  const handleInvalidSubmit = (invalidFields: FieldErrors<ContactFormValues>) => {
+    setSnackbarVariant('error');
+    setSnackbarMessage(t('contact.validationError'));
+    const firstInvalidField = (['name', 'email', 'message'] as const).find(
+      (field) => invalidFields[field],
+    );
+    if (firstInvalidField) {
+      document.getElementById(`contact-${firstInvalidField}`)?.focus();
+    }
+  };
 
-    const nextValues = { ...values, [changedField]: changedElement.value.trimStart() };
-    const { name, email, message } = nextValues;
-    setValues(nextValues);
+  const handleFieldChange = (
+    field: ContactField,
+    onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => unknown,
+  ) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    event.currentTarget.value = event.currentTarget.value.trimStart();
+    onChange(event);
+    const currentValues = getValues();
+    const nextValues = {
+      name: currentValues.name,
+      email: currentValues.email,
+      message: currentValues.message,
+      [field]: event.currentTarget.value,
+    };
     Object.assign(contactDraft, nextValues);
-    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const isComplete = name.length > 0 && message.length > 0 && emailIsValid;
-
-    setErrors((currentErrors) => {
-      const nextErrors = { ...currentErrors };
-
-      if (!hasAttemptedSubmit && !Object.prototype.hasOwnProperty.call(currentErrors, changedField)) {
-        return nextErrors;
-      }
-
-      if (changedField === 'name') {
-        if (name) {
-          delete nextErrors.name;
-        } else {
-          nextErrors.name = t('contact.nameRequired');
-        }
-      }
-
-      if (changedField === 'email') {
-        if (emailIsValid) {
-          delete nextErrors.email;
-        } else {
-          nextErrors.email = email ? t('contact.emailInvalid') : t('contact.emailRequired');
-        }
-      }
-
-      if (changedField === 'message') {
-        if (message) {
-          delete nextErrors.message;
-        } else {
-          nextErrors.message = t('contact.messageRequired');
-        }
-      }
-
-      return nextErrors;
-    });
+    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nextValues.email);
+    const isComplete = nextValues.name.length > 0 && nextValues.message.length > 0 && emailIsValid;
 
     if (isComplete) {
       setSnackbarMessage('');
     }
   };
+
+  const nameRegistration = register('name', {
+    validate: (value) => value.trim().length > 0 || t('contact.nameRequired'),
+  });
+  const emailRegistration = register('email', {
+    validate: (value) => {
+      const email = value.trim();
+      if (!email) return t('contact.emailRequired');
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || t('contact.emailInvalid');
+    },
+  });
+  const messageRegistration = register('message', {
+    validate: (value) => value.trim().length > 0 || t('contact.messageRequired'),
+  });
 
   return (
     <ContactPageWrapper>
@@ -200,14 +181,14 @@ export const Contact: FC = () => {
       <ContactGrid>
         <ContactForm
           as={motion.form}
-          onSubmit={handleSubmit}
+          onSubmit={handleFormSubmit(handleSubmit, handleInvalidSubmit)}
           aria-busy={isSending}
           noValidate
           initial={{ opacity: 0, x: -56 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.55, delay: 0.5, ease: 'easeOut' }}
         >
-          <input type="checkbox" name="botcheck" hidden tabIndex={-1} autoComplete="off" />
+          <input type="checkbox" hidden tabIndex={-1} autoComplete="off" {...register('botcheck')} />
           <FormRow>
             <Field
               as={motion.div}
@@ -217,20 +198,19 @@ export const Contact: FC = () => {
             >
               <Label htmlFor="contact-name">{t('contact.nameLabel')}</Label>
               <Input
+                {...nameRegistration}
                 id="contact-name"
-                name="name"
                 type="text"
                 placeholder={t('contact.namePlaceholder')}
-                value={values.name}
                 disabled={isSending}
-                onChange={handleFieldChange}
+                onChange={handleFieldChange('name', nameRegistration.onChange)}
                 aria-invalid={Boolean(errors.name)}
-                aria-describedby={errors.name ? 'contact-name-error' : undefined}
+                aria-describedby={errors.name?.message ? 'contact-name-error' : undefined}
               />
-              {errors.name ? (
+              {errors.name?.message ? (
                 <FieldError id="contact-name-error">
                   <FiAlertCircle aria-hidden="true" />
-                  {errors.name}
+                  {errors.name.message}
                 </FieldError>
               ) : null}
             </Field>
@@ -243,20 +223,19 @@ export const Contact: FC = () => {
             >
               <Label htmlFor="contact-email">{t('contact.emailLabel')}</Label>
               <Input
+                {...emailRegistration}
                 id="contact-email"
-                name="email"
                 type="email"
                 placeholder={t('contact.emailPlaceholder')}
-                value={values.email}
                 disabled={isSending}
-                onChange={handleFieldChange}
+                onChange={handleFieldChange('email', emailRegistration.onChange)}
                 aria-invalid={Boolean(errors.email)}
-                aria-describedby={errors.email ? 'contact-email-error' : undefined}
+                aria-describedby={errors.email?.message ? 'contact-email-error' : undefined}
               />
-              {errors.email ? (
+              {errors.email?.message ? (
                 <FieldError id="contact-email-error">
                   <FiAlertCircle aria-hidden="true" />
-                  {errors.email}
+                  {errors.email.message}
                 </FieldError>
               ) : null}
             </Field>
@@ -270,19 +249,18 @@ export const Contact: FC = () => {
           >
             <Label htmlFor="contact-message">{t('contact.messageLabel')}</Label>
             <Message
+              {...messageRegistration}
               id="contact-message"
-              name="message"
               placeholder={t('contact.messagePlaceholder')}
-              value={values.message}
               disabled={isSending}
-              onChange={handleFieldChange}
+              onChange={handleFieldChange('message', messageRegistration.onChange)}
               aria-invalid={Boolean(errors.message)}
-              aria-describedby={errors.message ? 'contact-message-error' : undefined}
+              aria-describedby={errors.message?.message ? 'contact-message-error' : undefined}
             />
-            {errors.message ? (
+            {errors.message?.message ? (
               <FieldError id="contact-message-error">
                 <FiAlertCircle aria-hidden="true" />
-                {errors.message}
+                {errors.message.message}
               </FieldError>
             ) : null}
           </Field>
