@@ -29,11 +29,11 @@ const skillIcons: Record<SkillIcon, ElementType> = {
   methodologies: FiCompass,
 };
 
-export const SkillCard: FC<{ skill: SkillCategory }> = ({ skill }) => {
+export const SkillCard: FC<{ skill: SkillCategory; isHighlighted?: boolean }> = ({ skill, isHighlighted = false }) => {
   const SkillIcon = skillIcons[skill.icon];
 
   return (
-    <SkillCardWrapper>
+    <SkillCardWrapper $isHighlighted={isHighlighted}>
       <SkillCardHeader>
         <CardIcon>
           <SkillIcon aria-hidden="true" />
@@ -87,14 +87,17 @@ const Card = styled.article`
   box-shadow: ${({ theme }) => theme.shadows.md};
 `;
 
-const SkillCardWrapper = styled.article`
+const SkillCardWrapper = styled.article<{ $isHighlighted: boolean }>`
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   min-height: 15rem;
   padding: ${({ theme }) => theme.spacing[6]};
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border: 1px solid ${({ theme, $isHighlighted }) =>
+    $isHighlighted
+      ? theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.86)' : 'rgba(17, 17, 17, 0.62)'
+      : theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   background-color: ${({ theme }) => (theme.mode === 'dark' ? 'rgba(23, 23, 23, 0.35)' : 'rgba(255, 255, 255, 0.35)')};
   backdrop-filter: blur(14px);
@@ -103,8 +106,7 @@ const SkillCardWrapper = styled.article`
   transition: all ${({ theme }) => theme.transitions.base};
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 20px ${({ theme }) => (theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)')}, ${({ theme }) => theme.shadows.md};
+    border-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.86)' : 'rgba(17, 17, 17, 0.62)'};
     transform: translateY(-3px);
   }
 `;

@@ -54,6 +54,9 @@ const Card = styled.button`
     display: block;
     width: 100%;
     height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
     color: ${({ theme }) => theme.colors.text};
     text-align: left;
     perspective: 1200px;
@@ -88,7 +91,10 @@ const Face = styled.span<{ $back?: boolean }>`
   padding: ${({ theme }) => theme.spacing[4]};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  background: ${({ theme }) => theme.colors.surface};
+  background-color: ${({ theme }) => (theme.mode === 'dark' ? 'rgba(23, 23, 23, 0.16)' : 'rgba(255, 255, 255, 0.2)')};
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 70%);
+  backdrop-filter: blur(22px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: rotateY(${({ $back }) => $back ? '180deg' : '0deg'});
