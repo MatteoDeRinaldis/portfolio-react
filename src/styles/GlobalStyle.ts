@@ -29,6 +29,10 @@ export const GlobalStyle = createGlobalStyle`
     text-rendering: optimizeLegibility;
   }
 
+  html:has(.home-page-wrapper) {
+    scrollbar-gutter: auto;
+  }
+
   body {
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: ${({ theme }) => theme.fontSizes.base};

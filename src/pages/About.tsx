@@ -1,8 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { FiUser } from 'react-icons/fi';
+import { useTheme } from 'styled-components';
 import { useTranslation } from '../i18n';
 import { PageTitle, PageDescription } from '../components/PageLayout';
+import { FoldText } from '../components/react-bits/FoldText';
+import { RotatingText } from '../components/react-bits/RotatingText';
 import { AboutPageWrapper, AboutBackgroundIcon, AboutLayout, AboutCopy, AboutReveal, AboutHeading, AboutLead, AboutSectionTitle, AboutAside, AsideTitle, FocusList } from './About.styles';
 
 const revealVariants = {
@@ -10,28 +13,38 @@ const revealVariants = {
   visible: { opacity: 1, x: 0 },
 };
 
+const foldTextProps = {
+  foldStyle: 'paper',
+  hinge: 'top',
+  splitBy: 'char',
+  hoverRefold: true,
+  fontSize: 'inherit',
+  fontWeight: 'inherit',
+  style: { letterSpacing: 'inherit', lineHeight: 'inherit' },
+} as const;
+
 export const About: FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const focusItems = useMemo(
+    () => [
+      t('about.focusFrontend'),
+      t('about.focusCinema'),
+      t('about.focusFilmmaking'),
+      t('about.focusArchery'),
+      t('about.focusDad'),
+    ],
+    [t],
+  );
+  const headingWords = useMemo(() => t('about.headingWords').split('|'), [t]);
 
   return (
     <AboutPageWrapper>
-      <PageTitle
-        as={motion.h2}
-        initial="hidden"
-        animate="visible"
-        variants={revealVariants}
-        transition={{ duration: 0.45, delay: 0.1, ease: 'easeOut' }}
-      >
-        {t('pages.aboutTitle')}
+      <PageTitle as="h2">
+        <FoldText text={t('pages.aboutTitle')} {...foldTextProps} stagger={0.06} delay={0.1} />
       </PageTitle>
-      <PageDescription
-        as={motion.p}
-        initial="hidden"
-        animate="visible"
-        variants={revealVariants}
-        transition={{ duration: 0.45, delay: 0.3, ease: 'easeOut' }}
-      >
-        {t('pages.aboutDescription')}
+      <PageDescription as="p">
+        <FoldText text={t('pages.aboutDescription')} {...foldTextProps} stagger={0.02} delay={0.5} />
       </PageDescription>
       <AboutLayout>
         <AboutCopy
@@ -41,7 +54,20 @@ export const About: FC = () => {
           variants={{ hidden: {}, visible: {} }}
           transition={{ delayChildren: 0.55, staggerChildren: 0.13 }}
         >
-          <AboutReveal variants={revealVariants}><AboutHeading>{t('about.heading')}</AboutHeading></AboutReveal>
+          <AboutReveal variants={revealVariants}>
+            <AboutHeading aria-label={t('about.heading')}>
+              <span aria-hidden="true">{t('about.headingPrefix')}</span>
+              <RotatingText
+                texts={headingWords}
+                effect="slide"
+                splitBy="characters"
+                staggerDuration={0.025}
+                staggerFrom="first"
+                rotationInterval={2200}
+                splitLevelClassName="about-rotating-level"
+              />
+            </AboutHeading>
+          </AboutReveal>
           <AboutReveal variants={revealVariants}><AboutLead>{t('about.lead')}</AboutLead></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.intro1')}</p></AboutReveal>
           <AboutReveal variants={revealVariants}><p>{t('about.intro2')}</p></AboutReveal>
@@ -73,13 +99,17 @@ export const About: FC = () => {
           transition={{ duration: 0.8, delay: 1, ease: 'easeOut' }}
         >
           <AsideTitle>{t('about.focusTitle')}</AsideTitle>
-          <FocusList>
-            <li>{t('about.focusFrontend')}</li>
-            <li>{t('about.focusCinema')}</li>
-            <li>{t('about.focusFilmmaking')}</li>
-            <li>{t('about.focusArchery')}</li>
-            <li>{t('about.focusDad')}</li>
-          </FocusList>
+          <FocusList
+            items={focusItems}
+            focusStyle="brackets"
+            blurAmount={1}
+            unfocusedOpacity={0.6}
+            borderColor={theme.colors.text}
+            cornerSize={10}
+            borderWidth={2}
+            animationDuration={0.5}
+            pauseBetweenAnimations={1.4}
+          />
         </AboutAside>
       </AboutLayout>
       <AboutBackgroundIcon
