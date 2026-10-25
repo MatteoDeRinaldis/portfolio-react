@@ -1,0 +1,48 @@
+.chroma-grid {
+  --chroma-x: -9999px;
+  --chroma-y: -9999px;
+  --chroma-power: 0;
+  position: relative;
+  width: 100%;
+}
+
+.chroma-card {
+  position: relative;
+}
+
+.chroma-card::before,
+.chroma-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: var(--chroma-radius, 12px);
+  pointer-events: none;
+  content: '';
+  -webkit-mask-image: radial-gradient(
+    circle var(--chroma-r, 260px) at calc(var(--chroma-x) - var(--chroma-ox, 0px))
+      calc(var(--chroma-y) - var(--chroma-oy, 0px)),
+    var(--chroma-stops)
+  );
+  mask-image: radial-gradient(
+    circle var(--chroma-r, 260px) at calc(var(--chroma-x) - var(--chroma-ox, 0px))
+      calc(var(--chroma-y) - var(--chroma-oy, 0px)),
+    var(--chroma-stops)
+  );
+}
+
+.chroma-card::before {
+  background: radial-gradient(130% 70% at 50% 100%, var(--chroma-accent, #fff), transparent 72%);
+  opacity: calc(var(--chroma-glow, 0.5) * var(--chroma-power) * 0.35);
+}
+
+.chroma-card::after {
+  box-shadow: inset 0 0 0 1px var(--chroma-accent, #fff);
+  opacity: calc(var(--chroma-border, 1) * var(--chroma-power));
+}
+
+@media (hover: none) {
+  .chroma-card::before,
+  .chroma-card::after {
+    display: none;
+  }
+}
