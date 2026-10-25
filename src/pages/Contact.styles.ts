@@ -7,6 +7,54 @@ export const ContactPageWrapper = styled(PageWrapper)`
   overflow-x: clip;
   overflow-y: visible;
 
+  .contact-typed-title {
+    display: inline-block;
+    min-height: 1em;
+    border-right: 0.08em solid transparent;
+  }
+
+  .contact-typed-title.is-typing {
+    border-right-color: currentColor;
+    animation: contact-caret-blink 0.9s steps(2, start) infinite;
+  }
+
+  @keyframes contact-caret-blink {
+    to {
+      border-color: transparent;
+    }
+  }
+
+  .swipe-toast.contact-toast[data-inline='false'] {
+    --st-offset: ${({ theme }) => theme.spacing[6]};
+    bottom: calc(${({ theme }) => theme.spacing[6]} + 4.5rem);
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    .swipe-toast.contact-toast[data-inline='false'] {
+      --st-offset: ${({ theme }) => theme.spacing[4]};
+      top: calc(var(--header-height, 5rem) + ${({ theme }) => theme.spacing[4]});
+      bottom: auto;
+    }
+
+    .swipe-toast.contact-toast[data-inline='false'] .swipe-toast__lift {
+      transform: translateY(0);
+    }
+
+    .swipe-toast.contact-toast[data-inline='false'][data-mounted='false'] .swipe-toast__lift,
+    .swipe-toast.contact-toast[data-inline='false'][data-phase='closing'] .swipe-toast__lift,
+    .swipe-toast.contact-toast[data-inline='false'][data-phase='gone'] .swipe-toast__lift {
+      transform: translateY(-100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-typed-title.is-typing {
+      animation: none;
+      border-right-color: transparent;
+    }
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding-top: 5rem;
     padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
@@ -67,22 +115,22 @@ export const ContactForm = styled.form`
 export const ContactCard = styled.div`
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
   width: 30%;
   margin-top: 28px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+  }
+`;
+
+export const ContactCardBody = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   padding: 1.5rem 2rem 3rem;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background-color: ${({ theme }) => (theme.mode === 'dark' ? 'rgba(23, 23, 23, 0.35)' : 'rgba(255, 255, 255, 0.35)')};
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: ${({ theme }) => theme.shadows.md};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => theme.spacing[6]};
-    width: 100%;
   }
 `;
 
@@ -105,6 +153,10 @@ export const CardDescription = styled.p`
   color: ${({ theme }) => theme.colors.textLight};
   line-height: 1.6;
   margin: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 export const CardInfoList = styled.div`
@@ -212,6 +264,8 @@ export const Message = styled.textarea`
 `;
 
 export const SubmitButton = styled.button`
+  position: relative;
+  isolation: isolate;
   align-self: flex-end;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
@@ -221,10 +275,41 @@ export const SubmitButton = styled.button`
   font: inherit;
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
   cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.border};
+    pointer-events: none;
+  }
+
+  .contact-star-border-canvas {
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    z-index: 1;
+    width: calc(100% + 32px);
+    height: calc(100% + 32px);
+    pointer-events: none;
+  }
+
+  > span {
+    position: relative;
+    z-index: 2;
+  }
+
   &:disabled {
     cursor: wait;
     opacity: 0.65;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-star-border-canvas { display: none; }
+  }
+
   transition: background-color ${({ theme }) => theme.transitions.base}, color ${({ theme }) => theme.transitions.base}, box-shadow ${({ theme }) => theme.transitions.base};
 
   &:hover {

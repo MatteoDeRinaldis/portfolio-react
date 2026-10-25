@@ -36,7 +36,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Tecnologie Frontend',
       icon: 'frontend',
-      items: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS / SCSS / LESS', 'Redux', 'Axios'],
+      items: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS / SCSS / LESS', 'Redux', 'Redux Toolkit', 'Redux Saga', 'Axios'],
     },
     {
       title: 'Sviluppo Mobile',
@@ -51,7 +51,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Strumenti di Sviluppo',
       icon: 'tools',
-      items: ['Webpack', 'npm / yarn', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
+      items: ['Vite', 'Webpack', 'npm / yarn', 'yalc', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
     },
     {
       title: 'DevOps e Collaborazione',
@@ -83,7 +83,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Frontend Technologies',
       icon: 'frontend',
-      items: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS / SCSS / LESS', 'Redux', 'Axios'],
+      items: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS / SCSS / LESS', 'Redux', 'Redux Toolkit', 'Redux Saga', 'Axios'],
     },
     {
       title: 'Mobile Development',
@@ -98,7 +98,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Development Tools',
       icon: 'tools',
-      items: ['Webpack', 'npm / yarn', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
+      items: ['Vite', 'Webpack', 'npm / yarn', 'yalc', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
     },
     {
       title: 'DevOps & Collaboration',
@@ -179,27 +179,14 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
       ],
     },
     {
-      company: 'WebScience',
+      company: 'iTuna / WebScience',
       location: 'Milano, IT',
-      period: '07/2022 - 09/2022',
+      period: '11/2020 - 09/2022',
       projects: [
         {
           client: 'Fabrick',
           description:
             'Sviluppo di componenti UI e integrazioni grafiche per il settore bancario, bug fixing, integrazione di endpoint backend e personalizzazione di componenti dinamici riutilizzabili.',
-          technologies: ['TypeScript', 'React', 'Less', 'Storybook', 'IntelliJ'],
-        },
-      ],
-    },
-    {
-      company: 'iTuna',
-      location: 'Milano, IT',
-      period: '11/2020 - 06/2022',
-      projects: [
-        {
-          client: 'Fabrick',
-          description:
-            'Sviluppo di componenti UI e integrazioni grafiche per il settore bancario, bug fixing e realizzazione di componenti dinamici riutilizzabili.',
           technologies: ['TypeScript', 'React', 'Less', 'Storybook', 'IntelliJ'],
         },
         {
@@ -274,18 +261,6 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
         },
       ],
     },
-    {
-      company: 'Private Tutor',
-      location: 'Milano, IT',
-      period: '2007 - 2017',
-      projects: [
-        {
-          client: 'Lezioni private',
-          description: 'Lezioni private di matematica e fisica per studenti delle scuole superiori e del primo anno universitario.',
-          technologies: ['Matematica', 'Fisica', 'Didattica'],
-        },
-      ],
-    },
   ],
   en: [
     {
@@ -337,27 +312,14 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
       ],
     },
     {
-      company: 'WebScience',
+      company: 'iTuna / WebScience',
       location: 'Milan, IT',
-      period: '07/2022 - 09/2022',
+      period: '11/2020 - 09/2022',
       projects: [
         {
           client: 'Fabrick',
           description:
             'Development of UI components and graphical integrations for the banking sector, bug fixing, backend endpoint integration, and customization of reusable dynamic components.',
-          technologies: ['TypeScript', 'React', 'Less', 'Storybook', 'IntelliJ'],
-        },
-      ],
-    },
-    {
-      company: 'iTuna',
-      location: 'Milan, IT',
-      period: '11/2020 - 06/2022',
-      projects: [
-        {
-          client: 'Fabrick',
-          description:
-            'Development of UI components and graphical integrations for the banking sector, bug fixing, and implementation of reusable dynamic components.',
           technologies: ['TypeScript', 'React', 'Less', 'Storybook', 'IntelliJ'],
         },
         {
@@ -429,18 +391,6 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
             'Unity',
             'C#',
           ],
-        },
-      ],
-    },
-    {
-      company: 'Private Tutor',
-      location: 'Milan, IT',
-      period: '2007 - 2017',
-      projects: [
-        {
-          client: 'Private lessons',
-          description: 'Private lessons in mathematics and physics for high school and first-year university students.',
-          technologies: ['Mathematics', 'Physics', 'Teaching'],
         },
       ],
     },
