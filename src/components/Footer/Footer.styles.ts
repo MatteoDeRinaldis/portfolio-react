@@ -34,7 +34,9 @@ export const FooterToggle = styled.button<{ $visible: boolean }>`
   border-radius: ${({ theme }) => theme.borderRadius.full};
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.primary};
-  box-shadow: ${({ theme }) => theme.shadows.md};
+  box-shadow: ${({ theme }) => (theme.mode === 'dark'
+    ? '0 6px 16px rgba(0, 0, 0, 0.7), 0 2px 5px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12)'
+    : '0 6px 16px rgba(17, 17, 17, 0.3), 0 2px 5px rgba(17, 17, 17, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.7)')};
   transform: translate(-50%, -50%);
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
@@ -58,7 +60,8 @@ export const FooterToggle = styled.button<{ $visible: boolean }>`
     left: auto;
     width: 3rem;
     height: 3rem;
-    transform: translateY(-120%);
+    top: ${({ theme }) => `calc(-1 * ${theme.spacing[4]})`};
+    transform: translateY(-100%);
 
     svg {
       width: 1.5rem;
@@ -69,7 +72,7 @@ export const FooterToggle = styled.button<{ $visible: boolean }>`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     &:hover {
-      transform: translateY(-125%);
+      transform: translateY(calc(-100% - 4px));
     }
   }
 
@@ -116,10 +119,19 @@ export const FooterText = styled.p`
   }
 `;
 
-export const FooterSeparator = styled.span`
+const hideOnDesktop = css<{ $hideOnDesktop?: boolean }>`
+  ${({ $hideOnDesktop, theme }) => $hideOnDesktop && css`
+    @media (min-width: calc(${theme.breakpoints.mobile} + 1px)) {
+      display: none;
+    }
+  `}
+`;
+
+export const FooterSeparator = styled.span<{ $hideOnDesktop?: boolean }>`
   margin: 0 ${({ theme }) => theme.spacing[3]};
   color: ${({ theme }) => theme.colors.textLight};
   white-space: nowrap;
+  ${hideOnDesktop}
 `;
 
 export const FooterLegal = styled.div`
@@ -239,8 +251,9 @@ export const PrivacyLink = styled.a`
   }
 `;
 
-export const TechnicalOverviewLink = styled.button`
+export const TechnicalOverviewLink = styled.button<{ $hideOnDesktop?: boolean }>`
   display: inline-flex;
+  ${hideOnDesktop}
   align-items: center;
   justify-content: center;
   vertical-align: middle;
