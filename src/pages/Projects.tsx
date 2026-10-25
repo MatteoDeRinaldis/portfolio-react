@@ -16,6 +16,7 @@ import type { ProjectExperience } from '../data/cv';
 
 const ProjectsPageWrapper = styled(PageWrapper)`
   position: relative;
+  isolation: isolate;
   overflow-x: clip;
   overflow-y: visible;
 
@@ -29,7 +30,7 @@ const ProjectsBackgroundIcon = styled.div`
   position: absolute;
   top: -5%;
   left: -10vw;
-  z-index: 0;
+  z-index: -1;
   color: ${({ theme }) => theme.colors.primary};
   font-size: clamp(18rem, 42vw, 44rem);
   line-height: 1;
@@ -795,12 +796,18 @@ const DesktopProjectContent = styled.div`
 `;
 
 const ProjectClient = styled.h4`
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: ${({ theme }) => theme.spacing[2]};
-  margin: 0 0 ${({ theme }) => theme.spacing[2]};
+  margin: 0 0 ${({ theme }) => theme.spacing[3]};
+  padding: ${({ theme }) => `${theme.spacing[2]} ${theme.spacing[4]}`};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background-color: ${({ theme }) => (theme.mode === 'dark' ? '#080808' : '#dededb')};
   color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: 1.35;
 
   &::before {
     flex: 0 0 auto;
@@ -833,12 +840,22 @@ const TechnologyList = styled.ul`
 `;
 
 const Technology = styled.li`
+  display: inline-flex;
+  align-items: center;
   padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[3]}`};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background-color: ${({ theme }) => (theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)')};
   color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => (theme.mode === 'dark' ? '#080808' : '#dededb')};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  letter-spacing: 0.02em;
+  transition: all ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 export const Projects: FC = () => {

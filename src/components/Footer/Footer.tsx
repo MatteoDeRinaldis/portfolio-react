@@ -158,6 +158,8 @@ export const Footer: FC<FooterProps> = ({ isHomeEngineerHovered, isHomeRoleHover
     };
   }, []);
 
+  const hideTechnicalOverviewOnDesktop = pathname === '/skills' || pathname === '/projects';
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -206,8 +208,9 @@ export const Footer: FC<FooterProps> = ({ isHomeEngineerHovered, isHomeRoleHover
           <FooterLegal>
             <FooterText>
               &copy; 2026 Matteo De Rinaldis · {t('common.allRightsReserved')} · v{packageJson.version}
-              <FooterSeparator aria-hidden="true">·</FooterSeparator>
+              <FooterSeparator aria-hidden="true" $hideOnDesktop={hideTechnicalOverviewOnDesktop}>·</FooterSeparator>
               <TechnicalOverviewLink
+                $hideOnDesktop={hideTechnicalOverviewOnDesktop}
                 ref={technicalOverviewTriggerRef}
                 type="button"
                 onClick={() => setIsTechnicalOverviewOpen(true)}
