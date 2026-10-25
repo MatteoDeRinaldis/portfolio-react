@@ -56,15 +56,17 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-test('invalid fields do not send a request', () => {
+test('invalid fields do not send a request', async () => {
   renderContact();
 
   submit();
 
   expect(fetchMock).not.toHaveBeenCalled();
 
-  expect(screen.getByRole('alert')).toHaveTextContent(
-    'contact.validationError',
+  await waitFor(() =>
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'contact.validationError',
+    ),
   );
 });
 
@@ -94,6 +96,14 @@ test('preserves spaces while typing and clears fields only after confirmed succe
   ).toHaveValue('Hello world \nSecond line ');
 
   submit();
+
+  await waitFor(() =>
+    expect(
+      screen.getByRole('button', {
+        name: 'contact.sending',
+      }),
+    ).toBeDisabled(),
+  );
 
   expect(
     screen.getByRole('button', {

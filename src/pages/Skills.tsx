@@ -1,9 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, useTheme } from 'styled-components';
 import { FiCode, FiLayers, FiAward, FiDatabase, FiCheckCircle } from 'react-icons/fi';
 import { SkillCard } from '../components/common/CvCards';
 import { PageDescription, PageSection, PageTitle, PageWrapper } from '../components/PageLayout';
+import { TargetCursor } from '../components/react-bits/TargetCursor';
+import { ChromaGrid } from '../components/react-bits/ChromaGrid';
+import GradualBlur from '../components/react-bits/GradualBlur';
 import { useTranslation } from '../i18n';
 import { getLocalizedSkillCategories } from '../data/cv';
 
@@ -46,43 +49,48 @@ const SkillsBackgroundIcon = styled.div`
   }
 `;
 
+const MobilePageScrollBlur = styled(GradualBlur)`
+  display: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: block;
+  }
+`;
+
 const revealVariants = {
   hidden: { opacity: 0, x: -40 },
   visible: { opacity: 1, x: 0 },
 };
 
 export const Skills: FC = () => {
+  const cursorScopeRef = useRef<HTMLDivElement>(null);
   const overviewRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const carousel = overviewRef.current;
-    if (!carousel) return;
-
-    const handleScroll = () => {
-      const { scrollLeft, scrollWidth, clientWidth } = carousel;
-
-      setIsOverviewAtEnd(
-        scrollLeft + clientWidth >= scrollWidth - 2
-      );
-    };
-
-    handleScroll();
-
-    carousel.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-
-    return () => {
-      carousel.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
-
   const { t, language } = useTranslation();
+  const theme = useTheme();
   const [isPageScrolled, setIsPageScrolled] = useState(false);
   const [hoveredCategoryIndex, setHoveredCategoryIndex] = useState<number | null>(null);
   const [isOverviewAtEnd, setIsOverviewAtEnd] = useState(false);
 
   const skillCategories = getLocalizedSkillCategories(language);
+
+  useEffect(() => {
+    const carousel = overviewRef.current;
+    if (!carousel) return undefined;
+
+    const updateOverviewEdge = () => {
+      setIsOverviewAtEnd(carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 2);
+    };
+
+    updateOverviewEdge();
+    carousel.addEventListener('scroll', updateOverviewEdge, { passive: true });
+    window.addEventListener('resize', updateOverviewEdge);
+
+    return () => {
+      carousel.removeEventListener('scroll', updateOverviewEdge);
+      window.removeEventListener('resize', updateOverviewEdge);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsPageScrolled(window.scrollY > 0);
@@ -99,7 +107,11 @@ export const Skills: FC = () => {
 
   return (
     <SkillsPageWrapper>
+      <TargetCursor spinDuration={2} parallaxOn container={cursorScopeRef} />
+      <div ref={cursorScopeRef}>
       <PageTitle
+        className="cursor-target"
+        style={{ width: 'fit-content' }}
         as={motion.h2}
         initial="hidden"
         animate="visible"
@@ -126,6 +138,7 @@ export const Skills: FC = () => {
             initial="hidden"
             animate="visible"
             variants={overviewItemVariants}
+            className="cursor-target"
             custom={0.55}
             transition={overviewItemTransition}
           >
@@ -138,6 +151,7 @@ export const Skills: FC = () => {
             initial="hidden"
             animate="visible"
             variants={overviewItemVariants}
+            className="cursor-target"
             custom={0.7}
             transition={overviewItemTransition}
           >
@@ -150,6 +164,7 @@ export const Skills: FC = () => {
             initial="hidden"
             animate="visible"
             variants={overviewItemVariants}
+            className="cursor-target"
             custom={0.85}
             transition={overviewItemTransition}
           >
@@ -162,6 +177,7 @@ export const Skills: FC = () => {
             initial="hidden"
             animate="visible"
             variants={overviewItemVariants}
+            className="cursor-target"
             custom={1}
             transition={overviewItemTransition}
           >
@@ -174,6 +190,7 @@ export const Skills: FC = () => {
             initial="hidden"
             animate="visible"
             variants={overviewItemVariants}
+            className="cursor-target"
             custom={1.15}
             transition={overviewItemTransition}
           >
@@ -182,6 +199,7 @@ export const Skills: FC = () => {
           </OverviewItem>
         </OverviewGrid>
       </OverviewCarousel>
+      </div>
 
       <SkillsPageLayout>
         <PageSection
@@ -195,19 +213,27 @@ export const Skills: FC = () => {
             <h3>{t('skills.carouselTitle')}</h3>
           </SkillsSectionHeader>
 
+          <ChromaGrid
+            accent={theme.mode === 'dark' ? '#f5f5f5' : '#1a1a1a'}
+            radius={300}
+            cardRadius={parseFloat(theme.borderRadius.lg) * 16 || 12}
+          >
           <SkillsGrid>
             {skillCategories.map((skill, index) => (
               <SkillCardItem
                 id={`skill-category-${index}`}
                 key={skill.title}
+                className="chroma-card"
+                data-chroma-area=""
                 $isHovered={hoveredCategoryIndex === index}
                 onMouseEnter={() => setHoveredCategoryIndex(index)}
                 onMouseLeave={() => setHoveredCategoryIndex(null)}
               >
-                <SkillCard skill={skill} />
+                <SkillCard skill={skill} isHighlighted={hoveredCategoryIndex === index} />
               </SkillCardItem>
             ))}
           </SkillsGrid>
+          </ChromaGrid>
         </PageSection>
 
         <SkillsSidebar $isPageScrolled={isPageScrolled} aria-label="Skill categories">
@@ -249,6 +275,18 @@ export const Skills: FC = () => {
       >
         <FiAward />
       </SkillsBackgroundIcon>
+      <MobilePageScrollBlur
+        target="page"
+        position="bottom"
+        height="5rem"
+        strength={1.5}
+        layers={8}
+        curve="bezier"
+        tint={theme.mode === 'dark' ? 'rgba(8, 8, 8, 0.28)' : 'rgba(255, 255, 255, 0.3)'}
+        autoHide
+        duration={0.25}
+        zIndex={5}
+      />
     </SkillsPageWrapper>
   );
 };
@@ -278,16 +316,9 @@ const OverviewCarousel = styled.div<{ $isAtEnd: boolean }>`
       bottom: 0;
       z-index: 2;
       width: 3rem;
-
-      background: linear-gradient(
-        to right,
-        transparent,
-        ${({ theme }) => theme.colors.background}
-      );
-
+      background: linear-gradient(to right, transparent, ${({ theme }) => theme.colors.background});
       content: '';
       pointer-events: none;
-
       opacity: ${({ $isAtEnd }) => ($isAtEnd ? 0 : 1)};
       transition: opacity 200ms ease;
     }
@@ -398,18 +429,13 @@ const SkillCardItem = styled.div<{ $isHovered?: boolean }>`
   scroll-margin-top: 8rem;
   transition: transform 220ms ease, opacity 180ms ease;
 
-  ${({ $isHovered, theme }) =>
+  ${({ $isHovered }) =>
     $isHovered &&
     `
     transform: translateY(-4px) scale(1.03);
     z-index: 2;
     position: relative;
     opacity: 1 !important;
-
-    > article {
-      border-color: ${theme.colors.primary};
-      box-shadow: 0 0 24px ${theme.colors.primary}66, ${theme.shadows.md};
-    }
   `}
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -417,7 +443,6 @@ const SkillCardItem = styled.div<{ $isHovered?: boolean }>`
     opacity: 1 !important;
 
     > article {
-      border-color: ${({ theme }) => theme.colors.border} !important;
       box-shadow: ${({ theme }) => theme.shadows.sm} !important;
     }
   }

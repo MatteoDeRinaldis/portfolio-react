@@ -1,9 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { IconType } from 'react-icons';
 import { SiAxios, SiCss, SiCypress, SiGit, SiGithub, SiGithubcopilot, SiHtml5, SiJavascript, SiJest, SiJira, SiMui, SiNpm, SiPostman, SiReact, SiRedux, SiStorybook, SiTailwindcss, SiTypescript, SiWebpack } from 'react-icons/si';
 import { VscAzureDevops } from 'react-icons/vsc';
+import { Crosshair } from '../components/react-bits/Crosshair';
+import LogoLoop from '../components/react-bits/LogoLoop';
+import { ShinyText } from '../components/react-bits/ShinyText';
 import profileImage from '../assets/img/MDR_Profile.webp';
 import frontendProfileImage from '../assets/img/MDR_Profile_FE.webp';
 import engineerProfileImage from '../assets/img/MDR_Profile_EN.webp';
@@ -14,10 +17,8 @@ import {
   HomeBackgroundImage,
   HomeProfileTarget,
   HomeProfileOrbit,
-  HomeOrbitNode,
   HomeSkillsLayer,
   HomeSkill,
-  HomeRoleSkills,
   HomeCornerLabel,
   HomeRoleTitle,
   HomeRoleDescription,
@@ -29,7 +30,7 @@ import {
   HomeMobilePanel,
   HomeMobileDescription,
   HomeCornerLabelContent,
-  HomeCornerLabelHint,
+  HomeRoleLabels,
 } from '../styles/Home.styles';
 
 type HomeProps = {
@@ -70,36 +71,27 @@ const engineerTechnologies: OrbitTechnology[] = [
   { name: 'GitHub Copilot CLI', Icon: SiGithubcopilot, documentationUrl: 'https://github.com/features/copilot/cli' },
 ];
 
-const frontendSkillOrder = [
-  'React',
-  'TypeScript',
-  'JavaScript',
-  'HTML5',
-  'CSS / SCSS / LESS',
-  'Redux',
-  'Axios',
-  'Tailwind CSS',
-  'Material UI',
-  'Storybook',
-];
+const defaultExperienceCrosshairPhrases = new Set([
+  'web applications',
+  'frontend development',
+  'applicazioni web',
+  'sviluppo frontend',
+]);
 
-const engineerSkillOrder = [
-  'Git',
-  'GitHub',
-  'npm / yarn',
-  'Webpack',
-  'REST APIs',
-  'API REST',
-  'Jest',
-  'Cypress',
-  'Azure DevOps',
-  'Jira',
-  'GitHub Copilot CLI',
-];
+const renderDefaultExperience = (text: string) =>
+  text.split(/(web applications|frontend development|applicazioni web|sviluppo frontend)/g)
+    .map((part, index) => defaultExperienceCrosshairPhrases.has(part)
+      ? (
+        <span key={`${part}-${index}`} data-crosshair-target>
+          <span data-crosshair-lock>{part}</span>
+        </span>
+      )
+      : part);
 
 export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChange, onRoleHoverChange }) => {
   const { language, t } = useTranslation();
   const theme = useTheme();
+  const prefersReducedMotion = useReducedMotion();
   const mobileQuery = `(max-width: ${theme.breakpoints.mobile})`;
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(mobileQuery).matches);
   const [mobileRole, setMobileRole] = useState<'frontend' | 'engineer' | null>(null);
@@ -139,12 +131,12 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   const [areProfileLabelsVisible] = useState(true);
   const [hasCornerLabelsEntered, setHasCornerLabelsEntered] = useState(false);
   const [activeRole, setActiveRole] = useState<'frontend' | 'engineer' | null>(null);
-  const [leavingRole, setLeavingRole] = useState<'frontend' | 'engineer' | null>(null);
   const [isOrbitEntering, setIsOrbitEntering] = useState(false);
   const [hasProfileImageMounted, setHasProfileImageMounted] = useState(false);
   const roleExitTimerRef = useRef<number | null>(null);
   const orbitEntryTimerRef = useRef<number | null>(null);
   const mobileContentRef = useRef<HTMLDivElement>(null);
+  const homeContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => {
     onProfileHoverChange(false);
@@ -193,19 +185,19 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
       orbitEntryTimerRef.current = null;
     }
     setIsOrbitEntering(false);
-    setLeavingRole(null);
     setActiveRole(role);
   };
 
-  const handleRoleLeave = (role: 'frontend' | 'engineer') => {
-    setActiveRole(null);
-    setLeavingRole(role);
-    setIsOrbitEntering(false);
+  const handleRoleLeave = () => {
     if (orbitEntryTimerRef.current !== null) {
       window.clearTimeout(orbitEntryTimerRef.current);
+      orbitEntryTimerRef.current = null;
+    }
+    if (roleExitTimerRef.current !== null) {
+      window.clearTimeout(roleExitTimerRef.current);
     }
     roleExitTimerRef.current = window.setTimeout(() => {
-      setLeavingRole(null);
+      setActiveRole(null);
       roleExitTimerRef.current = null;
     }, 260);
   };
@@ -214,27 +206,6 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
     .flatMap((category) => category.items)
     .filter((skill) => skill !== 'Cross-platform Development');
   const localizedCategories = getLocalizedSkillCategories(language);
-  const frontendSkills = localizedCategories
-    .filter(({ icon }) => ['frontend', 'ui', 'design', 'mobile'].includes(icon))
-    .flatMap((category) => category.items)
-    .filter((skill) => skill !== 'Cross-platform Development')
-    .sort((firstSkill, secondSkill) => {
-      const firstIndex = frontendSkillOrder.indexOf(firstSkill);
-      const secondIndex = frontendSkillOrder.indexOf(secondSkill);
-
-      return (firstIndex === -1 ? Number.MAX_SAFE_INTEGER : firstIndex) - (secondIndex === -1 ? Number.MAX_SAFE_INTEGER : secondIndex);
-    })
-    .slice(0, 10);
-  const engineerSkills = localizedCategories
-    .filter(({ icon }) => ['tools', 'devops', 'testing', 'backend', 'security', 'methodologies'].includes(icon))
-    .flatMap((category) => category.items)
-    .sort((firstSkill, secondSkill) => {
-      const firstIndex = engineerSkillOrder.indexOf(firstSkill);
-      const secondIndex = engineerSkillOrder.indexOf(secondSkill);
-
-      return (firstIndex === -1 ? Number.MAX_SAFE_INTEGER : firstIndex) - (secondIndex === -1 ? Number.MAX_SAFE_INTEGER : secondIndex);
-    })
-    .slice(0, 10);
   const leftSkills = skills.filter((_, index) => index % 2 === 0);
   const rightSkills = skills.filter((_, index) => index % 2 !== 0);
   const skillBatchCount = Math.max(Math.ceil(leftSkills.length / 2), Math.ceil(rightSkills.length / 2));
@@ -295,10 +266,20 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
     });
   }, []);
 
-  const orbitNodes = [
-    ...frontendTechnologies.map((technology, index) => ({ technology, role: 'frontend' as const, index })),
-    ...engineerTechnologies.map((technology, index) => ({ technology, role: 'engineer' as const, index })),
-  ];
+  const orbitLogos = [
+    ...frontendTechnologies.map((technology) => ({ technology, role: 'frontend' as const })),
+    ...engineerTechnologies.map((technology) => ({ technology, role: 'engineer' as const })),
+  ]
+    .filter(({ role }) => activeRole === null || role === activeRole)
+    .map(({ technology }) => {
+      const TechnologyIcon = technology.Icon;
+
+      return {
+        node: <TechnologyIcon aria-hidden="true" focusable="false" />,
+        title: technology.name,
+        href: technology.documentationUrl,
+      };
+    });
 
   const renderSkill = (side: 'left' | 'right', skill: string | undefined) => (
     <AnimatePresence mode="wait">
@@ -335,41 +316,17 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
       );
     });
 
-  const renderRoleSkills = (
-    role: 'frontend' | 'engineer',
-    roleSkills: string[],
-    position: 'top-left' | 'bottom-left' = role === 'frontend' ? 'top-left' : 'bottom-left',
-  ) => (
-    <HomeRoleSkills
-      key={`${role}-skills`}
-      $fontFamily="Consolas, 'Courier New', monospace"
-      $position={position}
-      as={motion.ul}
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      aria-label={`${role} skills`}
-    >
-      {roleSkills.map((skill, index) => (
-        <motion.li
-          key={skill}
-          initial={{ opacity: 0, y: role === 'frontend' ? -(index + 1) * 20 : (index + 1) * 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.38,
-            delay: (role === 'engineer' ? roleSkills.length - 1 - index : index) * 0.14,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          {skill}
-        </motion.li>
-      ))}
-    </HomeRoleSkills>
-  );
-
   return (
     <HomePageWrapper>
-      <HomeContainer>
+      <HomeContainer ref={homeContainerRef}>
+        <Crosshair
+          containerRef={homeContainerRef}
+          color={theme.colors.text}
+          opacity={0.75}
+          smoothing={0.35}
+          targetEffect="lock"
+          clickPulse
+        />
         <HomeMobileContent ref={mobileContentRef}>
           <section aria-labelledby="mobile-frontend-title">
             <HomeMobileTitle $isOpen={isMobileFrontendOpen}>
@@ -414,18 +371,21 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
             </HomeMobilePanel>
           </section>
         </HomeMobileContent>
+        <HomeRoleLabels>
         <HomeCornerLabel
-          $position="top-left"
           $isDisabled={!areProfileLabelsVisible || !hasCornerLabelsEntered}
           as={motion.button}
           type="button"
           aria-expanded={activeRole === 'frontend'}
           onMouseEnter={() => handleRoleEnter('frontend')}
-          onMouseLeave={() => handleRoleLeave('frontend')}
+          onMouseLeave={handleRoleLeave}
           onFocus={() => handleRoleEnter('frontend')}
-          onBlur={() => handleRoleLeave('frontend')}
+          onBlur={handleRoleLeave}
           initial={{ opacity: 0, x: -96 }}
-          animate={{ opacity: areProfileLabelsVisible ? (activeRole ? 1 : 0.45) : 0, x: areProfileLabelsVisible ? 0 : -24 }}
+          animate={{
+            opacity: areProfileLabelsVisible ? 1 : 0,
+            x: areProfileLabelsVisible ? 0 : -24,
+          }}
           transition={{
             duration: areProfileLabelsVisible ? hasCornerLabelsEntered ? 0.25 : 0.85 : 0.85,
             delay: 0,
@@ -433,50 +393,32 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
           }}
         >
           <HomeCornerLabelContent>
-            {activeRole === null && leavingRole === null && (
-              <HomeCornerLabelHint aria-hidden="true">hover</HomeCornerLabelHint>
-            )}
-            <AnimatePresence mode="wait" initial={false}>
-              {activeRole !== 'engineer' && leavingRole !== 'engineer' && (
-                <HomeRoleTitle
-                  key="frontend-title"
-                  initial={{ opacity: 0, y: -16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -16 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                >
-                  FRONTEND
-                </HomeRoleTitle>
-              )}
-            </AnimatePresence>
+            <HomeRoleTitle
+              data-crosshair-lock
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <ShinyText color={theme.mode === 'dark' ? theme.colors.textLight : theme.colors.primary} shineColor={theme.mode === 'dark' ? '#ffffff' : '#777777'} speed={3}>
+                FRONTEND
+              </ShinyText>
+            </HomeRoleTitle>
           </HomeCornerLabelContent>
-          <AnimatePresence>
-            {activeRole === 'frontend' && (
-              <HomeRoleDescription
-                key="frontend-description"
-                $position="top-left"
-                initial={{ opacity: 0, y: -28 }}
-                animate={{ opacity: 0.72, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.55, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {t('pages.frontendExperience')}
-              </HomeRoleDescription>
-            )}
-          </AnimatePresence>
         </HomeCornerLabel>
         <HomeCornerLabel
-          $position="bottom-right"
           $isDisabled={!areProfileLabelsVisible || !hasCornerLabelsEntered}
           as={motion.button}
           type="button"
           aria-expanded={activeRole === 'engineer'}
           onMouseEnter={() => handleRoleEnter('engineer')}
-          onMouseLeave={() => handleRoleLeave('engineer')}
+          onMouseLeave={handleRoleLeave}
           onFocus={() => handleRoleEnter('engineer')}
-          onBlur={() => handleRoleLeave('engineer')}
+          onBlur={handleRoleLeave}
           initial={{ opacity: 0, x: 96 }}
-          animate={{ opacity: areProfileLabelsVisible ? (activeRole ? 1 : 0.45) : 0, x: areProfileLabelsVisible ? 0 : 24 }}
+          animate={{
+            opacity: areProfileLabelsVisible ? 1 : 0,
+            x: areProfileLabelsVisible ? 0 : 24,
+          }}
           transition={{
             duration: areProfileLabelsVisible ? hasCornerLabelsEntered ? 0.25 : 0.85 : 0.85,
             delay: 0,
@@ -484,48 +426,40 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
           }}
         >
           <HomeCornerLabelContent>
-            {activeRole === null && leavingRole === null && (
-              <HomeCornerLabelHint aria-hidden="true">hover</HomeCornerLabelHint>
-            )}
-            <AnimatePresence mode="wait" initial={false}>
-              {activeRole !== 'frontend' && leavingRole !== 'frontend' && (
-                <HomeRoleTitle
-                  key="engineer-title"
-                  $letterSpacing="0.4rem"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 16 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                >
-                  ENGINEER
-                </HomeRoleTitle>
-              )}
-            </AnimatePresence>
+            <HomeRoleTitle
+              data-crosshair-lock
+              $letterSpacing="0.4rem"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <ShinyText color={theme.mode === 'dark' ? theme.colors.textLight : theme.colors.primary} shineColor={theme.mode === 'dark' ? '#ffffff' : '#777777'} speed={3}>
+                ENGINEER
+              </ShinyText>
+            </HomeRoleTitle>
           </HomeCornerLabelContent>
-          <AnimatePresence>
-            {activeRole === 'engineer' && (
-              <HomeRoleDescription
-                key="engineer-description"
-                $position="bottom-right"
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 0.72, y: 0 }}
-                exit={{ opacity: 0, y: 16 }}
-                transition={{ duration: 0.55, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {t('pages.engineerExperience')}
-              </HomeRoleDescription>
-            )}
-          </AnimatePresence>
         </HomeCornerLabel>
-        <AnimatePresence mode="wait" initial={false}>
-          {activeRole === 'frontend' && renderRoleSkills('frontend', frontendSkills, 'top-left')}
-          {activeRole === 'engineer' && renderRoleSkills('engineer', engineerSkills, 'bottom-left')}
-        </AnimatePresence>
+        </HomeRoleLabels>
+        <HomeRoleDescription $role={profileRole ?? 'default'}>
+          <AnimatePresence mode="sync">
+            <motion.span
+              key={profileRole ?? 'default'}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              {profileRole === null
+                ? renderDefaultExperience(t('pages.defaultExperience'))
+                : t(profileRole === 'frontend' ? 'pages.frontendExperience' : 'pages.engineerExperience')}
+            </motion.span>
+          </AnimatePresence>
+        </HomeRoleDescription>
         <HomeProfileTarget aria-hidden="true">
           <motion.div
-            initial={false}
+            initial={isMobile || prefersReducedMotion ? false : { opacity: 0, x: 80 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: isMobile || prefersReducedMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }}
             style={{ position: 'absolute', inset: 0 }}
           >
             <AnimatePresence mode="sync" initial={false}>
@@ -543,49 +477,20 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
           </motion.div>
         </HomeProfileTarget>
         <HomeProfileOrbit className="home-profile-orbit">
-          <AnimatePresence>
-            {orbitNodes
-              .filter(({ role }) => activeRole === null || role === activeRole)
-              .map(({ technology, role, index }) => {
-                const TechnologyIcon = technology.Icon;
-
-                return (
-                  <HomeOrbitNode
-                    key={`${role}-orbit-node-${index}`}
-                    href={technology.documentationUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${technology.name} documentation`}
-                    title={technology.name}
-                    $role={role}
-                    $index={index}
-                    $isFocused={activeRole === role}
-                    whileHover={{ scale: 1.24, transition: { duration: 0.04, ease: 'linear' } }}
-                    whileFocus={{ scale: 1.24, transition: { duration: 0.04, ease: 'linear' } }}
-                    initial={{ opacity: 0, x: '-42vw', scale: 0.72 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      scale: 1,
-                      transition: {
-                        duration: 0.55,
-                        delay: isOrbitEntering ? index * 0.08 : 0,
-                        ease: [0.22, 1, 0.36, 1],
-                      },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      x: '-42vw',
-                      scale: 0.72,
-                      transition: { duration: 0.24, ease: [0.22, 1, 0.36, 1] },
-                    }}
-                    transition={{ duration: 0.04, ease: 'linear', delay: 0 }}
-                  >
-                    <TechnologyIcon aria-hidden="true" focusable="false" />
-                  </HomeOrbitNode>
-                );
-              })}
-          </AnimatePresence>
+          <LogoLoop
+            logos={orbitLogos}
+            direction="up"
+            layout="line"
+            magnify={0.6}
+            labels="hover"
+            muted={0.5}
+            logoHeight={32}
+            width="3rem"
+            gap={28}
+            speed={50}
+            fadeOut
+            ariaLabel="Technologies"
+          />
         </HomeProfileOrbit>
         {activeSkills &&
           <HomeSkillsLayer aria-hidden="true">
