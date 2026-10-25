@@ -17,6 +17,7 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Skills } from './pages/Skills';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { Seo } from './seo/Seo';
 
 const AppLayout = styled.div`
   display: flex;
@@ -113,6 +114,7 @@ const AppContent: FC = () => {
     <ThemeProvider theme={activeTheme}>
       <BrowserRouter>
         <ScrollToTop />
+        <Seo />
         <GlobalStyle />
         <AppLayout>
           <Header
