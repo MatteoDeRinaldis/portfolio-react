@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'motion/react';
 import { PageWrapper } from '../components/PageLayout';
+import { TrueFocus } from '../components/react-bits/TrueFocus';
 
 export const AboutPageWrapper = styled(PageWrapper)`
   position: relative;
@@ -72,6 +73,16 @@ export const AboutHeading = styled.h3`
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   letter-spacing: -0.04em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25em;
+
+  .about-rotating-level {
+    overflow: hidden;
+    padding: 0 0.12em 0.12em 0;
+    margin: 0 -0.12em -0.12em 0;
+  }
 `;
 
 export const AboutSectionTitle = styled.h4`
@@ -104,14 +115,9 @@ export const AsideTitle = styled.h4`
   letter-spacing: 0.08em;
 `;
 
-export const FocusList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: ${({ theme }) => theme.spacing[3]};
+export const FocusList = styled(TrueFocus)`
   margin: 0;
-  padding: 0;
-  list-style: none;
+  gap: ${({ theme }) => theme.spacing[3]};
 
   li {
     color: ${({ theme }) => theme.colors.textLight};

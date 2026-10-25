@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 
 export const HomeContainer = styled.div`
   position: relative;
+  position: relative;
   display: flex;
   flex: 1;
   align-items: center;
@@ -130,6 +131,7 @@ export const HomeMobileDescription = styled.p`
   line-height: 1.4;
   white-space: normal;
   text-align: justify;
+  text-justify: inter-word;
   hyphens: auto;
 `;
 
@@ -310,97 +312,38 @@ export const HomeProfileAura = styled.span<{ $isVisible: boolean }>`
 
 export const HomeProfileOrbit = styled.div`
   position: absolute;
-  inset: 0 auto auto 4.25rem;
-  width: 50%;
-  max-width: none;
-  height: 100%;
-  transform: none;
+  top: clamp(6.5rem, 12vh, 8rem);
+  bottom: 6rem;
+  right: calc(min(20vw, calc(100vh * 490 / 915)) + 12vw - 7rem);
+  width: 10rem;
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: 1.75rem;
   pointer-events: none;
   z-index: 3;
+
+  .logoloop--vertical {
+    padding: 0 11rem 0 0;
+    box-sizing: content-box;
+    pointer-events: auto;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }
 `;
 
-export const HomeOrbitNode = styled(motion.a)<{ $role: 'frontend' | 'engineer'; $index: number; $isFocused: boolean }>`
-  position: absolute;
-  ${({ $role, $index, $isFocused }) => {
-    if ($isFocused) {
-      return `top: ${[11, 19, 27, 35, 43, 51, 59, 67, 75, 83][$index]}%; left: 55%;`;
-    }
-
-    const row = Math.floor($index / 5);
-    const column = $index % 5;
-    const top = $role === 'frontend' ? [18, 32][row] : [60, 74][row];
-    const left = [6, 19, 32, 45, 58][column];
-
-    return `top: ${top}%; left: ${left}%;`;
-  }}
-  display: block;
-  width: clamp(1.9rem, 3.8vw, 3.6rem);
-  height: clamp(1.9rem, 3.8vw, 3.6rem);
-  border: 1px solid ${({ theme }) => theme.colors.primary};
-  border-radius: 50%;
-  background: transparent;
-  color: ${({ theme }) => theme.colors.primary};
-  text-decoration: none;
+export const HomeCornerLabel = styled.div<{ $isDisabled?: boolean }>`
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-  transform-origin: center;
-  transition:
-    top 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    left 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 220ms ease,
-    border-color 220ms ease,
-    color 220ms ease;
-  will-change: transform, opacity;
-
-  svg {
-    width: 52%;
-    height: 52%;
-    display: block;
-  }
-
-  &:hover,
-  &:focus-visible {
-    color: ${({ theme }) => theme.colors.text};
-    border-color: ${({ theme }) => theme.colors.text};
-    box-shadow: ${({ theme }) => (theme.mode === 'light'
-      ? `0 0 0.45rem rgba(0, 0, 0, 0.9), 0 0 1.25rem rgba(0, 0, 0, 0.58), 0 0 2.4rem rgba(0, 0, 0, 0.28)`
-      : `0 0 0.45rem rgba(255, 255, 255, 0.95), 0 0 1.25rem rgba(255, 255, 255, 0.72), 0 0 2.4rem rgba(255, 255, 255, 0.42)`)};
-    outline: none;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    ${({ $role, $index, $isFocused }) => {
-      if ($isFocused) {
-        return `top: ${[12, 20, 28, 36, 44, 52, 60, 68, 76, 84][$index]}%; left: 62%;`;
-      }
-
-      const row = Math.floor($index / 5);
-      const column = $index % 5;
-      const top = $role === 'frontend' ? [18, 31][row] : [57, 70][row];
-      const left = [3, 16, 29, 42, 55][column];
-
-      return `top: ${top}%; left: ${left}%;`;
-    }}
-    width: 1.65rem;
-    height: 1.65rem;
-  }
-`;
-
-export const HomeCornerLabel = styled.div<{ $position: 'top-left' | 'bottom-right'; $isDisabled?: boolean }>`
-  position: absolute;
-  z-index: 4;
-  ${({ $position, theme }) => ($position === 'top-left'
-    ? 'top: 40%; left: 48.5%;'
-    : 'top: 50%; left: 48.5%; right: auto; bottom: auto;')}
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 0;
+  width: fit-content;
+  justify-self: start;
   color: ${({ theme }) => theme.colors.primary};
   font-family: 'Sora', 'Segoe UI', sans-serif;
-  font-size: clamp(1.65rem, 4.8vw, 4.8rem);
+  font-size: clamp(1.65rem, 3.7vw, 3.5rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   line-height: 1;
   letter-spacing: -0.08em;
@@ -414,27 +357,12 @@ export const HomeCornerLabel = styled.div<{ $position: 'top-left' | 'bottom-righ
   will-change: transform, opacity;
   transition: color 250ms ease, text-shadow 250ms ease;
 
-  &:after {
-    content: none;
-    position: relative;
-    z-index: 5;
-    display: block;
-    width: 0;
-    height: 2px;
-    margin-top: 0.28em;
-    background: currentColor;
-    transition: width 250ms ease;
-  }
-
   &:hover,
   &:focus-visible {
     color: ${({ theme }) => theme.colors.text};
     text-shadow: 0 0 0.08em ${({ theme }) => theme.colors.primary}, 0 0 0.35em ${({ theme }) => theme.colors.primary};
     outline: none;
 
-    &:after {
-      width: 100%;
-    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -442,17 +370,36 @@ export const HomeCornerLabel = styled.div<{ $position: 'top-left' | 'bottom-righ
   }
 `;
 
-export const HomeRoleSkills = styled(motion.ul)<{ $position: 'top-left' | 'bottom-left'; $fontFamily?: string }>`
+export const HomeRoleLabels = styled.div`
   position: absolute;
+  top: clamp(6.5rem, 12vh, 8rem);
+  left: ${({ theme }) => theme.spacing[32]};
   z-index: 4;
-  ${({ $position }) => ($position === 'top-left'
-    ? 'top: 8rem; left: 8rem;'
-    : 'bottom: 8rem; left: 8rem;')}
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vh, 2.5rem);
+  width: min(58vw, 760px);
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
+  }
+`;
+
+export const HomeRoleSkills = styled(motion.ul)<{ $fontFamily?: string }>`
+  position: absolute;
+  top: 48%;
+  left: ${({ theme }) => theme.spacing[32]};
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: flex-start;
-  gap: 0.38em;
-  width: max-content;
+  gap: 0.65em clamp(1rem, 3vw, 3rem);
+  width: min(55vw, 700px);
   margin: 0;
   padding: 0;
   color: ${({ theme }) => theme.colors.text};
@@ -470,8 +417,10 @@ export const HomeRoleSkills = styled(motion.ul)<{ $position: 'top-left' | 'botto
   li {
     display: block;
     width: max-content;
+    max-width: 100%;
     font-weight: 400;
     text-shadow: none;
+    pointer-events: auto;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -491,6 +440,7 @@ export const HomeRoleSkills = styled(motion.ul)<{ $position: 'top-left' | 'botto
 
 export const HomeRoleTitle = styled(motion.span)<{ $fontFamily?: string; $letterSpacing?: string }>`
   display: block;
+  width: fit-content;
   font-family: ${({ $fontFamily }) => $fontFamily || "'Sora', 'Segoe UI', sans-serif"};
   font-size: inherit;
   font-weight: ${({ theme }) => theme.fontWeights.normal};
@@ -501,46 +451,33 @@ export const HomeRoleTitle = styled(motion.span)<{ $fontFamily?: string; $letter
 
 export const HomeCornerLabelContent = styled.span`
   position: relative;
-  display: inline-block;
-  width: fit-content;
-`;
-
-export const HomeCornerLabelHint = styled.span`
-  position: absolute;
-  top: 8em;
-  left: -2.8rem;
-  display: inline-block;
-  color: ${({ theme }) => theme.colors.textLight};
-  font-family: 'Sora', 'Segoe UI', sans-serif;
-  font-size: 0.46rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0.72;
-  text-align: left;
-  pointer-events: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    display: none;
-  }
-`;
-
-export const HomeRoleDescription = styled(motion.span)<{ $position: 'top-left' | 'bottom-right' }>`
-  position: absolute;
-  z-index: 1;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
-  margin: 0;
-  ${({ $position }) => ($position === 'bottom-right'
-    ? 'right: 0; bottom: calc(100% + 3.25rem);'
-    : 'top: calc(100% + 1.75rem); right: 0;')}
+`;
+
+export const HomeRoleDescription = styled(motion.div)<{ $role: 'default' | 'frontend' | 'engineer' }>`
+  position: absolute;
+  left: ${({ theme }) => theme.spacing[32]};
+  bottom: calc(
+    var(--footer-height, 3rem) +
+    clamp(6.5rem, 12vh, 8rem) -
+    var(--header-height, 4rem)
+  );
+  z-index: 4;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  min-height: 12em;
+  width: min(58vw, 760px);
   color: ${({ theme }) => theme.colors.text};
   font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   font-size: clamp(0.85rem, 1.05vw, 1.05rem);
   font-weight: 400;
   line-height: 1.35;
   letter-spacing: 0.01em;
-  text-align: right;
+  text-align: left;
   white-space: pre-line;
   pointer-events: none;
   text-shadow: none !important;
@@ -548,21 +485,41 @@ export const HomeRoleDescription = styled(motion.span)<{ $position: 'top-left' |
   will-change: transform, opacity;
 
   &:before {
-    content: ${({ $position }) => ($position === 'bottom-right' ? "''" : 'none')};
+    grid-row: 2;
+    content: '';
     display: block;
     width: 100%;
     height: 2px;
-    margin-bottom: 1.75em;
+    margin-bottom: 1.5rem;
     background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: home-experience-line-expand-${({ $role }) => $role} 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms forwards;
   }
 
-  &:after {
-    content: ${({ $position }) => ($position === 'top-left' ? "''" : 'none')};
-    display: block;
-    width: 100%;
-    height: 2px;
-    margin-top: 2em;
-    background: currentColor;
+  @keyframes home-experience-line-expand-default {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes home-experience-line-expand-frontend {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes home-experience-line-expand-engineer {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:before {
+      transform: none;
+      animation: none;
+    }
   }
 
   strong,
@@ -570,9 +527,19 @@ export const HomeRoleDescription = styled(motion.span)<{ $position: 'top-left' |
     font-weight: 400;
   }
 
+  > span {
+    grid-row: 3;
+    grid-column: 1;
+    display: block;
+    align-self: end;
+
+    [data-crosshair-target] {
+      pointer-events: auto;
+    }
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 100%;
-    font-size: 0.78rem;
+    display: none;
   }
 `;
 
