@@ -8,7 +8,7 @@ export const AboutPageWrapper = styled(PageWrapper)`
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding-top: 5rem;
     padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
@@ -31,7 +31,7 @@ export const AboutBackgroundIcon = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     top: 2rem;
     font-size: clamp(16rem, 56vw, 32rem);
   }
@@ -44,7 +44,7 @@ export const AboutLayout = styled.div`
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing[12]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     grid-template-columns: 1fr;
     gap: ${({ theme }) => theme.spacing[8]};
   }
@@ -102,7 +102,7 @@ export const AboutAside = styled.aside`
   border-left: 1px solid ${({ theme }) => theme.colors.border};
   text-align: right;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -129,7 +129,7 @@ export const FocusList = styled(TrueFocus)`
 export const AboutReveal = styled(motion.div)`
   display: block;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     h4 {
       font-size: ${({ theme }) => theme.fontSizes.lg};
     }

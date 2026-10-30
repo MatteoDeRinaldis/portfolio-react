@@ -16,7 +16,7 @@ export const FooterWrapper = styled.footer`
     background-color ${({ theme }) => theme.transitions.base},
     color ${({ theme }) => theme.transitions.base};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     bottom: -1px;
   }
 `;
@@ -55,7 +55,7 @@ export const FooterToggle = styled.button<{ $visible: boolean }>`
     transform: translate(-50%, -54%);
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     right: ${({ theme }) => theme.spacing[4]};
     left: auto;
     width: 3rem;
@@ -70,7 +70,7 @@ export const FooterToggle = styled.button<{ $visible: boolean }>`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     &:hover {
       transform: translateY(calc(-100% - 4px));
     }
@@ -95,7 +95,7 @@ export const FooterContent = styled.div`
   padding-right: ${({ theme }) => theme.spacing[32]};
   margin: 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -113,7 +113,7 @@ export const FooterText = styled.p`
   color: ${({ theme }) => theme.colors.textLight};
   margin-bottom: 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     order: 1;
     flex-basis: 100%;
   }
@@ -141,7 +141,7 @@ export const FooterLegal = styled.div`
   min-width: max-content;
   white-space: nowrap;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: contents;
   }
 `;
@@ -163,7 +163,7 @@ export const SocialLinks = styled.div<{ $isHomeIdle: boolean }>`
       }
     }
 
-    @media (max-width: ${theme.breakpoints.mobile}) {
+    @media ${theme.breakpoints.mobilePortrait} {
       ${theme.mode === 'light' && css`
         a, button {
           color: ${theme.colors.textLight};
@@ -176,7 +176,7 @@ export const SocialLinks = styled.div<{ $isHomeIdle: boolean }>`
     }
   `}
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: contents;
   }
 `;
@@ -214,7 +214,7 @@ export const CvLink = styled.button<{ $isHomeEngineerHovered?: boolean }>`
     outline-offset: 4px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     margin-left: 0;
     padding-left: ${({ theme }) => theme.spacing[4]};
     white-space: nowrap;
@@ -240,7 +240,7 @@ export const PrivacyLink = styled.a`
     outline-offset: 4px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     margin-left: 0;
     margin-right: 0;
     padding-right: ${({ theme }) => theme.spacing[4]};
@@ -274,7 +274,7 @@ export const TechnicalOverviewLink = styled.button<{ $hideOnDesktop?: boolean }>
     outline-offset: 4px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     width: 1em;
     height: 1em;
     font-size: inherit;
@@ -301,7 +301,7 @@ export const TechnicalOverviewBody = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   line-height: 1.6;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding: ${({ theme }) => theme.spacing[4]};
   }
 `;
@@ -322,7 +322,7 @@ export const TechnicalOverviewSections = styled.div`
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -330,7 +330,7 @@ export const TechnicalOverviewSections = styled.div`
 export const TechnicalOverviewMobileCarousel = styled(CompactCarousel)`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: block;
     margin-top: ${({ theme }) => theme.spacing[4]};
   }
@@ -341,7 +341,7 @@ export const TechnicalOverviewFullWidth = styled.div`
   gap: ${({ theme }) => theme.spacing[4]};
   margin-top: ${({ theme }) => theme.spacing[4]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     gap: ${({ theme }) => theme.spacing[8]};
     margin-top: ${({ theme }) => theme.spacing[8]};
   }
@@ -373,7 +373,7 @@ export const TechnicalOverviewSection = styled.section`
     text-justify: inter-word;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     .desktop-only {
       display: none;
     }

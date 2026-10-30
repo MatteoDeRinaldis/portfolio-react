@@ -99,6 +99,7 @@ const sharedTheme = {
   },
   breakpoints: {
     mobile: '768px',
+    mobilePortrait: '(max-width: 768px) and (orientation: portrait)',
     desktop: '1024px',
     wide: '1280px',
   },

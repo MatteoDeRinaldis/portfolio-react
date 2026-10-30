@@ -24,7 +24,7 @@ const AppLayout = styled.div`
   flex-direction: column;
   min-height: 100vh;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     &:has(.home-page-wrapper) {
       min-height: 100dvh;
     }
