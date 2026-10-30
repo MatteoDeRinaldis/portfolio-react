@@ -50,7 +50,7 @@ export const MobileProjectCard = ({ client, description, technologies }: Props) 
 const Card = styled.button`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: block;
     width: 100%;
     height: 100%;

@@ -9,7 +9,7 @@ export const PageWrapper = styled.div.attrs({
   padding-left: ${({ theme }) => theme.spacing[32]};
   padding-right: ${({ theme }) => theme.spacing[32]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding-top: ${({ theme }) => theme.spacing[4]};
     padding-right: ${({ theme }) => theme.spacing[4]};
     padding-bottom: calc(${({ theme }) => theme.spacing[4]} + 9rem);

@@ -35,7 +35,7 @@ export const Header: FC<HeaderProps> = ({ themeMode, onToggleTheme, isHomeProfil
     const content = headerContentRef.current;
     const nav = navRef.current;
     if (!header || !content || !nav) return;
-    const mobileMotion = window.matchMedia(`(max-width: ${theme.breakpoints.mobile}) and (prefers-reduced-motion: no-preference)`);
+    const mobileMotion = window.matchMedia(`${theme.breakpoints.mobilePortrait} and (prefers-reduced-motion: no-preference)`);
     let previousNavTop = nav.offsetTop;
     let navAnimation: Animation | undefined;
 
@@ -78,7 +78,7 @@ export const Header: FC<HeaderProps> = ({ themeMode, onToggleTheme, isHomeProfil
       header.style.removeProperty('--header-content-height');
       document.documentElement.style.removeProperty('--header-height');
     };
-  }, [theme.breakpoints.mobile]);
+  }, [theme.breakpoints.mobilePortrait]);
 
   return (
     <HeaderWrapper ref={headerRef} $isHome={pathname === '/'}>

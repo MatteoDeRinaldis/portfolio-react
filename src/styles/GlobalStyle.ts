@@ -133,7 +133,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     html {
       font-size: 14px;
     }

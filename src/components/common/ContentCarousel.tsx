@@ -99,7 +99,7 @@ const CarouselHeader = styled.div`
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing[6]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -171,7 +171,7 @@ const CarouselSlide = styled.div<{ $itemsPerPage: number }>`
   min-width: 100%;
   align-items: stretch;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     grid-template-columns: 1fr;
   }
 `;

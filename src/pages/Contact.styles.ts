@@ -30,7 +30,7 @@ export const ContactPageWrapper = styled(PageWrapper)`
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     .swipe-toast.contact-toast[data-inline='false'] {
       --st-offset: ${({ theme }) => theme.spacing[4]};
       top: calc(var(--header-height, 5rem) + ${({ theme }) => theme.spacing[4]});
@@ -55,7 +55,7 @@ export const ContactPageWrapper = styled(PageWrapper)`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding-top: 5rem;
     padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
@@ -78,7 +78,7 @@ export const ContactMail = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     top: 2rem;
     font-size: clamp(16rem, 56vw, 32rem);
   }
@@ -107,7 +107,7 @@ export const ContactForm = styled.form`
   gap: ${({ theme }) => theme.spacing[4]};
   width: 50%;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) { 
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     width: 100%;
   }
 `;
@@ -118,7 +118,7 @@ export const ContactCard = styled.div`
   width: 30%;
   margin-top: 28px;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     width: 100%;
   }
 `;
@@ -129,7 +129,7 @@ export const ContactCardBody = styled.div`
   gap: 2rem;
   padding: 1.5rem 2rem 3rem;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding: ${({ theme }) => theme.spacing[6]};
   }
 `;
@@ -154,7 +154,7 @@ export const CardDescription = styled.p`
   line-height: 1.6;
   margin: 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -198,7 +198,7 @@ export const FormRow = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: ${({ theme }) => theme.spacing[4]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     grid-template-columns: 1fr;
   }
 `;
@@ -350,7 +350,7 @@ export const Snackbar = styled(motion.div) <{ $variant?: 'error' | 'success' }>`
     color: ${({ theme, $variant }) => $variant === 'success' ? '#72947a' : theme.colors.warning};
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     right: ${({ theme }) => theme.spacing[4]};
     bottom: ${({ theme }) => `calc(${theme.spacing[4]} + 9rem)`};
   }

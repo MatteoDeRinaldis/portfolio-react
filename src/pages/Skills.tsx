@@ -20,7 +20,7 @@ const SkillsPageWrapper = styled(PageWrapper)`
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding-top: 5rem;
     padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
@@ -43,7 +43,7 @@ const SkillsBackgroundIcon = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     top: 2rem;
     font-size: clamp(16rem, 56vw, 32rem);
   }
@@ -52,7 +52,7 @@ const SkillsBackgroundIcon = styled.div`
 const MobilePageScrollBlur = styled(GradualBlur)`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: block;
   }
 `;
@@ -297,7 +297,7 @@ const overviewCarouselEnter = keyframes`
 `;
 
 const OverviewCarousel = styled.div<{ $isAtEnd: boolean }>`
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -331,7 +331,7 @@ const OverviewGrid = styled.div`
   gap: ${({ theme }) => theme.spacing[4]};
   margin-bottom: ${({ theme }) => theme.spacing[12]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 82%;
@@ -420,7 +420,7 @@ const SkillsGrid = styled.div`
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     grid-template-columns: 1fr;
   }
 `;
@@ -438,7 +438,7 @@ const SkillCardItem = styled.div<{ $isHovered?: boolean }>`
     opacity: 1 !important;
   `}
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     transform: none !important;
     opacity: 1 !important;
 
