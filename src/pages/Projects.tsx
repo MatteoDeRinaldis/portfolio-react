@@ -20,7 +20,7 @@ const ProjectsPageWrapper = styled(PageWrapper)`
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding-top: 5rem;
     padding-bottom: calc(12rem + env(safe-area-inset-bottom, 0px));
   }
@@ -43,7 +43,7 @@ const ProjectsBackgroundIcon = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     top: 8rem;
     font-size: clamp(16rem, 56vw, 32rem);
   }
@@ -65,7 +65,7 @@ const overviewCarouselEnter = keyframes`
 `;
 
 const OverviewCarousel = styled.div<{ $isAtEnd: boolean }>`
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -99,7 +99,7 @@ const OverviewGrid = styled.div`
   gap: ${({ theme }) => theme.spacing[4]};
   margin-bottom: ${({ theme }) => theme.spacing[12]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 82%;
@@ -168,7 +168,7 @@ const ExperienceTimeline = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[16]};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     gap: ${({ theme }) => theme.spacing[4]};
   }
 `;
@@ -189,7 +189,7 @@ const ProjectsExperienceLayout = styled.div`
   gap: ${({ theme }) => theme.spacing[16]};
   align-items: start;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     grid-template-columns: minmax(0, 1fr);
     gap: ${({ theme }) => theme.spacing[8]};
     width: 100%;
@@ -227,7 +227,7 @@ const CompanySidebar = styled.aside<{ $isPageScrolled: boolean }>`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -235,7 +235,7 @@ const CompanySidebar = styled.aside<{ $isPageScrolled: boolean }>`
 const CompanySidebarContent = styled(motion.div)`
   width: 100%;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     height: 100%;
     opacity: 1 !important;
     transform: none !important;
@@ -254,7 +254,7 @@ const CompanySidebarTitle = styled.h3<{ $isPageScrolled?: boolean }>`
   pointer-events: ${({ $isPageScrolled }) => ($isPageScrolled ? 'auto' : 'none')};
   transition: opacity 240ms ease, transform 240ms ease;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -278,7 +278,7 @@ const CompanyList = styled.ul`
     background-color: ${({ theme }) => theme.colors.border};
     content: '';
   }
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: minmax(0, 1fr);
@@ -324,7 +324,7 @@ const CompanyListItem = styled.li<{ $isActive: boolean }>`
     background-color: ${({ theme }) => theme.colors.primary};
     box-shadow: 0 0 0.45rem ${({ theme }) => theme.colors.primary};
   }
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     min-width: 0;
     height: 100%;
     margin: 0;
@@ -379,7 +379,7 @@ const CompanyLink = styled.button<{ $isActive: boolean }>`
     background-color: ${({ theme }) => theme.colors.primary};
     box-shadow: 0 0 0.45rem ${({ theme }) => theme.colors.primary};
   }
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -423,7 +423,7 @@ const ExperienceTimelineItem = styled(motion.article)<{ $isExpanded: boolean }>`
     : 'none')};
   border-radius: ${({ $isExpanded }) => ($isExpanded ? '8px' : 0)};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     background-image: none;
     scroll-margin-top: calc(var(--header-height, 5rem) + 1rem);
   }
@@ -491,7 +491,7 @@ const ExperienceHeader = styled.header<{ $isExpanded: boolean; $isActive: boolea
     pointer-events: none;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
@@ -501,7 +501,7 @@ const ExperienceHeader = styled.header<{ $isExpanded: boolean; $isActive: boolea
     cursor: default;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) and (orientation: portrait) {
     grid-template-columns: minmax(0, 1fr);
 
     > :nth-child(2) {
@@ -585,7 +585,7 @@ const ExperienceDate = styled.span<{ $isActive: boolean; $isExpanded: boolean }>
   }
 
   .accordion-chevron {
-    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
       display: none;
     }
   }
@@ -609,7 +609,7 @@ const ExperienceProjects = styled.div`
     z-index: 2;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     margin-left: 0;
     padding-left: 0;
     grid-template-columns: none;
@@ -641,7 +641,7 @@ const CompanyProjectsViewport = styled.div<{ $isAtEnd: boolean }>`
   display: block;
   min-width: 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: center;
@@ -664,7 +664,7 @@ const CompanyProjectsViewport = styled.div<{ $isAtEnd: boolean }>`
 `;
 
 const DesktopCompanyProjects = styled(CompanyProjectsViewport)`
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -672,7 +672,7 @@ const DesktopCompanyProjects = styled(CompanyProjectsViewport)`
 const MobileCompanyProjects = styled(CompactCarousel)`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: block;
     margin-top: ${({ theme }) => theme.spacing[3]};
 
@@ -688,7 +688,7 @@ const MobileCompanyProjects = styled(CompactCarousel)`
 const MobilePageScrollBlur = styled(GradualBlur)`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: block;
   }
 `;
@@ -762,7 +762,7 @@ const ExperienceProject = styled.section`
   backdrop-filter: blur(22px) saturate(1.2);
   -webkit-backdrop-filter: blur(22px) saturate(1.2);
   transition: opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding: 0;
     border: 0;
     background: none;
@@ -790,7 +790,7 @@ const ExperienceProject = styled.section`
 const DesktopProjectContent = styled.div`
   display: contents;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -864,7 +864,7 @@ export const Projects: FC = () => {
   const cursorScopeRef = useRef<HTMLDivElement>(null);
   const { t, language } = useTranslation();
   const [isMobile, setIsMobile] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(`(max-width: ${theme.breakpoints.mobile})`).matches,
+    () => typeof window !== 'undefined' && window.matchMedia(theme.breakpoints.mobilePortrait).matches,
   );
   const [isPageScrolled, setIsPageScrolled] = useState(false);
   const [isOverviewAtEnd, setIsOverviewAtEnd] = useState(false);
@@ -897,13 +897,13 @@ export const Projects: FC = () => {
   }, []);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(`(max-width: ${theme.breakpoints.mobile})`);
+    const mediaQuery = window.matchMedia(theme.breakpoints.mobilePortrait);
     const updateMobileState = () => setIsMobile(mediaQuery.matches);
 
     updateMobileState();
     mediaQuery.addEventListener('change', updateMobileState);
     return () => mediaQuery.removeEventListener('change', updateMobileState);
-  }, [theme.breakpoints.mobile]);
+  }, [theme.breakpoints.mobilePortrait]);
 
   useEffect(() => {
     const handleScroll = () => setIsPageScrolled(window.scrollY > 0);
@@ -950,7 +950,7 @@ export const Projects: FC = () => {
         return;
       }
 
-      const mobile = window.matchMedia(`(max-width: ${theme.breakpoints.mobile})`).matches;
+      const mobile = window.matchMedia(theme.breakpoints.mobilePortrait).matches;
       const firstCompany = document.getElementById('company-0');
       const offset = mobile && firstCompany
         ? parseFloat(window.getComputedStyle(firstCompany).scrollMarginTop)
@@ -982,7 +982,7 @@ export const Projects: FC = () => {
       window.removeEventListener('scroll', updateActiveCompany);
       window.removeEventListener('resize', updateActiveCompany);
     };
-  }, [experiences, theme.breakpoints.mobile]);
+  }, [experiences, theme.breakpoints.mobilePortrait]);
 
   const scrollToCompany = (index: number) => {
     if (pendingCompanyScrollRef.current === index) return;

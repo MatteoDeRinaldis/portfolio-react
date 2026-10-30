@@ -173,7 +173,7 @@ const SkillItem = styled.span`
 const ExperienceCardWrapper = styled(Card)`
   min-height: 31rem;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     min-height: auto;
   }
 `;

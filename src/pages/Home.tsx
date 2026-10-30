@@ -92,7 +92,7 @@ export const Home: FC<HomeProps> = ({ onProfileHoverChange, onEngineerHoverChang
   const { language, t } = useTranslation();
   const theme = useTheme();
   const prefersReducedMotion = useReducedMotion();
-  const mobileQuery = `(max-width: ${theme.breakpoints.mobile})`;
+  const mobileQuery = theme.breakpoints.mobilePortrait;
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(mobileQuery).matches);
   const [mobileRole, setMobileRole] = useState<'frontend' | 'engineer' | null>(null);
   const isMobileFrontendOpen = mobileRole === 'frontend';

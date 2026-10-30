@@ -28,7 +28,7 @@
   width: min(var(--st-w), calc(100vw - 2 * var(--st-offset)));
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px) and (orientation: portrait) {
   .swipe-toast[data-inline='false'] {
     --st-offset: 16px;
   }

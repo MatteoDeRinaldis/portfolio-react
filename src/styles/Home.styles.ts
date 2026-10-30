@@ -11,7 +11,7 @@ export const HomeContainer = styled.div`
   width: 100%;
   min-height: 0;
   overflow: visible;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
@@ -29,7 +29,7 @@ export const HomePageWrapper = styled.div.attrs({
   padding: 0;
   overflow-x: clip;
   overflow-y: clip;
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     min-height: 0;
     overflow-y: visible;
   }
@@ -38,7 +38,7 @@ export const HomePageWrapper = styled.div.attrs({
 export const HomeMobileContent = styled.div`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     position: relative;
     z-index: 2;
     display: flex;
@@ -58,7 +58,7 @@ export const HomeMobileTitle = styled.h2<{ $isOpen: boolean }>`
   line-height: 1.1;
   letter-spacing: 0.02em;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     width: 100%;
     margin-bottom: ${({ $isOpen }) => $isOpen ? '0.4em' : '0'};
     padding-bottom: ${({ $isOpen }) => $isOpen ? '0.2em' : '0'};
@@ -153,7 +153,7 @@ export const HomeHero = styled.div`
   transform: translateY(-50%) scale(0.78);
   transform-origin: right center;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     width: min(47vw, calc(100vh * 490 / 915));
     transform: translateY(-50%) scale(0.72);
   }
@@ -223,7 +223,7 @@ export const HomeSkill = styled(motion.span)<{ $side: 'left' | 'right' }>`
   white-space: nowrap;
   will-change: transform, opacity, clip-path;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     font-size: 0.95rem;
   }
 
@@ -249,7 +249,7 @@ export const HomeBackgroundImage = styled.img`
   pointer-events: none;
   z-index: 0;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     object-fit: cover;
     object-position: center top;
   }
@@ -276,7 +276,7 @@ export const HomeProfileTarget = styled.div`
   pointer-events: none;
   z-index: 1;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     position: fixed;
     inset: 0;
     width: 100%;
@@ -314,7 +314,7 @@ export const HomeProfileOrbit = styled.div`
   position: absolute;
   top: clamp(6.5rem, 12vh, 8rem);
   bottom: 6rem;
-  right: calc(min(20vw, calc(100vh * 490 / 915)) + 12vw - 7rem);
+  right: calc(min(52vw, calc(100vh * 490 / 915)) + 2rem);
   width: 10rem;
   color: ${({ theme }) => theme.colors.primary};
   font-size: 1.75rem;
@@ -327,7 +327,7 @@ export const HomeProfileOrbit = styled.div`
     pointer-events: auto;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.wide}) {
     display: none;
   }
 `;
@@ -365,7 +365,7 @@ export const HomeCornerLabel = styled.div<{ $isDisabled?: boolean }>`
 
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -378,14 +378,14 @@ export const HomeRoleLabels = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: clamp(1.25rem, 3vh, 2.5rem);
-  width: min(58vw, 760px);
+  width: min(58vw, 760px, calc(100vw - ${({ theme }) => theme.spacing[32]} - min(52vw, calc(100vh * 490 / 915)) - 2rem));
   pointer-events: none;
 
   > * {
     pointer-events: auto;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -433,7 +433,7 @@ export const HomeRoleSkills = styled(motion.ul)<{ $fontFamily?: string }>`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -470,7 +470,11 @@ export const HomeRoleDescription = styled(motion.div)<{ $role: 'default' | 'fron
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto auto;
   min-height: 12em;
-  width: min(58vw, 760px);
+  width: min(
+    58vw,
+    760px,
+    calc(100vw - ${({ theme }) => theme.spacing[32]} - min(52vw, calc(100vh * 490 / 915)) - 2rem)
+  );
   color: ${({ theme }) => theme.colors.text};
   font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   font-size: clamp(0.85rem, 1.05vw, 1.05rem);
@@ -538,8 +542,16 @@ export const HomeRoleDescription = styled(motion.div)<{ $role: 'default' | 'fron
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
+    width: min(
+      58vw,
+      760px,
+      calc(100vw - ${({ theme }) => theme.spacing[32]} - min(52vw, calc(100vh * 490 / 915)) - 14rem)
+    );
   }
 `;
 
@@ -583,7 +595,7 @@ export const HomeNameBadge = styled.div`
   will-change: transform, opacity;
   backface-visibility: hidden;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     top: 62%;
     width: 43vw;
     padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[2]}`};
