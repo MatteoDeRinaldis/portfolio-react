@@ -34,7 +34,7 @@ const BookmarkContainer = styled.div<{ $isExpanded: boolean; $isHome: boolean }>
   z-index: 50;
   animation: ${({ $isExpanded }) => ($isExpanded ? slideInFromLeft : slideOutToLeft)} 400ms ease-out both;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: ${({ $isHome }) => $isHome ? 'block' : 'none'};
     top: calc(var(--header-height, 8rem) + 5rem);
     right: 0;
@@ -64,7 +64,7 @@ const BookmarkContent = styled.div<{ $isExpanded: boolean }>`
   height: 3.5rem;
   transition: all ${({ theme }) => theme.transitions.base};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
     border-right: 0;
     border-radius: ${({ theme }) => `${theme.borderRadius.lg} 0 0 ${theme.borderRadius.lg}`};

@@ -11,7 +11,7 @@ export const BrandLink = styled.a<{ $isHome?: boolean }>`
   gap: ${({ theme }) => theme.spacing[3]};
   text-decoration: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     gap: ${({ theme, $isHome }) => $isHome ? theme.spacing[3] : '0'};
     transition: gap 380ms cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: ${({ $isHome }) => $isHome ? '0ms' : '1140ms'};
@@ -51,7 +51,7 @@ export const BrandLabel = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.base};
   white-space: nowrap;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
   }
 `;
@@ -73,7 +73,7 @@ export const HeaderWrapper = styled.header<{ $isHome?: boolean }>`
   overflow: visible;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     ${({ $isHome }) => $isHome && 'position: sticky;'}
     height: calc(var(--header-content-height) + 1px);
     flex-shrink: 0;
@@ -98,7 +98,7 @@ export const HeaderContent = styled.div`
   gap: ${({ theme }) => theme.spacing[4]};
   flex-wrap: wrap;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding: ${({ theme }) => theme.spacing[4]};
   }
 `;
@@ -157,7 +157,7 @@ export const Logo = styled.span<{ $isHome?: boolean }>`
     transition-delay: 0ms;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     max-width: ${({ $isHome }) => $isHome ? '24rem' : '0'};
     opacity: ${({ $isHome }) => $isHome ? 1 : 0};
     overflow: hidden;
@@ -197,7 +197,7 @@ export const Nav = styled.nav`
   gap: ${({ theme }) => theme.spacing[6]};
   flex-wrap: wrap;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     gap: ${({ theme }) => theme.spacing[4]};
   }
 `;
@@ -243,7 +243,7 @@ export const NavLink = styled.a<{ $active: boolean; $isHome?: boolean }>`
     outline-offset: 4px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     color: ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.textLight)};
 
     &::after {
@@ -277,7 +277,7 @@ export const LightModeButton = styled.button<{ $isLightMode: boolean }>`
     outline-offset: 4px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding-right: ${({ theme }) => theme.spacing[4]};
   }
 `;

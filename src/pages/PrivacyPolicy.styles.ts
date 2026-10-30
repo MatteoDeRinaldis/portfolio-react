@@ -11,7 +11,7 @@ export const PrivacyPageWrapper = styled.div`
   overflow-x: clip;
   overflow-y: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding-top: ${({ theme }) => theme.spacing[4]};
     padding-right: ${({ theme }) => theme.spacing[4]};
     padding-bottom: calc(${({ theme }) => theme.spacing[4]} + 9rem);
@@ -37,7 +37,7 @@ export const PrivacyBackgroundIcon = styled.div`
     height: 1em;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     right: -18vw;
     top: 1rem;
     font-size: clamp(11rem, 48vw, 22rem);
