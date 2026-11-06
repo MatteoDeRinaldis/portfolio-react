@@ -194,6 +194,7 @@ export default function Carousel({
   items = DEFAULT_ITEMS,
   baseWidth = 300,
   aspectRatio = 1.25,
+  cardHeight: requestedCardHeight,
   peek = 0,
   gap = 16,
   radius = 12,
@@ -239,7 +240,7 @@ export default function Carousel({
   const slot = Math.max(40, width - side * 2);
   const diameter = frame ? slot : Math.min(slot, slot / ratio);
   const cardWidth = round ? diameter : slot;
-  const cardHeight = round ? diameter : slot / ratio;
+  const cardHeight = requestedCardHeight ?? (round ? diameter : slot / ratio);
   const clipped = !frame && !stacked;
   const bleed = clipped ? Math.round(Math.min(48, cardWidth * 0.12)) : 0;
   const inset = bleed + (width - cardWidth) / 2;
