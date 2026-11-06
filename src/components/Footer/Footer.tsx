@@ -346,7 +346,7 @@ export const Footer: FC<FooterProps> = ({ isHomeEngineerHovered, isHomeRoleHover
                       description: t(`common.technicalOverview${section}Description`),
                     }))}
                     baseWidth="100%"
-                    aspectRatio={6.2}
+                    aspectRatio={3.5}
                     effect="slide"
                     indicator="bars"
                     frame={false}

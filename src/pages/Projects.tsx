@@ -594,6 +594,7 @@ const ExperienceDate = styled.span<{ $isActive: boolean; $isExpanded: boolean }>
 const ExperienceProjects = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: ${({ theme }) => theme.spacing[6]};
 
   &:has(> section:hover) > section:not(:hover) {
@@ -693,11 +694,17 @@ const MobilePageScrollBlur = styled(GradualBlur)`
   }
 `;
 
+const MOBILE_PROJECT_BADGE_COLUMNS = 3;
+const MOBILE_PROJECT_BADGE_ROW_HEIGHT = 40;
+const MOBILE_PROJECT_BADGE_ROW_GAP = 8;
+const MOBILE_PROJECT_CARD_FIXED_CONTENT_HEIGHT = 96;
+
 const CompanyProjectCarousel: FC<{
   children: React.ReactNode;
   company: string;
   projects: ProjectExperience[];
-}> = ({ children, company, projects }) => {
+  mobileCardHeight: number;
+}> = ({ children, company, projects, mobileCardHeight }) => {
   const theme = useTheme();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtEnd, setIsAtEnd] = useState(React.Children.count(children) <= 1);
@@ -740,7 +747,7 @@ const CompanyProjectCarousel: FC<{
             />
           ))}
           baseWidth="100%"
-          aspectRatio={1.2}
+          cardHeight={mobileCardHeight}
           effect="slide"
           indicator="bars"
           frame={false}
@@ -753,6 +760,9 @@ const CompanyProjectCarousel: FC<{
 
 const ExperienceProject = styled.section`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   min-width: 0;
   padding: ${({ theme }) => theme.spacing[4]};
   border: 1px solid ${({ theme }) => theme.colors.border};
@@ -788,7 +798,9 @@ const ExperienceProject = styled.section`
 `;
 
 const DesktopProjectContent = styled.div`
-  display: contents;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 
   @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: none;
@@ -831,18 +843,21 @@ const ProjectDescription = styled.p`
 `;
 
 const TechnologyList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 2.5rem;
   gap: ${({ theme }) => theme.spacing[2]};
-  margin: 0;
+  margin: auto 0 0;
   padding: 0;
   list-style: none;
 `;
 
 const Technology = styled.li`
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[3]}`};
+  justify-content: center;
+  min-width: 0;
+  padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[2]}`};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   background-color: ${({ theme }) => (theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)')};
@@ -850,6 +865,9 @@ const Technology = styled.li`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
@@ -871,6 +889,14 @@ export const Projects: FC = () => {
   const [activeCompanyIndex, setActiveCompanyIndex] = useState<number | null>(null);
   const [hoveredCompanyIndex, setHoveredCompanyIndex] = useState<number | null>(null);
   const experiences = getLocalizedProfessionalExperiences(language);
+  const maxMobileTechnologyRows = Math.ceil(
+    Math.max(...experiences.flatMap((experience) => experience.projects.map((project) => project.technologies.length))) /
+      MOBILE_PROJECT_BADGE_COLUMNS,
+  );
+  const mobileProjectCardHeight =
+    MOBILE_PROJECT_CARD_FIXED_CONTENT_HEIGHT +
+    maxMobileTechnologyRows * MOBILE_PROJECT_BADGE_ROW_HEIGHT +
+    Math.max(0, maxMobileTechnologyRows - 1) * MOBILE_PROJECT_BADGE_ROW_GAP;
   const [expandedExperiences, setExpandedExperiences] = useState<Set<number>>(
     () => new Set(experiences.map((_, index) => index)),
   );
@@ -1163,7 +1189,11 @@ export const Projects: FC = () => {
                       aria-hidden={!isExpanded}
                       inert={!isExpanded}
                     >
-                      <CompanyProjectCarousel company={experience.company} projects={experience.projects}>
+                      <CompanyProjectCarousel
+                        company={experience.company}
+                        projects={experience.projects}
+                        mobileCardHeight={mobileProjectCardHeight}
+                      >
                         {experience.projects.map((project) => (
                           <ExperienceProject
                             as={motion.section}

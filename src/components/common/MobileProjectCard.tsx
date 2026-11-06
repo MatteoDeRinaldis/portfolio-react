@@ -115,19 +115,26 @@ const Description = styled.span`
 `;
 
 const BadgeList = styled.span`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 2.5rem;
   gap: ${({ theme }) => theme.spacing[2]};
 `;
 
 const Badge = styled.span`
-  padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[3]}`};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[2]}`};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   background: ${({ theme }) => theme.colors.background};
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 10px;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
 `;
 
 const Hint = styled.span`

@@ -92,6 +92,7 @@ const SkillCardWrapper = styled.article<{ $isHighlighted: boolean }>`
   z-index: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
   min-height: 15rem;
   padding: ${({ theme }) => theme.spacing[6]};
   border: 1px solid ${({ theme, $isHighlighted }) =>
@@ -146,15 +147,18 @@ const SkillCardTitle = styled.h4`
 `;
 
 const SkillList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 2.75rem;
   gap: ${({ theme }) => theme.spacing[2]};
 `;
 
 const SkillItem = styled.span`
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[3]}`};
+  justify-content: center;
+  min-width: 0;
+  padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[2]}`};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   background-color: ${({ theme }) => (theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)')};
@@ -162,6 +166,9 @@ const SkillItem = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {

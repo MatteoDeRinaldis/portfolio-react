@@ -36,12 +36,21 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Tecnologie Frontend',
       icon: 'frontend',
-      items: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS / SCSS / LESS', 'Redux', 'Redux Toolkit', 'Redux Saga', 'Axios'],
+      items: [
+        'React',
+        'JavaScript',
+        'TypeScript',
+        'HTML5',
+        'CSS/SCSS/LESS',
+        'React Hook Form',
+        'React Native',
+        'Expo',
+      ],
     },
     {
-      title: 'Sviluppo Mobile',
+      title: 'Gestione dello Stato',
       icon: 'mobile',
-      items: ['React Native', 'Expo', 'Sviluppo Cross-platform'],
+      items: ['Redux', 'Redux Toolkit', 'Redux-Saga', 'React Query', 'Axios'],
     },
     {
       title: 'UI & Design',
@@ -51,7 +60,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Strumenti di Sviluppo',
       icon: 'tools',
-      items: ['Vite', 'Webpack', 'npm / yarn', 'yalc', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
+      items: ['Vite', 'Webpack', 'npm/yarn', 'yalc', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
     },
     {
       title: 'DevOps e Collaborazione',
@@ -61,7 +70,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Testing e Qualità',
       icon: 'testing',
-      items: ['Jest', 'Cypress', 'SonarQube', 'SonarCloud', 'Black Duck', 'Veracode'],
+      items: ['Vitest', 'Jest', 'React Testing Library', 'Cypress', 'SonarQube', 'SonarCloud', 'Black Duck', 'Veracode'],
     },
     {
       title: 'Backend e Dati',
@@ -83,12 +92,21 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Frontend Technologies',
       icon: 'frontend',
-      items: ['React', 'JavaScript', 'TypeScript', 'HTML5', 'CSS / SCSS / LESS', 'Redux', 'Redux Toolkit', 'Redux Saga', 'Axios'],
+      items: [
+        'React',
+        'JavaScript',
+        'TypeScript',
+        'HTML5',
+        'CSS/SCSS/LESS',
+        'React Hook Form',
+        'React Native',
+        'Expo',
+      ],
     },
     {
-      title: 'Mobile Development',
+      title: 'State Management',
       icon: 'mobile',
-      items: ['React Native', 'Expo', 'Cross-platform Development'],
+      items: ['Redux', 'Redux Toolkit', 'Redux-Saga', 'React Query', 'Axios'],
     },
     {
       title: 'UI & Design',
@@ -98,7 +116,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Development Tools',
       icon: 'tools',
-      items: ['Vite', 'Webpack', 'npm / yarn', 'yalc', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
+      items: ['Vite', 'Webpack', 'npm/yarn', 'yalc', 'Git', 'GitHub', 'BrowserStack', 'GitHub Copilot CLI'],
     },
     {
       title: 'DevOps & Collaboration',
@@ -108,7 +126,7 @@ const skillCategoriesByLanguage: Record<Language, SkillCategory[]> = {
     {
       title: 'Testing & Quality',
       icon: 'testing',
-      items: ['Jest', 'Cypress', 'SonarQube', 'SonarCloud', 'Black Duck', 'Veracode'],
+      items: ['Vitest', 'Jest', 'React Testing Library', 'Cypress', 'SonarQube', 'SonarCloud', 'Black Duck', 'Veracode'],
     },
     {
       title: 'Backend & Data',
@@ -138,25 +156,25 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
         {
           client: 'Sisal',
           description:
-            'Sviluppo di nuove feature e bug fix per applicazioni di lotteria online su oltre 30 repository. Analisi e implementazione dei requisiti UX/UI, sviluppo di componenti riutilizzabili e integrazione di REST API.',
+            'Manutenzione ed evoluzione di applicazioni per lotterie online distribuite su oltre 30 repository. Traduzione dei requisiti business e UI/UX in componenti React riutilizzabili e funzionalità frontend, integrazione di REST API e cura della coerenza tra codebase. Risoluzione di problemi complessi e miglioramento delle piattaforme.',
           technologies: ['JavaScript', 'React', 'TypeScript', 'CSS', 'SCSS', 'Git', 'Webpack', 'GitHub Copilot CLI'],
         },
         {
           client: 'Gimac',
           description:
-            'Implementazione della repository e dell’architettura del back office. Sviluppo di feature funzionali e grafiche, bug fixing e integrazione API REST con ownership indipendente della piattaforma.',
+            'Definizione dell’architettura frontend e della struttura repository per una piattaforma back-office. Sviluppo end-to-end di componenti riutilizzabili e funzionalità business, integrazione di REST API e manutenzione evolutiva. Gestione autonoma delle attività dalla configurazione iniziale all’evoluzione della piattaforma.',
           technologies: ['JavaScript', 'React', 'Axios', 'SCSS', 'Git'],
         },
         {
           client: 'Bip',
           description:
-            'Analisi, design e implementazione della repository e dell’architettura core di una piattaforma gestionale web per uno studio legale internazionale. Sviluppo di feature funzionali e UI, bug fixing e integrazione REST API.',
+            'Progettazione delle fondamenta frontend di una piattaforma gestionale per uno studio legale internazionale. Definizione della struttura di progetto e sviluppo di componenti riutilizzabili e flussi business. Gestione autonoma di implementazione frontend, integrazione delle API backend e manutenzione della soluzione.',
           technologies: ['TypeScript', 'React', 'Axios', 'SCSS', 'Git'],
         },
         {
           client: 'Accenture',
           description:
-            'Sviluppo di nuove feature e bug fix per una piattaforma di gestione industriale. Ownership della shared component library e dell’area di integrazione del core. Ruolo di Security Champion. Gestione end-to-end di test e release.',
+            'Gestione della shared component library e del livello d’integrazione tra i moduli di una piattaforma gestionale industriale. Sviluppo di funzionalità business e mantenimento della coerenza tra le integrazioni. Nel ruolo di Security Champion, gestione end-to-end di test e rilasci negli ambienti di sviluppo e test.',
           technologies: [
             'JavaScript',
             'React',
@@ -186,20 +204,20 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
         {
           client: 'Fabrick',
           description:
-            'Sviluppo di componenti UI e integrazioni grafiche per il settore bancario, bug fixing, integrazione di endpoint backend e personalizzazione di componenti dinamici riutilizzabili.',
+            'Sviluppo e personalizzazione di componenti frontend riutilizzabili per applicazioni bancarie. Integrazione con le API backend e adattamento di componenti UI dinamici ai requisiti di business. Cura della coerenza con i pattern esistenti e manutenzione delle funzionalità nelle diverse aree dell’applicazione.',
           technologies: ['TypeScript', 'React', 'Less', 'Storybook', 'IntelliJ'],
         },
         {
           client: 'Bugnion',
           description:
-            'Miglioramento e implementazione di logica e UI per una piattaforma di gestione brevetti basata su architettura micro-frontend con integrazione API backend.',
-          technologies: ['TypeScript', 'React', 'Piral App', 'Redux Saga', 'Tailwind', 'SCSS'],
+            'Sviluppo di funzionalità business e componenti UI riutilizzabili in un’architettura micro-frontend per una piattaforma di gestione brevetti. Implementazione della logica applicativa e della gestione dello stato, con integrazione delle API backend. Cura della coerenza tra i moduli e manutenzione delle funzionalità esistenti.',
+          technologies: ['TypeScript', 'React', 'Piral', 'Redux-Saga', 'Tailwind CSS', 'SCSS'],
         },
         {
           client: 'Roche',
           description:
-            'Sviluppo e manutenzione di una piattaforma per presentazioni farmaceutiche, inclusi calcoli Excel e integrazione di grafici interattivi.',
-          technologies: ['JavaScript', 'jQuery', 'React', 'HTML', 'CSS', 'SCSS', 'eCharts'],
+            'Sviluppo di funzionalità frontend interattive e strumenti di visualizzazione dati per una piattaforma di presentazione farmaceutica. Implementazione della logica applicativa, di calcoli basati su Excel e grafici dinamici. Manutenzione dei componenti e cura della fruibilità dei contenuti nelle presentazioni.',
+          technologies: ['JavaScript', 'jQuery', 'React', 'HTML', 'CSS', 'SCSS', 'Apache ECharts'],
         },
       ],
     },
@@ -211,24 +229,25 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
         {
           client: 'Faber System',
           description:
-            'Sviluppo indipendente e manutenzione di una piattaforma gestionale basata su architettura frontend atomica con component library custom.',
-          technologies: ['TypeScript', 'React', 'Redux Saga', 'SCSS'],
+            'Sviluppo e manutenzione autonoma di una piattaforma gestionale basata su un’architettura frontend atomica e una libreria di componenti custom. Realizzazione di componenti riutilizzabili, gestione dello stato e logica di business, con attenzione alla coerenza e all’evoluzione delle funzionalità.',
+          technologies: ['TypeScript', 'React', 'Redux-Saga', 'SCSS'],
         },
         {
           client: 'Gitto',
           description:
-            'Sviluppo indipendente e manutenzione di un generatore dinamico per contratti legali personalizzati.',
-          technologies: ['TypeScript', 'React', 'Redux Saga', 'SCSS'],
+            'Sviluppo e manutenzione autonoma di una piattaforma dinamica per la generazione di contratti personalizzati. Implementazione di flussi configurabili e funzionalità di business, gestione dello stato e aggiornamento dei componenti riutilizzabili, garantendo coerenza e affidabilità nel processo di creazione.',
+          technologies: ['TypeScript', 'React', 'Redux-Saga', 'SCSS'],
         },
         {
           client: 'Enigaseluce',
           description:
-            'Redesign e implementazione di UI e business logic per workflow di sottoscrizione contratti. Gestione ambienti di sviluppo e strumenti di project management. Ottimizzazione responsive e cross-browser.',
-          technologies: ['React', 'Redux', 'JavaScript', 'CSS', 'LESS', 'SASS', 'SCSS'],
+            'Riprogettazione dei flussi frontend per la sottoscrizione di contratti e sviluppo di interfacce responsive. Integrazione della logica di business e miglioramento della compatibilità cross-browser. Gestione degli ambienti e degli strumenti di progetto, con manutenzione e verifica delle funzionalità.',
+          technologies: ['React', 'Redux', 'JavaScript', 'CSS', 'Less', 'Sass', 'SCSS'],
         },
         {
           client: 'Fimelato',
-          description: 'Sviluppo e manutenzione di pagine web con forte attenzione all’ottimizzazione responsive.',
+          description:
+            'Sviluppo e manutenzione di interfacce web responsive per diversi dispositivi e browser. Realizzazione di componenti UI riutilizzabili e verifica della corretta visualizzazione dei contenuti. Cura della coerenza funzionale e supporto agli aggiornamenti e alla manutenzione delle pagine esistenti.',
           technologies: ['DNN', 'Bootstrap', 'HTML', 'CSS'],
         },
       ],
@@ -240,16 +259,20 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
       projects: [
         {
           client: 'Java Junior Developer',
-          description: 'Sviluppo di progetti software interni e manutenzione degli strumenti di sviluppo.',
+          description:
+            'Sviluppo e manutenzione di applicazioni Java interne, con implementazione di funzionalità backend e frontend, integrazioni database e correzioni di bug. Acquisizione di esperienza pratica nello sviluppo object-oriented.',
           technologies: [
-            'Java Spring MVC/JDBC',
+            'Java',
+            'Spring MVC',
+            'JDBC',
             'DAO',
             'MVC',
+            'design patterns',
             'XML',
             'UML',
             'JPA',
             'JavaScript',
-            'JQuery',
+            'jQuery',
             'Ajax',
             'HTML',
             'CSS',
@@ -271,25 +294,25 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
         {
           client: 'Sisal',
           description:
-            'Development of new features and bug fixes for online lottery applications across more than 30 repositories. Review, analysis and implementation of UI/UX requirements, reusable UI components, and REST API integration.',
+            'Maintained and evolved enterprise online lottery applications across 30+ repositories. Translated business and UI/UX requirements into reusable React components and frontend features, integrated REST APIs, and ensured consistency across codebases. Resolved complex frontend issues and continuously improved the existing platforms.',
           technologies: ['JavaScript', 'React', 'TypeScript', 'CSS', 'SCSS', 'Git', 'Webpack', 'GitHub Copilot CLI'],
         },
         {
           client: 'Gimac',
           description:
-            'Implementation of the project repository and back-office architecture. Development of functional and UI features, bug fixing, and REST API integration with independent ownership of the platform.',
+            'Defined the frontend architecture and repository structure for a back-office management platform. Owned end-to-end frontend development, building reusable components and business features, integrating REST APIs, and maintaining the application. Managed the work independently from the initial setup through ongoing platform improvements.',
           technologies: ['JavaScript', 'React', 'Axios', 'SCSS', 'Git'],
         },
         {
           client: 'Bip',
           description:
-            'Analysis, design and implementation of the repository and core architecture for a web-based management platform for an international law firm. Development of functional and UI features, bug fixing and REST API integration.',
+            'Designed the frontend foundation of a management platform for an international law firm. Defined the project structure and developed reusable components and business workflows. Independently delivered the frontend and backend API integrations, supporting the platform from its architectural setup through ongoing evolution.',
           technologies: ['TypeScript', 'React', 'Axios', 'SCSS', 'Git'],
         },
         {
           client: 'Accenture',
           description:
-            'Development of new features and bug fixes for an industrial manufacturing management platform. Ownership of the shared component library and the application core integration area. Security Champion role and end-to-end testing and releases.',
+            'Managed the shared component library and integration layer connecting modules of an industrial platform. Developed business features and kept integrations consistent. As Security Champion, handled end-to-end testing and releases across development and test environments, supporting solution quality and security.',
           technologies: [
             'JavaScript',
             'React',
@@ -319,20 +342,20 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
         {
           client: 'Fabrick',
           description:
-            'Development of UI components and graphical integrations for the banking sector, bug fixing, backend endpoint integration, and customization of reusable dynamic components.',
+            'Developed and customized reusable frontend components for banking applications. Integrated backend APIs and adapted dynamic UI components to business requirements. Maintained consistency with existing patterns and supported features across the application, including ongoing improvements and maintenance.',
           technologies: ['TypeScript', 'React', 'Less', 'Storybook', 'IntelliJ'],
         },
         {
           client: 'Bugnion',
           description:
-            'Enhancement and implementation of UI and business logic for a patent management platform based on a micro-frontend architecture, including backend API integration.',
-          technologies: ['TypeScript', 'React', 'Piral App', 'Redux Saga', 'Tailwind', 'SCSS'],
+            'Developed business features and reusable UI components within a micro-frontend architecture for a patent management platform. Implemented application logic and state management, integrated backend APIs, and maintained consistency across modules while supporting existing functionality.',
+          technologies: ['TypeScript', 'React', 'Piral', 'Redux-Saga', 'Tailwind CSS', 'SCSS'],
         },
         {
           client: 'Roche',
           description:
-            'Development and maintenance of a pharmaceutical slide presentation platform, including Excel-based calculations and interactive chart integration.',
-          technologies: ['JavaScript', 'jQuery', 'React', 'HTML', 'CSS', 'SCSS', 'eCharts'],
+            'Developed interactive frontend features and data visualization for a pharmaceutical presentation platform. Implemented application logic, Excel-based calculations, and dynamic charts. Maintained components and improved how content was presented and accessed throughout the platform.',
+          technologies: ['JavaScript', 'jQuery', 'React', 'HTML', 'CSS', 'SCSS', 'Apache ECharts'],
         },
       ],
     },
@@ -344,24 +367,25 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
         {
           client: 'Faber System',
           description:
-            'Independent development and maintenance of a management platform built on an atomic frontend architecture with a custom component library.',
-          technologies: ['TypeScript', 'React', 'Redux Saga', 'SCSS'],
+            'Independently developed and maintained a management platform built on an atomic frontend architecture and custom component library. Created reusable components, state management, and business logic, while keeping features consistent and supporting the platform’s ongoing evolution.',
+          technologies: ['TypeScript', 'React', 'Redux-Saga', 'SCSS'],
         },
         {
           client: 'Gitto',
           description:
-            'Independent development and maintenance of a dynamic generator for customized legal contracts.',
-          technologies: ['TypeScript', 'React', 'Redux Saga', 'SCSS'],
+            'Independently developed and maintained a dynamic platform for generating customized contracts. Implemented configurable workflows and business features, managed application state, and updated reusable components to keep the contract creation process consistent and reliable.',
+          technologies: ['TypeScript', 'React', 'Redux-Saga', 'SCSS'],
         },
         {
           client: 'Enigaseluce',
           description:
-            'Redesign and implementation of UI and business logic for customer contract subscription workflows. Management of development environments and project management tools. Cross-browser responsive optimization and frontend business flow implementation.',
-          technologies: ['React', 'Redux', 'JavaScript', 'CSS', 'LESS', 'SASS', 'SCSS'],
+            'Redesigned frontend workflows for customer contract subscriptions and developed responsive interfaces. Integrated business logic and improved cross-browser compatibility. Managed development environments and project tooling while maintaining and verifying application features.',
+          technologies: ['React', 'Redux', 'JavaScript', 'CSS', 'Less', 'Sass', 'SCSS'],
         },
         {
           client: 'Fimelato',
-          description: 'Development and maintenance of web pages with a strong focus on responsive design optimization.',
+          description:
+            'Developed and maintained responsive web interfaces for different devices. Implemented reusable UI components and verified that content displayed correctly. Ensured consistent functionality across browsers and supported the ongoing improvement of existing pages.',
           technologies: ['DNN', 'Bootstrap', 'HTML', 'CSS'],
         },
       ],
@@ -373,16 +397,20 @@ const professionalExperiencesByLanguage: Record<Language, ProfessionalExperience
       projects: [
         {
           client: 'Java Junior Developer',
-          description: 'Development of internal software projects and maintenance of development tools.',
+          description:
+            'Developed and maintained internal Java applications, implementing backend and frontend functionality, database integrations, and bug fixes. Gained practical experience with object-oriented development.',
           technologies: [
-            'Java Spring MVC/JDBC',
+            'Java',
+            'Spring MVC',
+            'JDBC',
             'DAO',
             'MVC',
+            'design patterns',
             'XML',
             'UML',
             'JPA',
             'JavaScript',
-            'JQuery',
+            'jQuery',
             'Ajax',
             'HTML',
             'CSS',

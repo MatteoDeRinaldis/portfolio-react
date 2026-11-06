@@ -29,6 +29,7 @@ import {
   Message,
   FieldError,
   ContactMail,
+  ContactMobileSubmit,
 } from './Contact.styles';
 
 // Public form identifier supplied by Web3Forms, intended for browser use.
@@ -48,6 +49,12 @@ const contactDraft: ContactValues = {
 export const Contact: FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const mobileQuery = theme.breakpoints.mobilePortrait;
+  const [isMobile, setIsMobile] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      (typeof window.matchMedia !== 'function' || window.matchMedia(mobileQuery).matches),
+  );
   const [isSubmitHovered, setIsSubmitHovered] = useState(false);
   const contactTitle = t('pages.contactTitle');
   const contactDescription = t('pages.contactDescription');
@@ -72,6 +79,19 @@ export const Contact: FC = () => {
   const [toast, setToast] = useState<{ id: number; message: string; variant: 'error' | 'success' } | null>(null);
   const toastCounter = useRef(0);
   const sendingRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') {
+      setIsMobile(true);
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia(mobileQuery);
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+    updateIsMobile();
+    mediaQuery.addEventListener('change', updateIsMobile);
+    return () => mediaQuery.removeEventListener('change', updateIsMobile);
+  }, [mobileQuery]);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
@@ -220,6 +240,33 @@ export const Contact: FC = () => {
     validate: (value) => value.trim().length > 0 || t('contact.messageRequired'),
   });
 
+  const contactCardContent = (
+    <ContactCardBody>
+      <CardHeader>
+        <CardTitle>{t('contact.cardTitle')}</CardTitle>
+        <CardDescription>{t('contact.cardDescription')}</CardDescription>
+      </CardHeader>
+      <CardInfoList>
+        <CardInfoItem>
+          <CardInfoLabel>{t('contact.basedInLabel')}</CardInfoLabel>
+          <CardInfoValue>{t('contact.basedInValue')}</CardInfoValue>
+        </CardInfoItem>
+        <CardInfoItem>
+          <CardInfoLabel>{t('contact.workPreferenceLabel')}</CardInfoLabel>
+          <CardInfoValue>{t('contact.workPreferenceValue')}</CardInfoValue>
+        </CardInfoItem>
+        <CardInfoItem>
+          <CardInfoLabel>{t('contact.languagesLabel')}</CardInfoLabel>
+          <CardInfoValue>{t('contact.languagesValue')}</CardInfoValue>
+        </CardInfoItem>
+        <CardInfoItem>
+          <CardInfoLabel>{t('contact.focusLabel')}</CardInfoLabel>
+          <CardInfoValue>{t('contact.focusValue')}</CardInfoValue>
+        </CardInfoItem>
+      </CardInfoList>
+    </ContactCardBody>
+  );
+
   return (
     <ContactPageWrapper>
       <PageTitle
@@ -333,22 +380,28 @@ export const Contact: FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 1.65, ease: 'easeOut' }}
           >
-            <SpecularButton
-              className="contact-submit"
-              type="submit"
-              size="md"
-              radius={8}
-              tint="#0b0b0b"
-              tintOpacity={1}
-              textColor="#f5f5f5"
-              lineColor={isSubmitHovered ? '#6b6b6b' : '#ffffff'}
-              baseColor={isSubmitHovered ? '#9a9a9a' : '#525252'}
-              disabled={isSending}
-              onPointerEnter={() => setIsSubmitHovered(true)}
-              onPointerLeave={() => setIsSubmitHovered(false)}
-            >
-              {t(isSending ? 'contact.sending' : 'contact.submit')}
-            </SpecularButton>
+            {isMobile ? (
+              <ContactMobileSubmit type="submit" disabled={isSending}>
+                {t(isSending ? 'contact.sending' : 'contact.submit')}
+              </ContactMobileSubmit>
+            ) : (
+              <SpecularButton
+                className="contact-submit"
+                type="submit"
+                size="md"
+                radius={8}
+                tint="#0b0b0b"
+                tintOpacity={1}
+                textColor="#f5f5f5"
+                lineColor={isSubmitHovered ? '#6b6b6b' : '#ffffff'}
+                baseColor={isSubmitHovered ? '#9a9a9a' : '#525252'}
+                disabled={isSending}
+                onPointerEnter={() => setIsSubmitHovered(true)}
+                onPointerLeave={() => setIsSubmitHovered(false)}
+              >
+                {t(isSending ? 'contact.sending' : 'contact.submit')}
+              </SpecularButton>
+            )}
           </motion.div>
         </ContactForm>
 
@@ -358,42 +411,23 @@ export const Contact: FC = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.55, delay: 0.65, ease: 'easeOut' }}
         >
-          <BorderGlow
-            backgroundColor={theme.mode === 'dark' ? 'rgba(23, 23, 23, 0.35)' : 'rgba(255, 255, 255, 0.35)'}
-            light={theme.mode !== 'dark'}
-            blur={14}
-            borderRadius={12}
-            glowColor={theme.mode === 'dark' ? '0 0 85' : '0 0 25'}
-            colors={theme.mode === 'dark' ? ['#f5f5f5', '#9a9a9a', '#5c5c5c'] : ['#1a1a1a', '#6b6b6b', '#a8a8a8']}
-            glowRadius={32}
-            edgeSensitivity={30}
-            animated
-          >
-          <ContactCardBody>
-          <CardHeader>
-            <CardTitle>{t('contact.cardTitle')}</CardTitle>
-            <CardDescription>{t('contact.cardDescription')}</CardDescription>
-          </CardHeader>
-          <CardInfoList>
-            <CardInfoItem>
-              <CardInfoLabel>{t('contact.basedInLabel')}</CardInfoLabel>
-              <CardInfoValue>{t('contact.basedInValue')}</CardInfoValue>
-            </CardInfoItem>
-            <CardInfoItem>
-              <CardInfoLabel>{t('contact.workPreferenceLabel')}</CardInfoLabel>
-              <CardInfoValue>{t('contact.workPreferenceValue')}</CardInfoValue>
-            </CardInfoItem>
-            <CardInfoItem>
-              <CardInfoLabel>{t('contact.languagesLabel')}</CardInfoLabel>
-              <CardInfoValue>{t('contact.languagesValue')}</CardInfoValue>
-            </CardInfoItem>
-            <CardInfoItem>
-              <CardInfoLabel>{t('contact.focusLabel')}</CardInfoLabel>
-              <CardInfoValue>{t('contact.focusValue')}</CardInfoValue>
-            </CardInfoItem>
-          </CardInfoList>
-          </ContactCardBody>
-          </BorderGlow>
+          {isMobile ? (
+            contactCardContent
+          ) : (
+            <BorderGlow
+              backgroundColor={theme.mode === 'dark' ? 'rgba(23, 23, 23, 0.35)' : 'rgba(255, 255, 255, 0.35)'}
+              light={theme.mode !== 'dark'}
+              blur={14}
+              borderRadius={12}
+              glowColor={theme.mode === 'dark' ? '0 0 85' : '0 0 25'}
+              colors={theme.mode === 'dark' ? ['#f5f5f5', '#9a9a9a', '#5c5c5c'] : ['#1a1a1a', '#6b6b6b', '#a8a8a8']}
+              glowRadius={32}
+              edgeSensitivity={30}
+              animated
+            >
+              {contactCardContent}
+            </BorderGlow>
+          )}
         </ContactCard>
       </ContactGrid>
       <ContactMail

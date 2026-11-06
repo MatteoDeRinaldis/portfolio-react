@@ -332,7 +332,22 @@ export const TechnicalOverviewMobileCarousel = styled(CompactCarousel)`
 
   @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     display: block;
-    margin-top: ${({ theme }) => theme.spacing[4]};
+    margin-top: ${({ theme }) => theme.spacing[1]};
+
+    .carousel-card {
+      padding: ${({ theme }) => `${theme.spacing[2]} ${theme.spacing[3]}`};
+    }
+
+    .carousel-title {
+      font-size: 0.82rem;
+      line-height: 1.2;
+    }
+
+    .carousel-description {
+      margin-top: 4px;
+      font-size: 0.7rem;
+      line-height: 1.25;
+    }
   }
 `;
 
@@ -342,8 +357,8 @@ export const TechnicalOverviewFullWidth = styled.div`
   margin-top: ${({ theme }) => theme.spacing[4]};
 
   @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
-    gap: ${({ theme }) => theme.spacing[8]};
-    margin-top: ${({ theme }) => theme.spacing[8]};
+    gap: ${({ theme }) => theme.spacing[4]};
+    margin-top: ${({ theme }) => theme.spacing[4]};
   }
 `;
 
@@ -361,10 +376,11 @@ export const TechnicalOverviewSection = styled.section`
     padding: ${({ theme }) => `${theme.spacing[1]} ${theme.spacing[3]}`};
     border: 1px solid ${({ theme }) => theme.colors.border};
     border-radius: ${({ theme }) => theme.borderRadius.sm};
-    color: ${({ theme }) => theme.colors.text};
+    border-color: transparent;
+    color: ${({ theme }) => (theme.mode === 'dark' ? '#0b0b0b' : '#f4f4f1')};
     font-size: ${({ theme }) => theme.fontSizes.sm};
     font-weight: ${({ theme }) => theme.fontWeights.semibold};
-    background-color: ${({ theme }) => (theme.mode === 'dark' ? '#080808' : '#dededb')};
+    background-color: ${({ theme }) => (theme.mode === 'dark' ? '#f3f3f3' : '#121212')};
   }
 
   p {
@@ -395,6 +411,16 @@ export const TechnicalOverviewTree = styled.pre`
   font-family: ${({ theme }) => theme.fonts.mono};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   line-height: 1.6;
+
+  @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
+    overflow-x: hidden;
+    margin-top: ${({ theme }) => theme.spacing[2]};
+    padding: ${({ theme }) => theme.spacing[3]};
+    font-size: 0.7rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
 
   code {
     padding: 0;
