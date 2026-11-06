@@ -18,7 +18,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
     description:
       'Informativa sul trattamento dei dati personali del portfolio di Matteo De Rinaldis.',
     updated: 'Ultimo aggiornamento:',
-    updatedDate: '13 ottobre 2026',
+    updatedDate: '6 novembre 2026',
     intro:
       'La presente Privacy Policy descrive come vengono trattati i dati personali degli utenti che visitano il sito portfolio di Matteo De Rinaldis, disponibile all’indirizzo https://matteoderinaldis.com.',
 
@@ -39,8 +39,9 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
             paragraphs: [
               'Il modulo di contatto consente agli utenti di fornire volontariamente il proprio nome, indirizzo email e un messaggio.',
               'I dati inseriti nel modulo vengono trasmessi tramite connessione HTTPS a Web3Forms, servizio esterno utilizzato per elaborare la richiesta e inoltrare il messaggio alla casella email del titolare.',
-              'Web3Forms può trattare e conservare i dati trasmessi tramite il modulo secondo le proprie impostazioni di conservazione e la propria Privacy Policy.',
-              'Ulteriori informazioni sono disponibili nella Privacy Policy di Web3Forms: https://web3forms.com/privacy',
+              'Web3Forms opera dall’India e utilizza infrastrutture e sub-responsabili internazionali. I dati inviati possono quindi essere trattati in Paesi diversi, anche tramite l’infrastruttura dei sub-responsabili. Le ubicazioni specifiche possono dipendere dai fornitori utilizzati.',
+              'La conservazione di 30 giorni configurata per Web3Forms si applica ai dati delle richieste conservati da Web3Forms; non si applica alle email recapitate nella casella del titolare, che sono conservate separatamente.',
+              'Per ulteriori informazioni sul trattamento e sui sub-responsabili, consultare la Privacy Policy di Web3Forms: https://web3forms.com/privacy e il Data Processing Agreement (DPA): https://web3forms.com/dpa',
             ],
           },
 
@@ -94,8 +95,8 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
       {
         title: '5. Conservazione dei dati',
         paragraphs: [
-          'I dati inviati tramite il modulo di contatto possono essere conservati da Web3Forms secondo il periodo di conservazione previsto o configurato per il servizio e in conformità alla relativa Privacy Policy.',
-          'I messaggi ricevuti dal titolare possono essere conservati nella relativa casella email per il tempo ragionevolmente necessario a gestire la richiesta e le eventuali comunicazioni successive, fatti salvi eventuali obblighi di legge.',
+          'Il periodo di conservazione configurato per Web3Forms è di 30 giorni e si applica alle richieste conservate da Web3Forms. Non riguarda altri dati eventualmente trattati dal servizio secondo le proprie policy e configurazioni.',
+          'Le email ricevute dal titolare nella propria casella sono conservate separatamente da Web3Forms e solo per il tempo necessario a gestire la corrispondenza.',
           'I dati tecnici eventualmente trattati dai fornitori di hosting, storage, infrastruttura e analytics sono conservati secondo le rispettive policy e configurazioni del servizio.',
         ],
       },
@@ -105,7 +106,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         paragraphs: [
           'Per il funzionamento del sito vengono utilizzati i seguenti servizi esterni:',
           'Netlify: hosting, distribuzione dei contenuti, DNS e infrastruttura HTTPS. Privacy Policy: https://www.netlify.com/privacy/',
-          'Web3Forms: elaborazione e inoltro dei messaggi inviati tramite il modulo di contatto. Privacy Policy: https://web3forms.com/privacy',
+          'Web3Forms: elaborazione e inoltro dei messaggi inviati tramite il modulo di contatto. Privacy Policy: https://web3forms.com/privacy. Data Processing Agreement (DPA): https://web3forms.com/dpa',
           'Cloudflare Web Analytics: statistiche aggregate sull’utilizzo del sito e monitoraggio delle prestazioni. Privacy Policy: https://www.cloudflare.com/privacypolicy/',
           'Supabase Storage: archiviazione e distribuzione pubblica del curriculum vitae e di eventuali altri documenti scaricabili. Privacy Policy: https://supabase.com/privacy',
           'Il sito contiene inoltre collegamenti a servizi esterni, tra cui GitHub e LinkedIn. Quando l’utente segue uno di questi collegamenti lascia il presente sito; l’eventuale trattamento dei dati è pertanto disciplinato dalle condizioni e dalle Privacy Policy del rispettivo servizio.',
@@ -116,7 +117,8 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         title: '7. Trasferimenti internazionali di dati',
         paragraphs: [
           'Alcuni dei fornitori utilizzati dal sito possono trattare dati in Paesi diversi dalla Svizzera o dal Paese di residenza dell’utente.',
-          'Quando previsto dalla normativa applicabile, tali trasferimenti vengono effettuati dai rispettivi fornitori adottando le garanzie previste dalla legislazione applicabile in materia di protezione dei dati.',
+          'Web3Forms dichiara di operare dall’India. L’allegato 3 del suo DPA elenca Hetzner Online GmbH con infrastruttura nell’Unione europea (Germania/Finlandia), CleanTalk e Akismet negli Stati Uniti/a livello globale, Microsoft Clarity negli Stati Uniti/a livello globale, AWS nelle regioni configurate per il servizio, Cloudflare sulla propria rete edge globale e SparrowDesk nella località configurata dal fornitore. Il DPA non specifica quali sub-responsabili o località siano coinvolti per una singola richiesta: ciò non significa che ogni invio venga trattato in tutti questi Paesi o da ciascun sub-responsabile. Per i dettagli consultare: https://web3forms.com/dpa',
+          'Il DPA di Web3Forms descrive i trasferimenti internazionali e prevede l’applicazione delle Clausole Contrattuali Standard e, ove applicabile, dell’addendum britannico, quando la normativa applicabile richiede un meccanismo di trasferimento per dati provenienti dallo Spazio economico europeo, dal Regno Unito o dalla Svizzera. Per i dettagli consultare: https://web3forms.com/dpa',
         ],
       },
 
@@ -152,7 +154,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
     description:
       'Privacy information for the portfolio website of Matteo De Rinaldis.',
     updated: 'Last updated:',
-    updatedDate: '13 October 2026',
+    updatedDate: '6 November 2026',
     intro:
       'This Privacy Policy describes how personal data is handled when users visit the portfolio website of Matteo De Rinaldis, available at https://matteoderinaldis.com.',
 
@@ -173,8 +175,9 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
             paragraphs: [
               'The contact form allows users to voluntarily provide their name, email address and a message.',
               'Information submitted through the form is transmitted over HTTPS to Web3Forms, an external service used to process the request and forward the message to the controller’s email inbox.',
-              'Web3Forms may process and retain information submitted through the form according to its retention settings and Privacy Policy.',
-              'Further information is available in the Web3Forms Privacy Policy: https://web3forms.com/privacy',
+              'Web3Forms operates from India and uses international infrastructure and subprocessors. Submitted data may therefore be processed in different countries, including through subprocessors’ infrastructure. Specific locations may depend on the providers used.',
+              'The 30-day retention period configured for Web3Forms applies to submissions stored by Web3Forms; it does not apply to emails delivered to the controller’s inbox, which are stored separately.',
+              'For further information about processing and subprocessors, see the Web3Forms Privacy Policy: https://web3forms.com/privacy and Data Processing Agreement (DPA): https://web3forms.com/dpa',
             ],
           },
 
@@ -228,8 +231,8 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
       {
         title: '5. Data retention',
         paragraphs: [
-          'Information submitted through the contact form may be retained by Web3Forms according to the retention period provided or configured for the service and in accordance with its Privacy Policy.',
-          'Messages received by the controller may be retained in the controller’s email inbox for as long as reasonably necessary to handle the request and any related communications, subject to applicable legal requirements.',
+          'The retention period configured for Web3Forms is 30 days and applies to submissions stored by Web3Forms. It does not cover other data the service may process under its own policies and service configurations.',
+          'Emails received in the controller’s inbox are stored separately from Web3Forms and retained only as long as necessary to manage the correspondence.',
           'Technical information processed by hosting, storage, infrastructure and analytics providers is retained according to their respective policies and service configurations.',
         ],
       },
@@ -239,7 +242,7 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         paragraphs: [
           'The website uses the following external services:',
           'Netlify: hosting, content delivery, DNS and HTTPS infrastructure. Privacy Policy: https://www.netlify.com/privacy/',
-          'Web3Forms: processing and forwarding of messages submitted through the contact form. Privacy Policy: https://web3forms.com/privacy',
+          'Web3Forms: processing and forwarding of messages submitted through the contact form. Privacy Policy: https://web3forms.com/privacy. Data Processing Agreement (DPA): https://web3forms.com/dpa',
           'Cloudflare Web Analytics: aggregated website usage statistics and performance monitoring. Privacy Policy: https://www.cloudflare.com/privacypolicy/',
           'Supabase Storage: public storage and delivery of the curriculum vitae and any other downloadable documents. Privacy Policy: https://supabase.com/privacy',
           'The website also contains links to external services, including GitHub and LinkedIn. When users follow one of these links, they leave this website and any subsequent processing of personal data is governed by the terms and Privacy Policy of the respective service.',
@@ -250,7 +253,8 @@ const privacyCopy: Record<'it' | 'en', PrivacyCopy> = {
         title: '7. International data transfers',
         paragraphs: [
           'Some service providers used by the website may process data in countries other than Switzerland or the user’s country of residence.',
-          'Where required by applicable law, such transfers are carried out by the relevant providers using the safeguards required under applicable data protection legislation.',
+          'Web3Forms states that it operates from India. Annex 3 of its DPA lists Hetzner Online GmbH infrastructure in the European Union (Germany/Finland); CleanTalk and Akismet in the United States/global; Microsoft Clarity in the United States/global; AWS regions as configured for the service; Cloudflare’s global edge network; and SparrowDesk at the location configured by the provider. The DPA does not specify which subprocessors or locations are involved for any particular submission; this does not mean every submission is processed in all these countries or by every listed subprocessor. For details, see: https://web3forms.com/dpa',
+          'Web3Forms’ DPA describes international transfers and states that the Standard Contractual Clauses and, where applicable, the UK Addendum apply when data protection law requires a transfer mechanism for data transferred from the European Economic Area, the United Kingdom or Switzerland. For details, see: https://web3forms.com/dpa',
         ],
       },
 
