@@ -36,6 +36,8 @@ src/
 └─ index.tsx             Application entry point
 ```
 
+See [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md) for attribution and license information for React Bits-derived components.
+
 ## Development
 
 Requires Node.js and npm. From the project root:
