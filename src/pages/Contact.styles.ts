@@ -131,6 +131,11 @@ export const ContactCardBody = styled.div`
 
   @media ${({ theme }) => theme.breakpoints.mobilePortrait} {
     padding: ${({ theme }) => theme.spacing[6]};
+    border: 1px solid ${({ theme }) => theme.colors.border};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+    background-color: ${({ theme }) =>
+      theme.mode === 'dark' ? 'rgba(23, 23, 23, 0.35)' : 'rgba(255, 255, 255, 0.35)'};
+    box-shadow: ${({ theme }) => theme.shadows.sm};
   }
 `;
 
@@ -321,6 +326,33 @@ export const SubmitButton = styled.button`
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 3px;
+  }
+`;
+
+export const ContactMobileSubmit = styled.button`
+  align-self: flex-end;
+  padding: 14px 28px;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: #0b0b0b;
+  color: #f5f5f5;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color ${({ theme }) => theme.transitions.fast};
+
+  &:active:not(:disabled) {
+    background: #252525;
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: wait;
   }
 `;
 

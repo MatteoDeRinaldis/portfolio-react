@@ -414,6 +414,7 @@ const SkillsSectionHeader = styled.div`
 const SkillsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: ${({ theme }) => theme.spacing[6]};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.wide}) {
@@ -426,8 +427,13 @@ const SkillsGrid = styled.div`
 `;
 
 const SkillCardItem = styled.div<{ $isHovered?: boolean }>`
+  display: flex;
   scroll-margin-top: 8rem;
   transition: transform 220ms ease, opacity 180ms ease;
+
+  > article {
+    width: 100%;
+  }
 
   ${({ $isHovered }) =>
     $isHovered &&

@@ -13,6 +13,7 @@ export interface CarouselProps {
   items?: Array<CarouselItem | string | ReactNode>;
   baseWidth?: number | string;
   aspectRatio?: number;
+  cardHeight?: number;
   peek?: number;
   gap?: number;
   radius?: number;
